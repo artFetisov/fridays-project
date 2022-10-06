@@ -11,11 +11,12 @@ import {MainPage} from "../components/pages/MainPage";
 export interface IRoute {
     path: string
     element: FC
+
 }
 
 export const publicRoutes: IRoute[] = [
     {path: '/', element: MainPage},
-    {path: '/login', element: LoginPage},
+    {path: 'login', element: LoginPage},
     {path: '/register', element: RegisterPage},
     {path: '/profile', element: ProfilePage},
     {path: '/test', element: TestPage},
