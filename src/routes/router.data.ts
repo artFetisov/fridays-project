@@ -25,4 +25,4 @@ export const publicRoutes: IRoute[] = [
     {path: '/404', element: Page404},
 ]
 
-export const privateRoutes = []
+export const privateRoutes: IRoute[] = []
