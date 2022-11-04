@@ -1,0 +1,47 @@
+
+.checkbox {
+  opacity: 0;
+}
+
+.label {
+  position: relative;
+}
+
+.label::before,
+.label::after {
+  position: absolute;
+}
+
+.label::before {
+  content: "";
+  display: inline-block;
+  top: 3px;
+  height: 16px;
+  width: 16px;
+
+  border: 1px solid;
+}
+
+.label::after {
+  content: "";
+  display: inline-block;
+  height: 6px;
+  width: 9px;
+  border-left: 2px solid;
+  border-bottom: 2px solid;
+  left: 4px;
+  top: 7px;
+  transform: rotate(-45deg);
+}
+
+.label::after {
+  content: none;
+}
+
+.checkbox:checked + .label::after {
+  content: "";
+}
+
+.spanClassName {
+  margin-left: 20px;
+}
