@@ -4,14 +4,12 @@ import styles from './Button.module.scss'
 type DefaultButtonPropsType = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 
 type SuperButtonPropsType = DefaultButtonPropsType & {
-    red?: boolean
+    big?: boolean
 }
 
-export const Button: FC<SuperButtonPropsType> = ({red, className, ...restProps}) => {
-    const finalClassName = `${red ? styles.red : styles.default} ${className}`
-
+export const Button: FC<SuperButtonPropsType> = ({big, className, ...restProps}) => {
     return <button
-        className={finalClassName}
+        className={`${styles.default} ${big && styles.big}`}
         {...restProps}
     />
 }

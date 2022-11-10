@@ -1,50 +1,25 @@
 .default {
-  background-color: green;
-  padding: 10px;
-  font-size: 20px;
-  font-weight: 300;
+  background-color: #366EFF;
+  padding: 8px 28px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.01em;
   border: none;
-  color: white;
-  border-radius: 3px;
-  margin: 10px;
+  color: #FFFFFF;
+  border-radius: 30px;
   transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
-}
-
-.default:hover {
-  background-color: darkgreen;
   cursor: pointer;
+  box-shadow: 0px 4px 18px rgba(54, 110, 255, 0.35), inset 0px 1px 0px rgba(255, 255, 255, 0.3);
+
+  &.big {
+    width: 100%;
+  }
+
+
 }
 
-.default:active {
-  transform: scale(1.01)
-}
 
-.red {
-  background-color: red;
-  padding: 10px;
-  font-size: 20px;
-  font-weight: 300;
-  border: none;
-  margin-left: 5px;
-  color: white;
-  border-radius: 3px;
-}
 
-.red:hover {
-  background-color: #b60f0f;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
-}
 
-.default:active {
-  background-color: darkgreen;
-  cursor: pointer;
-}
-
-.default:disabled {
-  cursor: default;
-  background-color: darkgreen;
-  opacity: 0.7;
-  transform: none;
-}
 

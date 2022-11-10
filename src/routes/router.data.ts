@@ -1,6 +1,6 @@
 import {FC} from "react";
 import {LoginPage} from "../components/pages/LoginPage";
-import {RegisterPage} from "../components/pages/RegisterPage";
+import {RegisterPage} from "../components/pages/RegisterPage/RegisterPage";
 import {ProfilePage} from "../components/pages/ProfilePage";
 import {TestPage} from "../components/pages/TestPage";
 import {NewPasswordEntryPage} from "../components/pages/NewPasswordEntryPage";
@@ -17,10 +17,10 @@ export interface IRoute {
 
 export const publicRoutes: IRoute[] = [
     {path: '/', element: MainPage},
-    {path: 'login', element: LoginPage},
+    {path: '/login', element: LoginPage},
     {path: '/register', element: RegisterPage},
     {path: '/profile', element: ProfilePage},
-    {path: '/test', element: TestPage},
+    {path: '/auth', element: TestPage},
     {path: '/pass-entry', element: NewPasswordEntryPage},
     {path: '/pass-recovery', element: PasswordRecoveryPage},
     {path: '/404', element: Page404},

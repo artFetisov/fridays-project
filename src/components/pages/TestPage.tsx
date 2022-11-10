@@ -1,4 +1,4 @@
-import {FC} from "react";
+import React, {FC} from "react";
 import {Button} from "../ui/button/Button";
 import {Input} from "../ui/input/Input";
 import {Checkbox} from "../ui/checkbox/Checkbox";

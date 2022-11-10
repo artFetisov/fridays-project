@@ -19,6 +19,7 @@ export const Input: FC<SuperInputTextPropsType> = (
         error,
         className, spanClassName,
         sizeInp,
+        placeholder,
         ...restProps
     }
 ) => {
@@ -33,20 +34,20 @@ export const Input: FC<SuperInputTextPropsType> = (
     }
 
     const finalSpanClassName = `${styles.error} ${spanClassName ? spanClassName : ''}`
-    const finalInputClassName = `${styles.superInput} 
-    ${sizeInp === 'small' && styles.small} 
-    ${className ? className : ''} 
-    ${error && styles.errorInput}`
 
-    return <>
-        <input
-            type={'text'}
-            onChange={onChangeCallback}
-            onKeyPress={onKeyPressCallback}
-            className={finalInputClassName}
-            {...restProps}
-        />
-        {error && <span className={finalSpanClassName}>{error}</span>}
-    </>
+    return <div className={styles.common}>
+        <label>
+            <span>{placeholder}</span>
+            <input
+                type={'text'}
+                onChange={onChangeCallback}
+                onKeyPress={onKeyPressCallback}
+                {...restProps}
+                className={styles.input}
+            />
+            {error && <span className={finalSpanClassName}>{error}</span>}
+        </label>
+        {/*{error && <div className={styles.error}>{error.message}</div>}*/}
+    </div>
 }
 
