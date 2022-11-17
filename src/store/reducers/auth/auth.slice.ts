@@ -22,23 +22,6 @@ const authSlice = createSlice({
             state.isRegistered = action.payload
         }
     },
-    extraReducers: builder => {
-        // builder.addCase(authMeTC.fulfilled, (state, action) => {
-        //     if (action.payload) {
-        //         const {id, email, login} = action.payload
-        //         state.isAuth = true
-        //         state.id = id
-        //         state.login = login
-        //         state.email = email
-        //     }
-        // })
-        // builder.addCase(logoutTC.fulfilled, (state) => {
-        //     state.isAuth = false
-        //     state.id = null
-        //     state.login = null
-        //     state.email = null
-        // })
-    }
 })
 
 

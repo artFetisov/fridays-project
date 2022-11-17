@@ -1,14 +1,29 @@
 import {Layout} from "./components/layout/Layout";
 import {Router} from "./routes/Router";
-import {FC} from "react";
+import {FC, useEffect} from "react";
 import React from "react";
 import {CustomizedSnackBar} from "./components/ui/snack-bar/SnackBar";
+import {useAppSelector} from "./hooks/useAppSelector";
+import {useAppDispatch} from "./hooks/useAppDispatch";
+import {appInitializedTC} from "./store/reducers/app/app.actions";
 
 export const App: FC = () => {
-    return <div>
-        <CustomizedSnackBar/>
-        <Layout>
-            <Router/>
-        </Layout>
-    </div>
+    const isInitialized = useAppSelector(state => state.app.isInitialized)
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        dispatch(appInitializedTC())
+    })
+
+    return <>
+        {isInitialized
+            ? <div>
+                <CustomizedSnackBar/>
+                <Layout>
+                    <Router/>
+                </Layout>
+            </div>
+            : <div>...Loading</div>
+        }
+    </>
 }
