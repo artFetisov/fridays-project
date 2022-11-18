@@ -10,3 +10,7 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
+a {
+    color: #000000;
+    text-decoration: none;
+}

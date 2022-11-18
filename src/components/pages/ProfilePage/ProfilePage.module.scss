@@ -1,8 +1,25 @@
 @import '../../../scss/variables';
 
 .container {
+  position: relative;
   width: 100%;
   background-color: $bg-color;
+
+  .backArrowWrapper {
+    position: absolute;
+    top: 2%;
+    left: 9%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    & > span {
+      margin-left: 10px;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 24px;
+    }
+  }
 
   .profileWrapper {
     margin: 40px auto;
@@ -28,6 +45,7 @@
       opacity: 0.5;
       margin-bottom: 20px;
     }
+
 
     .btnWrapper {
       text-align: center;

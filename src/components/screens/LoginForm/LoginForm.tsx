@@ -3,7 +3,7 @@ import {Checkbox, FormControlLabel, IconButton, InputAdornment, TextField} from 
 import styles from './LoginForm.module.scss';
 import {validEmail} from "../../../utils/regex";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useAppDispatch} from "../../../hooks/useAppDispatch";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {ILoginData} from "../../../types/auth";
@@ -118,7 +118,12 @@ export const LoginForm: FC = () => {
                           label="Remember me"  {...register('rememberMe')}
                           style={{marginTop: '10px'}} id={'rememberMe'}/>
 
-        <div className={styles.forgotText}><span>Forgot Password?</span></div>
+        <div className={styles.forgotText}><span>
+            <Link to={PATH.FORGOT}>
+                  Forgot Password?
+            </Link>
+
+        </span></div>
 
         <Button big>Sign In</Button>
     </form>

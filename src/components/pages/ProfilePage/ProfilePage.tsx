@@ -10,6 +10,9 @@ import {useAppDispatch} from "../../../hooks/useAppDispatch";
 import {logoutTC} from "../../../store/reducers/auth/auth.actions";
 import {updateUserDataTC} from "../../../store/reducers/user/user.actions";
 import {getFileReaderURL} from "../../../utils/fileReader";
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import {Link} from "react-router-dom";
+import {PATH} from "../../../routes/router.data";
 
 export const ProfilePage: FC = () => {
     const user = useAppSelector(state => state.user.user)
@@ -35,6 +38,12 @@ export const ProfilePage: FC = () => {
 
 
     return <div className={styles.container}>
+        <Link to={PATH.MAIN}>
+            <div className={styles.backArrowWrapper}>
+                <KeyboardBackspaceIcon/>
+                <span>Back to Packs List</span>
+            </div>
+        </Link>
         <div className={styles.profileWrapper}>
             <h3 className={styles.title}>Personal Information</h3>
             <div className={styles.avatar}>

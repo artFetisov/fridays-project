@@ -2,18 +2,20 @@ import {FC} from "react";
 import {LoginPage} from "../components/pages/LoginPage/LoginPage";
 import {RegisterPage} from "../components/pages/RegisterPage/RegisterPage";
 import {ProfilePage} from "../components/pages/ProfilePage/ProfilePage";
-import {TestPage} from "../components/pages/TestPage";
-import {NewPasswordEntryPage} from "../components/pages/NewPasswordEntryPage";
-import {PasswordRecoveryPage} from "../components/pages/PasswordRecoveryPage";
-import {Page404} from "../components/pages/404Page";
 import {MainPage} from "../components/pages/MainPage";
+import {ForgotPasswordPage} from "../components/pages/ForgotPasswordPage/ForgotPasswordPage";
+import {CheckEmailPage} from "../components/pages/CheckEmailPage/CheckEmailPage";
+import {NewPasswordPage} from "../components/pages/NewPasswordPage/NewPasswordPage";
 
 export enum PATH {
     MAIN = '/',
     LOGIN = '/login',
     REGISTRATION = '/registration',
     PROFILE = '/profile',
-    ERROR = '/404'
+    ERROR = '/404',
+    FORGOT = '/forgotPassword',
+    CHECK = 'check-email',
+    NEW_PASS = 'new-pass'
 }
 
 export interface IRoute {
@@ -30,7 +32,7 @@ export const publicRoutes: IRoute[] = [
 export const privateRoutes: IRoute[] = [
     {path: PATH.LOGIN, element: LoginPage},
     {path: PATH.REGISTRATION, element: RegisterPage},
-    {path: '/auth', element: TestPage},
-    {path: '/pass-entry', element: NewPasswordEntryPage},
-    {path: '/pass-recovery', element: PasswordRecoveryPage},
+    {path: PATH.FORGOT, element: ForgotPasswordPage},
+    {path: PATH.CHECK, element: CheckEmailPage},
+    {path: PATH.NEW_PASS, element: NewPasswordPage}
 ]

@@ -63,3 +63,11 @@ export const logoutTC = createAsyncThunk('auth/logout', async (_, {dispatch, rej
         }
     }
 })
+
+export const forgotPassTC = createAsyncThunk<void, { email: string }>('auth/forgotPass', async ({email}, {dispatch}) => {
+    try {
+        const response = await authService.forgotPass()
+    } catch (error) {
+
+    }
+})

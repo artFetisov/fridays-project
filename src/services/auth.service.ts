@@ -13,5 +13,8 @@ export const authService = {
     },
     async authMe() {
         return instance.post<ILoginResponse>('auth/me').then(data => data.data)
+    },
+    async forgotPass() {
+
     }
 }
