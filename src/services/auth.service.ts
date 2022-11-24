@@ -14,7 +14,20 @@ export const authService = {
     async authMe() {
         return instance.post<ILoginResponse>('auth/me').then(data => data.data)
     },
-    async forgotPass() {
+    async forgotPass(email: string) {
+        const data = {
+            email,
+            message: `<div style="background-color: lime; padding: 15px">
+            password recovery link: 
+            <a href='https://artfetisov.github.io/fridays-project/#/new-pass/$token$'>
+            link</a>
+            </div>`,
+            from: "test-front-admin <ai73a@yandex.by>",
+        }
 
+        return instance.post<{ info: string, error: string }>('auth/forgot', data).then(data => data.data)
+    },
+    async setNewPass(data: { password: string, resetPasswordToken: string }) {
+        return instance.post<{ info: string, error: string }>('auth/set-new-password', data).then(data => data.data)
     }
 }

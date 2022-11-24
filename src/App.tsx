@@ -12,8 +12,9 @@ export const App: FC = () => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
+        console.log('work')
         dispatch(appInitializedTC())
-    })
+    }, [])
 
     return <>
         {isInitialized

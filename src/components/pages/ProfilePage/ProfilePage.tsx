@@ -38,7 +38,7 @@ export const ProfilePage: FC = () => {
 
 
     return <div className={styles.container}>
-        <Link to={PATH.MAIN}>
+        <Link to={PATH.PACKS}>
             <div className={styles.backArrowWrapper}>
                 <KeyboardBackspaceIcon/>
                 <span>Back to Packs List</span>

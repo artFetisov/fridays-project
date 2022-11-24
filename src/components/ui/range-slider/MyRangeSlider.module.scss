@@ -1,0 +1,37 @@
+.rangeBox {
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  .value {
+    width: 36px;
+    height: 36px;
+    border: 1px solid #D9D9D9;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: #000000;
+
+    &:nth-child(1) {
+      margin-right: 14px;
+    }
+
+    &:nth-child(3) {
+      margin-left: 14px;
+    }
+
+    &:nth-child(4) {
+      margin-left: auto;
+    }
+
+
+  }
+
+  .range {
+    width: 100%;
+  }
+}

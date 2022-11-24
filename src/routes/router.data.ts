@@ -2,20 +2,20 @@ import {FC} from "react";
 import {LoginPage} from "../components/pages/LoginPage/LoginPage";
 import {RegisterPage} from "../components/pages/RegisterPage/RegisterPage";
 import {ProfilePage} from "../components/pages/ProfilePage/ProfilePage";
-import {MainPage} from "../components/pages/MainPage";
 import {ForgotPasswordPage} from "../components/pages/ForgotPasswordPage/ForgotPasswordPage";
 import {CheckEmailPage} from "../components/pages/CheckEmailPage/CheckEmailPage";
 import {NewPasswordPage} from "../components/pages/NewPasswordPage/NewPasswordPage";
+import {PacksPage} from "../components/pages/PacksPage/PacksPage";
 
 export enum PATH {
-    MAIN = '/',
+    PACKS = '/packs',
     LOGIN = '/login',
     REGISTRATION = '/registration',
     PROFILE = '/profile',
     ERROR = '/404',
     FORGOT = '/forgotPassword',
-    CHECK = 'check-email',
-    NEW_PASS = 'new-pass'
+    CHECK = '/check-email',
+    NEW_PASS = '/new-pass/:token'
 }
 
 export interface IRoute {
@@ -23,13 +23,12 @@ export interface IRoute {
     element: FC
 }
 
-
-export const publicRoutes: IRoute[] = [
-    {path: PATH.MAIN, element: MainPage},
+export const privateRoutes: IRoute[] = [
+    {path: PATH.PACKS, element: PacksPage},
     {path: PATH.PROFILE, element: ProfilePage},
 ]
 
-export const privateRoutes: IRoute[] = [
+export const publicRoutes: IRoute[] = [
     {path: PATH.LOGIN, element: LoginPage},
     {path: PATH.REGISTRATION, element: RegisterPage},
     {path: PATH.FORGOT, element: ForgotPasswordPage},

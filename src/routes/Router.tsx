@@ -8,11 +8,11 @@ export const Router: FC = () => {
 
     return <>
         {isAuth && <Routes>
-            {publicRoutes.map(r => <Route key={r.path} path={r.path} element={<r.element/>}/>)}
+            {privateRoutes.map(r => <Route key={r.path} path={r.path} element={<r.element/>}/>)}
             <Route path="*" element={<Navigate to={PATH.PROFILE}/>}/>
         </Routes>}
         {!isAuth && <Routes>
-            {privateRoutes.map(r => <Route key={r.path} path={r.path} element={<r.element/>}/>)}
+            {publicRoutes.map(r => <Route key={r.path} path={r.path} element={<r.element/>}/>)}
             <Route path="*" element={<Navigate to={PATH.LOGIN}/>}/>
         </Routes>}
     </>

@@ -7,11 +7,13 @@ import {ThemeProvider} from "@mui/material/styles";
 import {fontTheme} from "../../../assets/materialUiThemes";
 import {useAppDispatch} from "../../../hooks/useAppDispatch";
 import {Button} from "../../ui/button/Button";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {PATH} from "../../../routes/router.data";
+import {forgotPassTC} from "../../../store/reducers/auth/auth.actions";
 
 export const ForgotPasswordPage: FC = () => {
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
 
     const {
         register,
@@ -20,9 +22,12 @@ export const ForgotPasswordPage: FC = () => {
         handleSubmit,
     } = useForm<{ email: string }>()
 
+    const redirect = () => {
+        navigate(PATH.CHECK)
+    }
+
     const onSubmit: SubmitHandler<{ email: string }> = ({email}) => {
-        console.log(email)
-        // dispatch(loginTC(data))
+        dispatch(forgotPassTC({email, redirect}))
         reset()
     }
 
@@ -53,13 +58,11 @@ export const ForgotPasswordPage: FC = () => {
                     <div className={styles.question}>
                         <span>Have you remembered your password?</span>
                     </div>
-
                     <Link to={PATH.LOGIN}>
                             <span className={styles.try}>
                                  Try logging in
                             </span>
                     </Link>
-
                 </form>
             </ThemeProvider>
         </div>

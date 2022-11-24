@@ -64,10 +64,26 @@ export const logoutTC = createAsyncThunk('auth/logout', async (_, {dispatch, rej
     }
 })
 
-export const forgotPassTC = createAsyncThunk<void, { email: string }>('auth/forgotPass', async ({email}, {dispatch}) => {
-    try {
-        const response = await authService.forgotPass()
-    } catch (error) {
+export const forgotPassTC = createAsyncThunk<void, { email: string, redirect: () => void }>('auth/forgotPass',
+    async ({email, redirect}, {dispatch}) => {
+        try {
+            await authService.forgotPass(email)
+            redirect()
+        } catch (error) {
+            if (error instanceof Error) {
+                errorUtils(error, dispatch, setAuthError)
+                dispatch(setAuthStatus('failed'))
+            }
+        }
+    })
 
+export const setNewPassTC = createAsyncThunk<void, { password: string, resetPasswordToken: string }>('auth/set-pass', async (data, {dispatch}) => {
+    try {
+        const response = authService.setNewPass(data).then(data => alert(data.info))
+    } catch (error) {
+        if (error instanceof Error) {
+            errorUtils(error, dispatch, setAuthError)
+            dispatch(setAuthStatus('failed'))
+        }
     }
 })
