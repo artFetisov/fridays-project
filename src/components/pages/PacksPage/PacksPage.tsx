@@ -9,10 +9,14 @@ import {MyRangeSlider} from "../../ui/range-slider/MyRangeSlider";
 import {PacksTable} from "../../screens/PacksTable/PacksTable";
 import {useAppSelector} from "../../../hooks/useAppSelector";
 import {Paginator} from "../../ui/pagination/Paginator";
-
+import {setCurrentPage, setPageCount} from "../../../store/reducers/pack/pack.slice";
+import {SelectChangeEvent} from "@mui/material/Select";
 
 export const PacksPage: FC = () => {
     const packsStatus = useAppSelector(state => state.pack.packStatus)
+    const page = useAppSelector(state => state.pack.page)
+    const pageCount = useAppSelector(state => state.pack.pageCount)
+    const cardPacksTotalCount = useAppSelector(state => state.pack.cardPacksTotalCount)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
@@ -23,6 +27,16 @@ export const PacksPage: FC = () => {
         const name = 'test pack 3'
         dispatch(createPackTC({name}))
     }
+
+    const handleChangeCurrentPage = (event: React.ChangeEvent<unknown>, value: number) => {
+        dispatch(setCurrentPage(value))
+        dispatch(getAllPacksTC())
+    };
+
+    const handleChangePortionSize = (event: SelectChangeEvent) => {
+        dispatch(setPageCount(Number(event.target.value)))
+        dispatch(getAllPacksTC())
+    };
 
     return <div className={styles.packsContainer}>
         <div className={styles.topBox}>
@@ -40,6 +54,12 @@ export const PacksPage: FC = () => {
             <MyRangeSlider/>
         </div>
         {packsStatus === 'loading' ? 'Loading...' : <PacksTable/>}
-        <Paginator/>
+        <Paginator
+            totalCount={cardPacksTotalCount}
+            page={page}
+            pageCount={pageCount}
+            handleChangeCurrentPage={handleChangeCurrentPage}
+            handleChangePortionSize={handleChangePortionSize}
+        />
     </div>
 }

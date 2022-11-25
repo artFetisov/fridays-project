@@ -1,5 +1,8 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {IAppState} from "./app.types";
+
+interface IAppState {
+    isInitialized: boolean
+}
 
 const initialState: IAppState = {
     isInitialized: false

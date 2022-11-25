@@ -8,6 +8,7 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import SchoolIcon from '@mui/icons-material/School';
 import {useAppDispatch} from "../../../hooks/useAppDispatch";
 import {deletePackTC, updatePackTC} from "../../../store/reducers/pack/pack.actions";
+import {useNavigate} from "react-router-dom";
 
 interface IPackProps {
     pack: IPack
@@ -16,6 +17,11 @@ interface IPackProps {
 export const PackItem: FC<IPackProps> = ({pack}) => {
     const dispatch = useAppDispatch()
     const myId = useAppSelector(state => state.user.user?._id)
+    const navigate = useNavigate()
+
+    const redirect = () => {
+        return navigate(`/cards/${pack._id}`)
+    }
 
     const handleUpdatePack = () => {
         const newPack: IUpdatePackData = {
@@ -38,11 +44,11 @@ export const PackItem: FC<IPackProps> = ({pack}) => {
         <span>
             {pack.user_id === myId
                 ? <div className={styles.iconsBox}>
-                    <SchoolIcon fontSize={'small'}/>
+                    <SchoolIcon fontSize={'small'} onClick={redirect}/>
                     <BorderColorIcon fontSize={'small'} onClick={handleUpdatePack}/>
                     <DeleteOutlineIcon fontSize={'small'} onClick={handleDeletePack}/>
                 </div>
-                : <div className={styles.iconsBox}><SchoolIcon fontSize={'small'}/></div>
+                : <div className={styles.iconsBox}><SchoolIcon fontSize={'small'} onClick={redirect}/></div>
             }
         </span>
     </div>

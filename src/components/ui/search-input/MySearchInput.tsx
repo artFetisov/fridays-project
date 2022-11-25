@@ -16,12 +16,12 @@ const SearchIconWrapper = styled('div')(({theme}) => ({
 }));
 
 
-export const MySearchInput: FC = () => {
+export const MySearchInput: FC<{ fullWidth?: boolean }> = ({fullWidth}) => {
 
-    return <div className={styles.searchBox}>
+    return <div className={`${styles.searchBox} ${fullWidth && styles.fullWidth}`}>
         <SearchIconWrapper>
             <SearchIcon style={{color: 'rgba(0, 0, 0, 0.5)'}}/>
         </SearchIconWrapper>
-        <input className={styles.searchInput} placeholder={'Provide your text'}/>
+        <input className={`${styles.searchInput}`} placeholder={'Provide your text'}/>
     </div>
 }

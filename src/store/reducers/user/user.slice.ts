@@ -1,6 +1,10 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {ILoginResponse, RequestStatusType} from "../../../types/auth";
-import {IUserState} from "./user.types";
+
+interface IUserState {
+    user: ILoginResponse | null
+    isAuth: boolean
+}
 
 const initialState: IUserState = {
     user: null,

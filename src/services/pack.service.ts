@@ -20,7 +20,7 @@ export const packService = {
                 name: packData.name
             }
         }
-        return instance.post('cards/pack', data)
+        return instance.post('cards/pack', data).then(data => data.data)
     },
     async updatePack(packData: IUpdatePackData) {
         const data = {
@@ -29,9 +29,9 @@ export const packService = {
                 _id: packData._id
             }
         }
-        return instance.put('cards/pack', data)
+        return instance.put('cards/pack', data).then(data => data.data)
     },
     async deletePack(packId: string) {
-        return instance.delete(`cards/pack?id=${packId}`)
+        return instance.delete(`cards/pack?id=${packId}`).then(data => data.data)
     }
 }

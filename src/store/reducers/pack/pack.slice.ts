@@ -1,8 +1,20 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {IPackState} from "./pack.types";
 import {IPack, IVariantMyOrAllPacks} from "../../../types/packs";
 import {RequestStatusType} from "../../../types/auth";
 
+interface IPackState {
+    cardPacks: IPack[]
+    cardPacksTotalCount: number
+    maxCardsCount: number
+    minCardsCount: number
+    currentMinCardsCount: number
+    currentMaxCardsCount: number
+    page: number
+    pageCount: number
+    packStatus: RequestStatusType
+    variantMyOrAllPacks: IVariantMyOrAllPacks
+
+}
 
 const initialState: IPackState = {
     cardPacks: [],
@@ -14,7 +26,8 @@ const initialState: IPackState = {
     page: 1,
     pageCount: 10,
     packStatus: 'idle',
-    variantMyOrAllPacks: 'all'
+    variantMyOrAllPacks: 'all',
+
 }
 
 const packSlice = createSlice({
@@ -26,8 +39,7 @@ const packSlice = createSlice({
         },
         setPacksTotalCount(state, action: PayloadAction<number>) {
             state.cardPacksTotalCount = action.payload
-        }
-        ,
+        },
         setCurrentPage(state, action: PayloadAction<number>) {
             state.page = action.payload
         },

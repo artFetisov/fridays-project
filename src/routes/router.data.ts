@@ -6,9 +6,11 @@ import {ForgotPasswordPage} from "../components/pages/ForgotPasswordPage/ForgotP
 import {CheckEmailPage} from "../components/pages/CheckEmailPage/CheckEmailPage";
 import {NewPasswordPage} from "../components/pages/NewPasswordPage/NewPasswordPage";
 import {PacksPage} from "../components/pages/PacksPage/PacksPage";
+import {CardsPage} from "../components/pages/CardsPage/CardsPage";
 
 export enum PATH {
     PACKS = '/packs',
+    CARDS = '/cards/:packId',
     LOGIN = '/login',
     REGISTRATION = '/registration',
     PROFILE = '/profile',
@@ -26,6 +28,7 @@ export interface IRoute {
 export const privateRoutes: IRoute[] = [
     {path: PATH.PACKS, element: PacksPage},
     {path: PATH.PROFILE, element: ProfilePage},
+    {path: PATH.CARDS, element: CardsPage}
 ]
 
 export const publicRoutes: IRoute[] = [

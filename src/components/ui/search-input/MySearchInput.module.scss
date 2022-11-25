@@ -3,6 +3,7 @@
   padding-right: 25px;
   position: relative;
 
+
   .searchInput {
     outline: none;
     width: 100%;
@@ -24,5 +25,9 @@
   .icon {
 
   }
+}
+
+.fullWidth {
+  padding-right: 0;
 }
 

@@ -6,26 +6,32 @@ import {useAppSelector} from "../../../hooks/useAppSelector";
 import {useAppDispatch} from "../../../hooks/useAppDispatch";
 import {setCurrentPage} from "../../../store/reducers/pack/pack.slice";
 import {getAllPacksTC} from "../../../store/reducers/pack/pack.actions";
+import {SelectChangeEvent} from "@mui/material/Select";
 
-export const Paginator: FC = () => {
-    const dispatch = useAppDispatch()
-    const cardPacksTotalCount = useAppSelector(state => state.pack.cardPacksTotalCount)
-    const page = useAppSelector(state => state.pack.page)
-    const pageCount = useAppSelector(state => state.pack.pageCount)
+interface IPaginatorProps {
+    page: number
+    pageCount: number
+    totalCount: number
+    handleChangeCurrentPage: (event: React.ChangeEvent<unknown>, value: number) => void
+    handleChangePortionSize: (event: SelectChangeEvent) => void
+}
 
-    const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-        dispatch(setCurrentPage(value))
-        dispatch(getAllPacksTC())
-    };
-
-
-    const pagesCount = Math.ceil(cardPacksTotalCount / pageCount)
+export const Paginator: FC<IPaginatorProps> = (
+    {
+        page,
+        pageCount,
+        totalCount,
+        handleChangeCurrentPage,
+        handleChangePortionSize
+    }
+) => {
+    const pagesCount = Math.ceil(totalCount / pageCount)
 
     return (
         <div className={styles.paginatorBox}>
-            <Pagination count={pagesCount} page={page} onChange={handleChange}/>
+            <Pagination count={pagesCount} page={page} onChange={handleChangeCurrentPage}/>
             <span>Show</span>
-            <MySelect/>
+            <MySelect handleChangePortionSize={handleChangePortionSize} pageCount={pageCount}/>
             <span>Cards per Page</span>
         </div>
     );

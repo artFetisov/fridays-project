@@ -1,6 +1,11 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {IAuthState} from "./auth.types";
 import {RequestStatusType} from "../../../types/auth";
+
+interface IAuthState {
+    authError: string | null
+    authStatus: RequestStatusType
+    isRegistered: boolean
+}
 
 const initialState: IAuthState = {
     authError: null,
@@ -23,7 +28,6 @@ const authSlice = createSlice({
         }
     },
 })
-
 
 export const {setAuthError, setAuthStatus, setIsRegistered} = authSlice.actions
 
