@@ -1,20 +1,33 @@
 import {instance} from "../api/axios";
-import {IAllCardsWithParams, ICardsRequestParams} from "../types/cards";
+import {IAllCardsWithParams, ICardsRequestParams, ICreateCardData, IUpdateCardData} from "../types/cards";
 
 export const cardService = {
     async getAll(params: ICardsRequestParams) {
         return instance.get<IAllCardsWithParams>('cards/card', {
             params: {
-                cardsPack_id: params.cardsPack_id,
-                page: params.page,
-                pageCount: params.pageCount
+                ...params
             }
         }).then(data => data.data)
     },
-    async createCard() {
+    async createCard(cardData: ICreateCardData) {
+        const data: { card: ICreateCardData } = {
+            card: {
+                ...cardData
+            }
+        }
+
+        return instance.post('cards/card', data)
     },
-    async updateCard() {
+    async updateCard(cardData: IUpdateCardData) {
+        const data: { card: IUpdateCardData } = {
+            card: {
+                ...cardData
+            }
+        }
+
+        return instance.put('cards/card', data)
     },
-    async deleteCard() {
+    async deleteCard(cardId: string) {
+        return instance.delete(`cards/card?id=${cardId}`)
     }
 }

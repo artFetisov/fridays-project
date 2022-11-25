@@ -5,28 +5,23 @@ export const packService = {
     async getAll(params: IPacksRequestParams) {
         return instance.get<IAllPacksWithParams>('cards/pack', {
                 params: {
-                    page: params.page,
-                    pageCount: params.pageCount,
-                    min: params.min,
-                    max: params.max,
-                    user_id: params.user_id
+                    ...params
                 }
             }
         ).then(data => data.data)
     },
     async createPack(packData: ICreatePackData) {
-        const data = {
+        const data: { cardsPack: ICreatePackData } = {
             cardsPack: {
-                name: packData.name
+                ...packData
             }
         }
         return instance.post('cards/pack', data).then(data => data.data)
     },
     async updatePack(packData: IUpdatePackData) {
-        const data = {
+        const data: { cardsPack: IUpdatePackData } = {
             cardsPack: {
-                name: packData.name,
-                _id: packData._id
+                ...packData
             }
         }
         return instance.put('cards/pack', data).then(data => data.data)

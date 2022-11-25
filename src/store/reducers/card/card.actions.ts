@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {cardService} from "../../../services/cardService";
-import {ICardsRequestParams} from "../../../types/cards";
+import {ICardsRequestParams, ICreateCardData, IUpdateCardData} from "../../../types/cards";
 import {setCards, setCardsPackName, setCardSTotalCount, setPackUserId} from "./card.slice";
 import {AppRootState} from "../../index";
 
@@ -30,3 +30,33 @@ export const getCardsTC = createAsyncThunk<void, void, { state: AppRootState }>(
         alert(error)
     }
 })
+
+export const createCardTC = createAsyncThunk<void, ICreateCardData, { state: AppRootState }>('card/create',
+    async (cardData, {dispatch}) => {
+        try {
+            await cardService.createCard(cardData)
+            dispatch(getCardsTC())
+        } catch (error) {
+            alert(error)
+        }
+    })
+
+export const updateCardTC = createAsyncThunk<void, IUpdateCardData, { state: AppRootState }>('card/update',
+    async (cardData, {dispatch}) => {
+        try {
+            await cardService.updateCard(cardData)
+            dispatch(getCardsTC())
+        } catch (error) {
+            alert(error)
+        }
+    })
+
+export const deleteCardTC = createAsyncThunk<void, { cardId: string }, { state: AppRootState }>('card/delete',
+    async ({cardId}, {dispatch}) => {
+        try {
+            await cardService.deleteCard(cardId)
+            dispatch(getCardsTC())
+        } catch (error) {
+            alert(error)
+        }
+    })

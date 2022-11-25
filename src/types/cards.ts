@@ -31,3 +31,21 @@ export interface ICardsRequestParams {
     page?: number
     pageCount?: number
 }
+
+export interface ICreateCardData {
+    cardsPack_id: string
+    question?: string
+    answer?: string
+    grade?: number
+    shots?: number
+    answerImg?: string
+    questionImg?: string
+    questionVideo?: string
+    answerVideo?: string
+}
+
+export interface IUpdateCardData {
+    _id: string
+    question?: string
+}
+

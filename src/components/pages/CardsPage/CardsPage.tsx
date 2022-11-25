@@ -1,7 +1,7 @@
 import React, {FC, useEffect} from "react";
 import {Link, useParams} from "react-router-dom";
 import {useAppDispatch} from "../../../hooks/useAppDispatch";
-import {getCardsTC} from "../../../store/reducers/card/card.actions";
+import {createCardTC, getCardsTC} from "../../../store/reducers/card/card.actions";
 import {PATH} from "../../../routes/router.data";
 import styles from './CardsPage.module.scss';
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
@@ -12,6 +12,7 @@ import {CardsTable} from "../../screens/CardsTable/CardsTable";
 import {Paginator} from "../../ui/pagination/Paginator";
 import {SelectChangeEvent} from "@mui/material/Select";
 import {setCardsCurrentPage, setCardsPageCount, setOpenedPackId} from "../../../store/reducers/card/card.slice";
+import {ICreateCardData} from "../../../types/cards";
 
 export const CardsPage: FC = () => {
     const dispatch = useAppDispatch()
@@ -43,6 +44,16 @@ export const CardsPage: FC = () => {
         dispatch(getCardsTC())
     }
 
+    const handleCreateCard = () => {
+        const newCard: ICreateCardData = {
+            cardsPack_id: String(packId),
+            question: 'question',
+            answer: 'answer'
+        }
+
+        dispatch(createCardTC(newCard))
+    }
+
     return <div className={styles.container}>
         <Link to={PATH.PACKS}>
             <div className={styles.backArrowWrapper}>
@@ -50,14 +61,16 @@ export const CardsPage: FC = () => {
                 <span>Back to Packs List</span>
             </div>
         </Link>
+
         <div className={styles.titleAndButtonBox}>
             <h3 className={styles.title}>{packName}</h3>
-            {cards.length > 0 && <Button>Learn to pack</Button>}
+            {cards.length > 0 && !isMyPack && <Button>Learn to pack</Button>}
+            {cards.length > 0 && isMyPack && <Button onClick={handleCreateCard}>Add new Card</Button>}
         </div>
         {cards.length ? <>
                 <div className={styles.searchTitle}>Search</div>
                 <MySearchInput fullWidth/>
-                <CardsTable/>
+                <CardsTable isMyPack={isMyPack}/>
                 <Paginator page={page} pageCount={pageCount}
                            totalCount={cardsTotalCount}
                            handleChangeCurrentPage={handleChangeCurrentPage}
@@ -68,7 +81,7 @@ export const CardsPage: FC = () => {
                 {isMyPack && <div>
                     <div className={styles.isEmpty}>This pack is empty.Click add new card to fill this pack</div>
                     <div style={{textAlign: 'center'}}>
-                        <Button>Add new card</Button>
+                        <Button onClick={handleCreateCard}>Add new card</Button>
                     </div>
                 </div>}
             </div>
