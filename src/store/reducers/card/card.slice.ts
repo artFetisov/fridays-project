@@ -11,6 +11,8 @@ interface ICardState {
     pageCount: number
     packUserId: string | null
     openedPackId: string | null
+    cardQuestionSearch: string
+    isEmptyCardQuestionSearchValue: boolean
 }
 
 const initialState: ICardState = {
@@ -22,7 +24,9 @@ const initialState: ICardState = {
     page: 1,
     pageCount: 10,
     packUserId: null,
-    openedPackId: null
+    openedPackId: null,
+    cardQuestionSearch: '',
+    isEmptyCardQuestionSearchValue: false
 }
 
 const cardSlice = createSlice({
@@ -49,6 +53,12 @@ const cardSlice = createSlice({
         },
         setPackUserId(state, action: PayloadAction<string>) {
             state.packUserId = action.payload
+        },
+        setCardQuestionSearch(state, action: PayloadAction<string>) {
+            state.cardQuestionSearch = action.payload
+        },
+        setIsEmptyCardQuestionSearchValue(state, action: PayloadAction<boolean>) {
+            state.isEmptyCardQuestionSearchValue = action.payload
         }
     },
 })
@@ -60,7 +70,9 @@ export const {
     setCardSTotalCount,
     setCardsCurrentPage,
     setOpenedPackId,
-    setPackUserId
+    setPackUserId,
+    setCardQuestionSearch,
+    setIsEmptyCardQuestionSearchValue
 } = cardSlice.actions
 
 export const {reducer} = cardSlice

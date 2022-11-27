@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {IPack, IVariantMyOrAllPacks} from "../../../types/packs";
+import {IPack, IVariantMyOrAllPacks, SortPacksType} from "../../../types/packs";
 import {RequestStatusType} from "../../../types/auth";
 
 interface IPackState {
@@ -13,7 +13,8 @@ interface IPackState {
     pageCount: number
     packStatus: RequestStatusType
     variantMyOrAllPacks: IVariantMyOrAllPacks
-
+    searchPackName: string
+    sortPacks: SortPacksType
 }
 
 const initialState: IPackState = {
@@ -27,7 +28,8 @@ const initialState: IPackState = {
     pageCount: 10,
     packStatus: 'idle',
     variantMyOrAllPacks: 'all',
-
+    searchPackName: '',
+    sortPacks: '0updated'
 }
 
 const packSlice = createSlice({
@@ -42,6 +44,9 @@ const packSlice = createSlice({
         },
         setCurrentPage(state, action: PayloadAction<number>) {
             state.page = action.payload
+        },
+        setSearchPackName(state, action: PayloadAction<string>) {
+            state.searchPackName = action.payload
         },
         setPageCount(state, action: PayloadAction<number>) {
             state.pageCount = action.payload
@@ -62,9 +67,14 @@ const packSlice = createSlice({
             state.pageCount = 10
             state.currentMaxCardsCount = state.maxCardsCount
             state.currentMinCardsCount = state.minCardsCount
+            state.searchPackName = ''
+            state.variantMyOrAllPacks = 'all'
         },
         setVariantMyOrAllPacks(state, action: PayloadAction<IVariantMyOrAllPacks>) {
             state.variantMyOrAllPacks = action.payload
+        },
+        setSortPacks(state, action: PayloadAction<SortPacksType>) {
+            state.sortPacks = action.payload
         }
     },
 })
@@ -79,7 +89,9 @@ export const {
     setPacksStatus,
     setMinAndMaxCurrentCardsCount,
     resetParams,
-    setVariantMyOrAllPacks
+    setVariantMyOrAllPacks,
+    setSearchPackName,
+    setSortPacks
 } = packSlice.actions
 
 export const {reducer} = packSlice

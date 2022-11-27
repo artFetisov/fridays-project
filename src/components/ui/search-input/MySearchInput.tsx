@@ -1,4 +1,4 @@
-import React, {FC, useState} from "react";
+import React, { FC} from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import {styled} from "@mui/material/styles";
 import styles from './MySearchInput.module.scss';
@@ -15,13 +15,18 @@ const SearchIconWrapper = styled('div')(({theme}) => ({
     justifyContent: 'center',
 }));
 
+interface IMySearchInput {
+    handleSearch: (value: string) => void
+    fullWidth?: boolean
+}
 
-export const MySearchInput: FC<{ fullWidth?: boolean }> = ({fullWidth}) => {
+export const MySearchInput: FC<IMySearchInput> = ({fullWidth, handleSearch}) => {
 
     return <div className={`${styles.searchBox} ${fullWidth && styles.fullWidth}`}>
         <SearchIconWrapper>
             <SearchIcon style={{color: 'rgba(0, 0, 0, 0.5)'}}/>
         </SearchIconWrapper>
-        <input className={`${styles.searchInput}`} placeholder={'Provide your text'}/>
+        <input onChange={(e) => handleSearch(e.currentTarget.value)} className={`${styles.searchInput}`}
+               placeholder={'Provide your text'}/>
     </div>
 }

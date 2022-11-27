@@ -9,8 +9,9 @@ import {MyRangeSlider} from "../../ui/range-slider/MyRangeSlider";
 import {PacksTable} from "../../screens/PacksTable/PacksTable";
 import {useAppSelector} from "../../../hooks/useAppSelector";
 import {Paginator} from "../../ui/pagination/Paginator";
-import {setCurrentPage, setPageCount} from "../../../store/reducers/pack/pack.slice";
+import {setCurrentPage, setPageCount, setSearchPackName} from "../../../store/reducers/pack/pack.slice";
 import {SelectChangeEvent} from "@mui/material/Select";
+import {useDebouncedCallback} from "use-debounce";
 
 export const PacksPage: FC = () => {
     const packsStatus = useAppSelector(state => state.pack.packStatus)
@@ -36,7 +37,12 @@ export const PacksPage: FC = () => {
     const handleChangePortionSize = (event: SelectChangeEvent) => {
         dispatch(setPageCount(Number(event.target.value)))
         dispatch(getAllPacksTC())
-    };
+    }
+
+    const handleSearchPackName = useDebouncedCallback((value: string) => {
+        dispatch(setSearchPackName(value))
+        dispatch(getAllPacksTC())
+    }, 600)
 
     return <div className={styles.packsContainer}>
         <div className={styles.topBox}>
@@ -49,7 +55,7 @@ export const PacksPage: FC = () => {
             <span>Number of cards</span>
         </div>
         <div className={styles.paramsBox}>
-            <MySearchInput/>
+            <MySearchInput handleSearch={handleSearchPackName}/>
             <ButtonGroup/>
             <MyRangeSlider/>
         </div>

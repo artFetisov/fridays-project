@@ -25,12 +25,16 @@ export interface IPackParams {
     pageCount: number
 }
 
+export type SortPacksType = '0updated' | '1updated' | '0cardsCount' | '1cardsCount'
+
 export interface IPacksRequestParams {
-    page: number
-    pageCount: number
-    min: number
-    max: number
+    page?: number
+    pageCount?: number
+    min?: number
+    max?: number
     user_id?: string
+    packName?: string
+    sortPacks?: SortPacksType
 }
 
 export interface ICreatePackData {

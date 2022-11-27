@@ -10,51 +10,53 @@ import {
 } from "./pack.slice";
 import {ICreatePackData, IUpdatePackData} from "../../../types/packs";
 
-export const getAllPacksTC = createAsyncThunk<void, void, { state: AppRootState }>('pack/getAll', async (_, {
-    dispatch,
-    getState
-}) => {
-    try {
+export const getAllPacksTC = createAsyncThunk<void, void, { state: AppRootState }>('pack/getAll',
+    async (_, {
+        dispatch,
+        getState
+    }) => {
+        try {
+            const {
+                maxCardsCount,
+                minCardsCount,
+                currentMinCardsCount,
+                currentMaxCardsCount,
+                pageCount,
+                page,
+                variantMyOrAllPacks,
+                searchPackName,
+                sortPacks
+            } = getState().pack
 
-        const {
-            maxCardsCount,
-            minCardsCount,
-            currentMinCardsCount,
-            currentMaxCardsCount,
-            pageCount,
-            page,
-            cardPacksTotalCount,
-            variantMyOrAllPacks
-        } = getState().pack
+            const userId = getState().user.user?._id
 
-        const userId = getState().user.user?._id
+            dispatch(setPacksStatus('loading'))
 
-        dispatch(setPacksStatus('loading'))
-        const response = await packService.getAll({
-            max: currentMaxCardsCount,
-            min: currentMinCardsCount,
-            page,
-            pageCount,
-            user_id: variantMyOrAllPacks === 'my' ? userId : ''
-        })
+            const response = await packService.getAll({
+                max: currentMaxCardsCount,
+                min: currentMinCardsCount,
+                page,
+                pageCount,
+                user_id: variantMyOrAllPacks === 'my' ? userId : '',
+                packName: searchPackName,
+                sortPacks
+            })
 
-        if (cardPacksTotalCount === 0) {
             dispatch(setPacksTotalCount(response.cardPacksTotalCount))
+
+            if (maxCardsCount === 0 && minCardsCount === 0) {
+                dispatch(setMinAndMaxCardsCount([response.minCardsCount, response.maxCardsCount]))
+                dispatch(setMinAndMaxCurrentCardsCount([response.minCardsCount, response.maxCardsCount]))
+            }
+
+            dispatch(setPacks(response.cardPacks))
+            dispatch(setPacksStatus('succeeded'))
+
+        } catch (error) {
+            alert(error)
+            dispatch(setPacksStatus('failed'))
         }
-
-        if (maxCardsCount === 0 && minCardsCount === 0) {
-            dispatch(setMinAndMaxCardsCount([response.minCardsCount, response.maxCardsCount]))
-            dispatch(setMinAndMaxCurrentCardsCount([response.minCardsCount, response.maxCardsCount]))
-        }
-
-        dispatch(setPacks(response.cardPacks))
-        dispatch(setPacksStatus('succeeded'))
-
-    } catch (error) {
-        alert(error)
-        dispatch(setPacksStatus('failed'))
-    }
-})
+    })
 
 export const createPackTC = createAsyncThunk<void, ICreatePackData, { state: AppRootState }>('pack/create',
     async (cardsPack, {dispatch}) => {

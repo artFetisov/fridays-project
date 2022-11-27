@@ -1,14 +1,14 @@
 import React, {FC} from "react";
 import styles from './CardsTable.module.scss'
-import {useAppSelector} from "../../../hooks/useAppSelector";
 import {CardsItem} from "./CardsItem";
+import {ICard} from "../../../types/cards";
 
 interface ICardsTableProps {
     isMyPack: boolean
+    cards: ICard[]
 }
 
-export const CardsTable: FC<ICardsTableProps> = ({isMyPack}) => {
-    const cards = useAppSelector(state => state.card.cards)
+export const CardsTable: FC<ICardsTableProps> = ({isMyPack, cards}) => {
 
     return <div className={styles.cardsTable}>
         {!isMyPack && <>
@@ -30,6 +30,8 @@ export const CardsTable: FC<ICardsTableProps> = ({isMyPack}) => {
             </div>
 
         </>}
+
+
         <div className={`${isMyPack ? styles.myCards : styles.cards}`}>
             {cards.map(card => <CardsItem card={card} key={card._id} isMyPack={isMyPack}/>)}
         </div>

@@ -9,6 +9,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import {useAppDispatch} from "../../../hooks/useAppDispatch";
 import {deletePackTC, updatePackTC} from "../../../store/reducers/pack/pack.actions";
 import {useNavigate} from "react-router-dom";
+import { IconButton} from "@mui/material";
 
 interface IPackProps {
     pack: IPack
@@ -39,16 +40,23 @@ export const PackItem: FC<IPackProps> = ({pack}) => {
     return <div className={styles.pack}>
         <span>{pack.name}</span>
         <span>{pack.cardsCount}</span>
-        <span>{getCorrectDate(pack.updated)}</span>
+        <span>
+            {getCorrectDate(pack.updated)}
+
+        </span>
         <span className={styles.userName}>{pack.user_name}</span>
         <span>
             {pack.user_id === myId
                 ? <div className={styles.iconsBox}>
-                    <SchoolIcon fontSize={'small'} onClick={redirect}/>
+                    <SchoolIcon color={'primary'} fontSize={'small'} aria-disabled={true} onClick={redirect}/>
                     <BorderColorIcon fontSize={'small'} onClick={handleUpdatePack}/>
                     <DeleteOutlineIcon fontSize={'small'} onClick={handleDeletePack}/>
                 </div>
-                : <div className={styles.iconsBox}><SchoolIcon fontSize={'small'} onClick={redirect}/></div>
+                : <div className={styles.iconsBox}>
+                    <IconButton disabled={pack.cardsCount === 0} onClick={redirect}>
+                        <SchoolIcon fontSize={'small'} aria-disabled={true}/>
+                    </IconButton>
+                </div>
             }
         </span>
     </div>
