@@ -9,13 +9,14 @@ export const getCardsTC = createAsyncThunk<void, void, { state: AppRootState }>(
     getState
 }) => {
     try {
-        const {page, pageCount, openedPackId, cardQuestionSearch} = getState().card
+        const {page, pageCount, openedPackId, cardQuestionSearch, sortCardsValue} = getState().card
 
         const cardsParams: ICardsRequestParams = {
             cardsPack_id: openedPackId as string,
             page,
             pageCount,
-            cardQuestion: cardQuestionSearch
+            cardQuestion: cardQuestionSearch,
+            sortCards: sortCardsValue
         }
 
         const response = await cardService.getAll(cardsParams)

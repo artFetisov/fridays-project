@@ -9,7 +9,11 @@ import {MyRangeSlider} from "../../ui/range-slider/MyRangeSlider";
 import {PacksTable} from "../../screens/PacksTable/PacksTable";
 import {useAppSelector} from "../../../hooks/useAppSelector";
 import {Paginator} from "../../ui/pagination/Paginator";
-import {setCurrentPage, setPageCount, setSearchPackName} from "../../../store/reducers/pack/pack.slice";
+import {
+    setCurrentPage,
+    setPageCount,
+    setSearchPackName
+} from "../../../store/reducers/pack/pack.slice";
 import {SelectChangeEvent} from "@mui/material/Select";
 import {useDebouncedCallback} from "use-debounce";
 
@@ -18,6 +22,8 @@ export const PacksPage: FC = () => {
     const page = useAppSelector(state => state.pack.page)
     const pageCount = useAppSelector(state => state.pack.pageCount)
     const cardPacksTotalCount = useAppSelector(state => state.pack.cardPacksTotalCount)
+    const min = useAppSelector(state => state.pack.minCardsCount)
+    const max = useAppSelector(state => state.pack.maxCardsCount)
     const dispatch = useAppDispatch()
 
     useEffect(() => {

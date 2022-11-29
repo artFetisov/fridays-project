@@ -8,6 +8,8 @@ interface IRatingProps {
 export const MyRating: FC<IRatingProps> = ({grade}) => {
 
     return <Rating
+        precision={0.5}
+        readOnly
         name="rating"
         value={grade}
         size={'small'}

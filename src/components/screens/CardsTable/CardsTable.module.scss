@@ -16,6 +16,17 @@
       line-height: 17px;
       color: #000000;
     }
+
+    .iconsBox {
+
+      & svg {
+        margin-right: 14px;
+        cursor: pointer;
+        width: 16px;
+        height: 16px;
+        color: #000000;
+      }
+    }
   }
 
   .myTitles {
@@ -29,6 +40,17 @@
       font-size: 14px;
       line-height: 17px;
       color: #000000;
+    }
+
+    .iconsBox {
+
+      & svg {
+        margin-right: 14px;
+        cursor: pointer;
+        width: 16px;
+        height: 16px;
+        color: #000000;
+      }
     }
   }
 
@@ -82,3 +104,4 @@
     }
   }
 }
+

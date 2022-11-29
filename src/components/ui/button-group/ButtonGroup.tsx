@@ -1,7 +1,7 @@
-import React, {FC, useState, MouseEvent} from "react";
+import React, {FC, useState, MouseEvent, useEffect} from "react";
 import styles from './ButtonGroup.module.scss';
 import {useAppSelector} from "../../../hooks/useAppSelector";
-import {setVariantMyOrAllPacks} from "../../../store/reducers/pack/pack.slice";
+import {setMinAndMaxCurrentCardsCount, setVariantMyOrAllPacks} from "../../../store/reducers/pack/pack.slice";
 import {IVariantMyOrAllPacks} from "../../../types/packs";
 import {useAppDispatch} from "../../../hooks/useAppDispatch";
 import {getAllPacksTC} from "../../../store/reducers/pack/pack.actions";
@@ -10,8 +10,8 @@ export const ButtonGroup: FC = () => {
     const dispatch = useAppDispatch()
     const variant = useAppSelector(state => state.pack.variantMyOrAllPacks)
 
-
     const changeVariantHandler = (event: MouseEvent<HTMLButtonElement>) => {
+        dispatch(setMinAndMaxCurrentCardsCount([0, 0]))
         dispatch(setVariantMyOrAllPacks(event.currentTarget.value as IVariantMyOrAllPacks))
         dispatch(getAllPacksTC())
     }

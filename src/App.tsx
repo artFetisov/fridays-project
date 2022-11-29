@@ -7,6 +7,7 @@ import {useAppSelector} from "./hooks/useAppSelector";
 import {useAppDispatch} from "./hooks/useAppDispatch";
 import {appInitializedTC} from "./store/reducers/app/app.actions";
 
+
 export const App: FC = () => {
     const isInitialized = useAppSelector(state => state.app.isInitialized)
     const dispatch = useAppDispatch()

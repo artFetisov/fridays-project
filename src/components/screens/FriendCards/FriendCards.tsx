@@ -1,6 +1,6 @@
 import React, {FC} from "react";
 import {PATH} from "../../../routes/router.data";
-import styles from "../../pages/CardsPage/CardsPage.module.scss";
+import styles from './FriendCards.module.scss';
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import {Link} from "react-router-dom";
 import {Button} from "../../ui/button/Button";
@@ -53,15 +53,12 @@ export const FriendCards: FC<IFriendCards> = (
         <MySearchInput fullWidth handleSearch={handleSearchCard}/>
 
         {cards.length > 0 && <CardsTable isMyPack={isMyPack} cards={cards}/>}
-        {cards.length < 0 && !isEmptyCardQuestionSearchValue &&
+        {cards.length <= 0 &&
             <div className={styles.notFound}>There are no cards matching the search in this pack</div>}
 
-        <Paginator page={page} pageCount={pageCount}
-                   totalCount={cardsTotalCount}
-                   handleChangeCurrentPage={handleChangeCurrentPage}
-                   handleChangePortionSize={handleChangePortionSize}/>
-        {isMyPack && cards.length === 0 && !isEmptyCardQuestionSearchValue && <div>
-            <div className={styles.isEmpty}>This pack is empty.Click add new card to fill this pack</div>
-        </div>}
+        {cards.length > 0 && <Paginator page={page} pageCount={pageCount}
+                                        totalCount={cardsTotalCount}
+                                        handleChangeCurrentPage={handleChangeCurrentPage}
+                                        handleChangePortionSize={handleChangePortionSize}/>}
     </>
 }

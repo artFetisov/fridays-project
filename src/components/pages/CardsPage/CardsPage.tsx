@@ -18,7 +18,9 @@ import {FriendCards} from "../../screens/FriendCards/FriendCards";
 
 export const CardsPage: FC = () => {
     const dispatch = useAppDispatch()
+
     const {packId} = useParams()
+
     const myId = useAppSelector(state => state.user.user?._id)
     const cards = useAppSelector(state => state.card.cards)
     const packName = useAppSelector(state => state.card.packName)

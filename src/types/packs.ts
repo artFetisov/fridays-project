@@ -25,7 +25,7 @@ export interface IPackParams {
     pageCount: number
 }
 
-export type SortPacksType = '0updated' | '1updated' | '0cardsCount' | '1cardsCount'
+export type SortPacksType = '1updated' | '0updated' | '1cardsCount' | '0cardsCount'
 
 export interface IPacksRequestParams {
     page?: number

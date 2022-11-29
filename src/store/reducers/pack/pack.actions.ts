@@ -44,11 +44,11 @@ export const getAllPacksTC = createAsyncThunk<void, void, { state: AppRootState 
 
             dispatch(setPacksTotalCount(response.cardPacksTotalCount))
 
-            if (maxCardsCount === 0 && minCardsCount === 0) {
-                dispatch(setMinAndMaxCardsCount([response.minCardsCount, response.maxCardsCount]))
+            if (maxCardsCount !== response.maxCardsCount || minCardsCount !== response.minCardsCount) {
                 dispatch(setMinAndMaxCurrentCardsCount([response.minCardsCount, response.maxCardsCount]))
             }
 
+            dispatch(setMinAndMaxCardsCount([response.minCardsCount, response.maxCardsCount]))
             dispatch(setPacks(response.cardPacks))
             dispatch(setPacksStatus('succeeded'))
 

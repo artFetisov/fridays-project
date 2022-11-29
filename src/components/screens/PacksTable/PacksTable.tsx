@@ -13,13 +13,23 @@ export const PacksTable: FC = () => {
     const packs = useAppSelector(state => state.pack.cardPacks)
     const sortPacks = useAppSelector(state => state.pack.sortPacks)
 
-    const handleChangeSortPacksUp = () => {
+    const handleChangeSortPacksUpdatedFieldUp = () => {
         dispatch(setSortPacks('0updated'))
         dispatch(getAllPacksTC())
     }
 
-    const handleChangeSortPacksDown = () => {
+    const handleChangeSortPacksUpdatedFieldDown = () => {
         dispatch(setSortPacks('1updated'))
+        dispatch(getAllPacksTC())
+    }
+
+    const handleChangeSortPacksCardsAmountUp = () => {
+        dispatch(setSortPacks('0cardsCount'))
+        dispatch(getAllPacksTC())
+    }
+
+    const handleChangeSortPacksCardsAmountDown = () => {
+        dispatch(setSortPacks('1cardsCount'))
         dispatch(getAllPacksTC())
     }
 
@@ -31,10 +41,13 @@ export const PacksTable: FC = () => {
     return <div className={styles.tableContainer}>
         <div className={styles.titles}>
             <span>Name</span>
-            <span>Cards</span>
+            <span className={styles.menuBox}>Cards {sortPacks === '0cardsCount'
+                ? <ArrowDropDownIcon onClick={handleChangeSortPacksCardsAmountDown} cursor={'pointer'}/>
+                : <ArrowDropUpIcon onClick={handleChangeSortPacksCardsAmountUp} cursor={'pointer'}/>}
+            </span>
             <span className={styles.menuBox}>Last Updated {sortPacks === '0updated'
-                ? <ArrowDropDownIcon onClick={handleChangeSortPacksDown} cursor={'pointer'}/>
-                : <ArrowDropUpIcon onClick={handleChangeSortPacksUp} cursor={'pointer'}/>}
+                ? <ArrowDropDownIcon onClick={handleChangeSortPacksUpdatedFieldDown} cursor={'pointer'}/>
+                : <ArrowDropUpIcon onClick={handleChangeSortPacksUpdatedFieldUp} cursor={'pointer'}/>}
             </span>
             <span>Created by</span>
             <span>Actions</span>

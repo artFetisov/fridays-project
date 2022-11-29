@@ -16,7 +16,6 @@ export const MyRangeSlider = () => {
     const currentMin = useAppSelector(state => state.pack.currentMinCardsCount)
     const currentMax = useAppSelector(state => state.pack.currentMaxCardsCount)
 
-
     const [value, setValue] = useState<number[]>([currentMin, currentMax])
 
     useEffect(() => {

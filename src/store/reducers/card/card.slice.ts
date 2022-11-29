@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {ICard} from "../../../types/cards";
+import {ICard, SortCardsType} from "../../../types/cards";
 
 interface ICardState {
     cards: ICard[]
@@ -13,6 +13,7 @@ interface ICardState {
     openedPackId: string | null
     cardQuestionSearch: string
     isEmptyCardQuestionSearchValue: boolean
+    sortCardsValue: SortCardsType
 }
 
 const initialState: ICardState = {
@@ -26,7 +27,8 @@ const initialState: ICardState = {
     packUserId: null,
     openedPackId: null,
     cardQuestionSearch: '',
-    isEmptyCardQuestionSearchValue: false
+    isEmptyCardQuestionSearchValue: false,
+    sortCardsValue: '0updated'
 }
 
 const cardSlice = createSlice({
@@ -59,6 +61,9 @@ const cardSlice = createSlice({
         },
         setIsEmptyCardQuestionSearchValue(state, action: PayloadAction<boolean>) {
             state.isEmptyCardQuestionSearchValue = action.payload
+        },
+        setSortCardsValue(state, action: PayloadAction<SortCardsType>) {
+            state.sortCardsValue = action.payload
         }
     },
 })
@@ -72,7 +77,8 @@ export const {
     setOpenedPackId,
     setPackUserId,
     setCardQuestionSearch,
-    setIsEmptyCardQuestionSearchValue
+    setIsEmptyCardQuestionSearchValue,
+    setSortCardsValue
 } = cardSlice.actions
 
 export const {reducer} = cardSlice

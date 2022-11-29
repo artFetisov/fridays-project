@@ -6,6 +6,8 @@ import {Link, useLocation} from "react-router-dom";
 import {PATH} from "../../../routes/router.data";
 import {useAppSelector} from "../../../hooks/useAppSelector";
 import {Avatar} from "@mui/material";
+import {MyTooltip} from "../../ui/tooltip/MyTooltip";
+import {ProfileTooltip} from "../../ui/tooltip/ProfileTooltip";
 
 export const Header: FC = () => {
     const {isAuth, user} = useAppSelector(state => state.user)
@@ -20,11 +22,17 @@ export const Header: FC = () => {
             {pathname === PATH.LOGIN && 'Sign In'}
             {pathname === PATH.REGISTRATION && 'Sign Up'}
         </Button>}
-        {isAuth &&
-            <Link to={PATH.PROFILE}>
+        {isAuth && <>
+            {pathname === PATH.PROFILE ? <Link to={PATH.PROFILE}>
                 <Avatar style={{marginLeft: '12px'}} sx={{width: 36, height: 36}} alt="Travis Howard"
                         src={user?.avatar || "/static/images/avatar/2.jpg"}/>
-            </Link>
+            </Link> : <MyTooltip element={<ProfileTooltip/>}>
+                <Link to={PATH.PROFILE}>
+                    <Avatar style={{marginLeft: '12px'}} sx={{width: 36, height: 36}} alt="Travis Howard"
+                            src={user?.avatar || "/static/images/avatar/2.jpg"}/>
+                </Link>
+            </MyTooltip>}
+        </>
         }
     </header>
 }

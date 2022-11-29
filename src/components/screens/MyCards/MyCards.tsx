@@ -1,6 +1,6 @@
 import React, {FC} from "react";
 import {PATH} from "../../../routes/router.data";
-import styles from "../../pages/CardsPage/CardsPage.module.scss";
+import styles from './MyCards.module.scss';
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import {Link} from "react-router-dom";
 import {Button} from "../../ui/button/Button";
@@ -9,6 +9,7 @@ import {MySearchInput} from "../../ui/search-input/MySearchInput";
 import {CardsTable} from "../CardsTable/CardsTable";
 import {Paginator} from "../../ui/pagination/Paginator";
 import {SelectChangeEvent} from "@mui/material/Select";
+import {ButtonTooltip} from "../../ui/button-tooltip/ButtonTooltip";
 
 interface IMyCardsProps {
     packName: string
@@ -49,6 +50,7 @@ export const MyCards: FC<IMyCardsProps> =
 
             <div className={styles.titleAndButtonBox}>
                 <h3 className={styles.title}>{packName}</h3>
+                <ButtonTooltip/>
                 {cards.length > 0 && <Button onClick={handleCreateCard}>Add new Card</Button>}
             </div>
 

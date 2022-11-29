@@ -69,6 +69,7 @@ const packSlice = createSlice({
             state.currentMinCardsCount = state.minCardsCount
             state.searchPackName = ''
             state.variantMyOrAllPacks = 'all'
+            state.sortPacks = '0updated'
         },
         setVariantMyOrAllPacks(state, action: PayloadAction<IVariantMyOrAllPacks>) {
             state.variantMyOrAllPacks = action.payload

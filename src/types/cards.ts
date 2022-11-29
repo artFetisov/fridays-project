@@ -21,6 +21,8 @@ export interface IAllCardsWithParams {
     packName: string
 }
 
+export type SortCardsType = '0updated' | '1updated'
+
 export interface ICardsRequestParams {
     cardAnswer?: string
     cardQuestion?: string

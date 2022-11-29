@@ -13,21 +13,13 @@
 }
 
 .titleAndButtonBox {
-  position: relative;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin: 30px 0;
 
-  & > div {
-    &:nth-child(2) {
-      margin-right: auto;
-    }
-  }
-
   .title {
-    margin-right: 10px;
     font-weight: 600;
     font-size: 22px;
     line-height: 27px;
@@ -58,6 +50,9 @@
   justify-content: center;
 }
 
+.customButton {
+
+}
 
 .notFound {
   text-align: center;
