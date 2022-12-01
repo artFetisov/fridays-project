@@ -1,8 +1,8 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {authMeTC} from "../auth/auth.actions";
 import {setIsInitialized} from "./app.slice";
-import {errorUtils} from "../../../utils/errors";
-import {setAuthError, setAuthStatus} from "../auth/auth.slice";
+import {errorToastr} from "../../../utils/errors";
+import {setAuthStatus} from "../auth/auth.slice";
 
 export const appInitializedTC = createAsyncThunk('app/initialized', async (_, {dispatch, rejectWithValue}) => {
     try {
@@ -11,9 +11,8 @@ export const appInitializedTC = createAsyncThunk('app/initialized', async (_, {d
             dispatch(setIsInitialized())
         })
     } catch (error) {
-        if (error instanceof Error) {
-            errorUtils(error, dispatch, setAuthError)
-            dispatch(setAuthStatus('failed'))
-        }
+        if (error instanceof Error) errorToastr(error)
+        dispatch(setAuthStatus('failed'))
+
     }
 })

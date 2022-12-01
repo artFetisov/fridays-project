@@ -1,7 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {authService} from "../../../services/auth.service";
-import {errorUtils} from "../../../utils/errors";
-import {setAuthError, setAuthStatus, setIsRegistered} from "./auth.slice";
+import {errorToastr} from "../../../utils/errors";
+import { setAuthStatus, setIsRegistered} from "./auth.slice";
 import {ILoginData} from "../../../types/auth";
 import {setIsAuth, setUserData} from "../user/user.slice";
 
@@ -15,7 +15,7 @@ export const registerTC = createAsyncThunk<void, { email: string, password: stri
             dispatch(setIsRegistered(true))
         } catch (error) {
             if (error instanceof Error) {
-                errorUtils(error, dispatch, setAuthError)
+                errorToastr(error)
                 dispatch(setAuthStatus('failed'))
             }
         }
@@ -31,7 +31,7 @@ export const loginTC = createAsyncThunk<void, ILoginData>('auth/login',
             dispatch(setAuthStatus('succeeded'))
         } catch (error) {
             if (error instanceof Error) {
-                errorUtils(error, dispatch, setAuthError)
+                errorToastr(error)
                 dispatch(setAuthStatus('failed'))
             }
         }
@@ -45,7 +45,7 @@ export const authMeTC = createAsyncThunk('auth/me', async (_, {dispatch, rejectW
         dispatch(setIsAuth(true))
     } catch (error) {
         if (error instanceof Error) {
-            errorUtils(error, dispatch, setAuthError)
+            errorToastr(error)
             dispatch(setAuthStatus('failed'))
         }
     }
@@ -58,7 +58,7 @@ export const logoutTC = createAsyncThunk('auth/logout', async (_, {dispatch, rej
         dispatch(setIsAuth(false))
     } catch (error) {
         if (error instanceof Error) {
-            errorUtils(error, dispatch, setAuthError)
+            errorToastr(error)
             dispatch(setAuthStatus('failed'))
         }
     }
@@ -71,7 +71,7 @@ export const forgotPassTC = createAsyncThunk<void, { email: string, redirect: ()
             redirect()
         } catch (error) {
             if (error instanceof Error) {
-                errorUtils(error, dispatch, setAuthError)
+                if (error instanceof Error) errorToastr(error)
                 dispatch(setAuthStatus('failed'))
             }
         }
@@ -82,7 +82,7 @@ export const setNewPassTC = createAsyncThunk<void, { password: string, resetPass
         const response = authService.setNewPass(data).then(data => alert(data.info))
     } catch (error) {
         if (error instanceof Error) {
-            errorUtils(error, dispatch, setAuthError)
+            if (error instanceof Error) errorToastr(error)
             dispatch(setAuthStatus('failed'))
         }
     }

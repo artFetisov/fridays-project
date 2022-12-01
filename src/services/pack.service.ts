@@ -13,9 +13,10 @@ export const packService = {
     async createPack(packData: ICreatePackData) {
         const data: { cardsPack: ICreatePackData } = {
             cardsPack: {
-                ...packData
+                ...packData,
             }
         }
+
         return instance.post('cards/pack', data).then(data => data.data)
     },
     async updatePack(packData: IUpdatePackData) {

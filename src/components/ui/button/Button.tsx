@@ -5,7 +5,7 @@ type DefaultButtonPropsType = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonE
 
 type SuperButtonPropsType = DefaultButtonPropsType & {
     big?: boolean
-    variant?: 'white' | 'blue' | 'no-radius'
+    variant?: 'white' | 'blue' | 'no-radius' | 'red'
 }
 
 export const Button: FC<SuperButtonPropsType> =
@@ -13,6 +13,7 @@ export const Button: FC<SuperButtonPropsType> =
         return <button
             className={`${styles.default} ${big && styles.big} 
         ${variant === 'white' && styles.white}
+        ${variant === 'red' && styles.red}
          ${variant === 'no-radius' && styles.noRadius}`}
             {...restProps}
         />

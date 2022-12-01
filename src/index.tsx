@@ -1,17 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './index.scss';
 import reportWebVitals from './reportWebVitals';
 import {App} from "./App";
 import {Provider} from "react-redux";
 import {store} from "./store";
 import {HashRouter} from "react-router-dom";
+import {ReduxToastr} from "./components/ui/redux-toastr/ReduxToastr";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
 root.render(
     <Provider store={store}>
+        <ReduxToastr/>
         <HashRouter>
             <App/>
         </HashRouter>

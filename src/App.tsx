@@ -6,18 +6,21 @@ import {CustomizedSnackBar} from "./components/ui/snack-bar/SnackBar";
 import {useAppSelector} from "./hooks/useAppSelector";
 import {useAppDispatch} from "./hooks/useAppDispatch";
 import {appInitializedTC} from "./store/reducers/app/app.actions";
-
+import {LayoutModal} from "./components/ui/modal/LayoutModal";
 
 export const App: FC = () => {
     const isInitialized = useAppSelector(state => state.app.isInitialized)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        console.log('work')
         dispatch(appInitializedTC())
     }, [])
 
+
     return <>
+        <>
+            <LayoutModal/>
+        </>
         {isInitialized
             ? <div>
                 <CustomizedSnackBar/>

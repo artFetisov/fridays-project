@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from "react";
+ import React, {FC, useEffect, useState} from "react";
 import {Checkbox, FormControlLabel, IconButton, InputAdornment, TextField} from "@mui/material";
 import styles from './LoginForm.module.scss';
 import {validEmail} from "../../../utils/regex";

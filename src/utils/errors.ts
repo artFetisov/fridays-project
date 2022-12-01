@@ -1,14 +1,16 @@
-import {AnyAction, Dispatch} from "redux";
 import axios, {AxiosError} from "axios";
+import {toastr} from "react-redux-toastr";
 
-export const errorUtils = (e: Error | AxiosError<{ error: string }>, dispatch: Dispatch<any>, cb: (value: string | null) => void) => {
-    const err = e as Error | AxiosError<{ error: string }>
+export const errorToastr = (e: Error | AxiosError<{ error: string }>) => {
+    const err = e as Error | AxiosError<{ error: string, info: string }>
     if (axios.isAxiosError(err)) {
         // @ts-ignore
         const error = err.response?.data ? err.response?.data?.error : err.message
-        console.log(error)
-        dispatch(cb(error))
+        // @ts-ignore
+        const error2 = err.response?.data?.info ? err.response?.data?.info : ''
+        // const errorInfo = err.response?.data && err.
+        toastr.error('Error', `${error}, ${error2 && error2}`)
     } else {
-        dispatch(cb(`Native error ${err.message}`))
+        toastr.error('Native Error', err.message)
     }
 }

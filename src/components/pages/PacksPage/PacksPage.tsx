@@ -1,5 +1,5 @@
 import React, {FC, useEffect} from "react";
-import {createPackTC, getAllPacksTC} from "../../../store/reducers/pack/pack.actions";
+import {getAllPacksTC} from "../../../store/reducers/pack/pack.actions";
 import {useAppDispatch} from "../../../hooks/useAppDispatch";
 import styles from './PacksPage.module.scss';
 import {Button} from "../../ui/button/Button";
@@ -16,14 +16,14 @@ import {
 } from "../../../store/reducers/pack/pack.slice";
 import {SelectChangeEvent} from "@mui/material/Select";
 import {useDebouncedCallback} from "use-debounce";
+import {setCurrentContentModal, setIsOpenModal, setModalTitle} from "../../../store/reducers/modal/modal.slice";
+import {AddPackModalForm} from "../../ui/modal/ModalContent/PackModals/AddPackModalForm";
 
 export const PacksPage: FC = () => {
     const packsStatus = useAppSelector(state => state.pack.packStatus)
     const page = useAppSelector(state => state.pack.page)
     const pageCount = useAppSelector(state => state.pack.pageCount)
     const cardPacksTotalCount = useAppSelector(state => state.pack.cardPacksTotalCount)
-    const min = useAppSelector(state => state.pack.minCardsCount)
-    const max = useAppSelector(state => state.pack.maxCardsCount)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
@@ -31,8 +31,9 @@ export const PacksPage: FC = () => {
     }, [])
 
     const handleCreatePack = () => {
-        const name = 'test pack 3'
-        dispatch(createPackTC({name}))
+        dispatch(setModalTitle('Add new pack'))
+        dispatch(setCurrentContentModal(AddPackModalForm))
+        dispatch(setIsOpenModal(true))
     }
 
     const handleChangeCurrentPage = (event: React.ChangeEvent<unknown>, value: number) => {
