@@ -2,7 +2,7 @@ import React, {FC} from "react";
 import {PATH} from "../../../routes/router.data";
 import styles from './MyCards.module.scss';
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {Button} from "../../ui/button/Button";
 import {ICard} from "../../../types/cards";
 import {MySearchInput} from "../../ui/search-input/MySearchInput";
@@ -23,6 +23,7 @@ interface IMyCardsProps {
     cardsTotalCount: number
     handleChangeCurrentPage: (event: React.ChangeEvent<unknown>, value: number) => void
     handleChangePortionSize: (event: SelectChangeEvent) => void
+    packId: string
 }
 
 export const MyCards: FC<IMyCardsProps> =
@@ -37,8 +38,10 @@ export const MyCards: FC<IMyCardsProps> =
          pageCount,
          cardsTotalCount,
          handleChangeCurrentPage,
-         handleChangePortionSize
+         handleChangePortionSize,
+         packId
      }) => {
+
 
         return <>
             <Link to={PATH.PACKS}>
@@ -50,7 +53,7 @@ export const MyCards: FC<IMyCardsProps> =
 
             <div className={styles.titleAndButtonBox}>
                 <h3 className={styles.title}>{packName}</h3>
-                <ButtonTooltip/>
+                <ButtonTooltip />
                 {cards.length > 0 && <Button onClick={handleCreateCard}>Add new Card</Button>}
             </div>
 

@@ -2,7 +2,7 @@ import React, {FC} from "react";
 import {PATH} from "../../../routes/router.data";
 import styles from './FriendCards.module.scss';
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
-import {Link} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {Button} from "../../ui/button/Button";
 import {MySearchInput} from "../../ui/search-input/MySearchInput";
 import {CardsTable} from "../CardsTable/CardsTable";
@@ -36,6 +36,13 @@ export const FriendCards: FC<IFriendCards> = (
         handleChangePortionSize,
         handleSearchCard
     }) => {
+    const navigate = useNavigate()
+    const {packId} = useParams()
+
+    const redirect = () => {
+        navigate(`/learn-pack/${packId}`)
+    }
+
     return <>
         <Link to={PATH.PACKS}>
             <div className={styles.backArrowWrapper}>
@@ -46,7 +53,7 @@ export const FriendCards: FC<IFriendCards> = (
 
         <div className={styles.titleAndButtonBox}>
             <h3 className={styles.title}>{packName}</h3>
-            {<Button>Learn to pack</Button>}
+            {<Button onClick={redirect}>Learn to pack</Button>}
         </div>
 
         <div className={styles.searchTitle}>Search</div>

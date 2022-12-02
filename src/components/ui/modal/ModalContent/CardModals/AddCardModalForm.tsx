@@ -12,10 +12,7 @@ import styles from './CardModals.module.scss';
 import {useAppSelector} from "../../../../../hooks/useAppSelector";
 import {createCardTC} from "../../../../../store/reducers/card/card.actions";
 
-
 export const AddCardModalForm = () => {
-
-
     const [variant, setVariant] = useState('Text');
 
     const handleChange = (event: SelectChangeEvent) => {

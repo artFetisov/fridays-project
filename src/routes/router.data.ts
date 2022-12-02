@@ -7,6 +7,7 @@ import {CheckEmailPage} from "../components/pages/CheckEmailPage/CheckEmailPage"
 import {NewPasswordPage} from "../components/pages/NewPasswordPage/NewPasswordPage";
 import {PacksPage} from "../components/pages/PacksPage/PacksPage";
 import {CardsPage} from "../components/pages/CardsPage/CardsPage";
+import {LearnPackPage} from "../components/pages/LearnPackPage/LearnPackPage";
 
 export enum PATH {
     PACKS = '/packs',
@@ -17,7 +18,8 @@ export enum PATH {
     ERROR = '/404',
     FORGOT = '/forgotPassword',
     CHECK = '/check-email',
-    NEW_PASS = '/new-pass/:token'
+    NEW_PASS = '/new-pass/:token',
+    LEARN_PACK = '/learn-pack/:packId'
 }
 
 export interface IRoute {
@@ -28,7 +30,8 @@ export interface IRoute {
 export const privateRoutes: IRoute[] = [
     {path: PATH.PACKS, element: PacksPage},
     {path: PATH.PROFILE, element: ProfilePage},
-    {path: PATH.CARDS, element: CardsPage}
+    {path: PATH.CARDS, element: CardsPage},
+    {path: PATH.LEARN_PACK, element: LearnPackPage}
 ]
 
 export const publicRoutes: IRoute[] = [

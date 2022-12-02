@@ -65,14 +65,6 @@ export const CardsPage: FC = () => {
         dispatch(setCurrentContentModal(AddCardModalForm))
         dispatch(setIsOpenModal(true))
         dispatch(setCurrentPackData({_id: String(packId), name: String(packName)}))
-
-        // const newCard: ICreateCardData = {
-        //     cardsPack_id: String(packId),
-        //     question: 'question',
-        //     answer: 'answer'
-        // }
-        //
-        // dispatch(createCardTC(newCard))
     }
 
     const handleSearchCard = useDebouncedCallback((value: string) => {
@@ -95,6 +87,7 @@ export const CardsPage: FC = () => {
                 cardsTotalCount={cardsTotalCount}
                 handleChangeCurrentPage={handleChangeCurrentPage}
                 handleChangePortionSize={handleChangePortionSize}
+                packId={String(packId)}
             /> :
             <FriendCards packName={String(packName)}
                          cards={cards}

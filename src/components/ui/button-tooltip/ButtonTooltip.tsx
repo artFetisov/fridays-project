@@ -25,7 +25,6 @@ const LightTooltip = styled(({className, ...props}: TooltipProps) => (
     },
 }));
 
-
 export const ButtonTooltip: FC = () => {
     const [isOpen, setIsOpen] = useState(false)
 
