@@ -49,5 +49,6 @@ export interface ICreateCardData {
 export interface IUpdateCardData {
     _id: string
     question?: string
+    answer?: string
 }
 

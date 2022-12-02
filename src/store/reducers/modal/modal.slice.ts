@@ -1,6 +1,7 @@
 import {AddPackModalForm} from "../../../components/ui/modal/ModalContent/PackModals/AddPackModalForm";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {IUpdatePackData} from "../../../types/packs";
+import {IUpdateCardData} from "../../../types/cards";
 
 
 interface IModalState {
@@ -8,6 +9,7 @@ interface IModalState {
     CurrentContentModal: () => JSX.Element
     modalTitle: string
     currentPackData: IUpdatePackData
+    currentCardData: IUpdateCardData
 }
 
 const initialState: IModalState = {
@@ -17,6 +19,11 @@ const initialState: IModalState = {
     currentPackData: {
         _id: '',
         name: ''
+    },
+    currentCardData: {
+        _id: '',
+        answer: '',
+        question: ''
     }
 }
 
@@ -35,10 +42,19 @@ export const modalSlice = createSlice({
         },
         setCurrentPackData(state, action: PayloadAction<IUpdatePackData>) {
             state.currentPackData = action.payload
+        },
+        setCurrentCardData(state, action: PayloadAction<IUpdateCardData>) {
+            state.currentCardData = action.payload
         }
     }
 })
 
-export const {setIsOpenModal, setCurrentContentModal, setModalTitle, setCurrentPackData} = modalSlice.actions
+export const {
+    setIsOpenModal,
+    setCurrentContentModal,
+    setModalTitle,
+    setCurrentPackData,
+    setCurrentCardData
+} = modalSlice.actions
 
 export const {reducer} = modalSlice

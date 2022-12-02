@@ -1,7 +1,7 @@
 import React, {FC, useEffect} from "react";
 import {useParams} from "react-router-dom";
 import {useAppDispatch} from "../../../hooks/useAppDispatch";
-import {createCardTC, getCardsTC} from "../../../store/reducers/card/card.actions";
+import {getCardsTC} from "../../../store/reducers/card/card.actions";
 import styles from './CardsPage.module.scss';
 import {useAppSelector} from "../../../hooks/useAppSelector";
 import {SelectChangeEvent} from "@mui/material/Select";
@@ -11,10 +11,16 @@ import {
     setCardsPageCount, setIsEmptyCardQuestionSearchValue,
     setOpenedPackId
 } from "../../../store/reducers/card/card.slice";
-import {ICreateCardData} from "../../../types/cards";
 import {useDebouncedCallback} from "use-debounce";
 import {MyCards} from "../../screens/MyCards/MyCards";
 import {FriendCards} from "../../screens/FriendCards/FriendCards";
+import {
+    setCurrentContentModal,
+    setCurrentPackData,
+    setIsOpenModal,
+    setModalTitle
+} from "../../../store/reducers/modal/modal.slice";
+import {AddCardModalForm} from "../../ui/modal/ModalContent/CardModals/AddCardModalForm";
 
 export const CardsPage: FC = () => {
     const dispatch = useAppDispatch()
@@ -55,13 +61,18 @@ export const CardsPage: FC = () => {
     }
 
     const handleCreateCard = () => {
-        const newCard: ICreateCardData = {
-            cardsPack_id: String(packId),
-            question: 'question',
-            answer: 'answer'
-        }
+        dispatch(setModalTitle('Add new card'))
+        dispatch(setCurrentContentModal(AddCardModalForm))
+        dispatch(setIsOpenModal(true))
+        dispatch(setCurrentPackData({_id: String(packId), name: String(packName)}))
 
-        dispatch(createCardTC(newCard))
+        // const newCard: ICreateCardData = {
+        //     cardsPack_id: String(packId),
+        //     question: 'question',
+        //     answer: 'answer'
+        // }
+        //
+        // dispatch(createCardTC(newCard))
     }
 
     const handleSearchCard = useDebouncedCallback((value: string) => {

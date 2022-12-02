@@ -1,13 +1,19 @@
 import React, {FC} from "react";
-import {ICard, IUpdateCardData} from "../../../types/cards";
+import {ICard} from "../../../types/cards";
 import styles from './CardsTable.module.scss';
 import {getCorrectDate} from "../../../utils/date";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import {useAppDispatch} from "../../../hooks/useAppDispatch";
-import {deleteCardTC, updateCardTC} from "../../../store/reducers/card/card.actions";
 import {MyRating} from "../../ui/rating/Rating";
-import {useAppSelector} from "../../../hooks/useAppSelector";
+import {
+    setCurrentCardData,
+    setCurrentContentModal,
+    setIsOpenModal,
+    setModalTitle
+} from "../../../store/reducers/modal/modal.slice";
+import {UpdateCardModalForm} from "../../ui/modal/ModalContent/CardModals/UpdateCardModalForm";
+import {DeleteCardModalForm} from "../../ui/modal/ModalContent/CardModals/DeleteCardModalForm";
 
 interface ICardItemProps {
     card: ICard
@@ -18,17 +24,17 @@ export const CardsItem: FC<ICardItemProps> = ({card, isMyPack}) => {
     const dispatch = useAppDispatch()
 
     const handleUpdateCard = () => {
-        const updateData: IUpdateCardData = {
-            _id: card._id,
-            question: 'updated question'
-        }
-
-        dispatch(updateCardTC(updateData))
+        dispatch(setModalTitle('Edit card'))
+        dispatch(setCurrentContentModal(UpdateCardModalForm))
+        dispatch(setCurrentCardData({_id: card._id, answer: card.answer, question: card.question}))
+        dispatch(setIsOpenModal(true))
     }
 
-
     const handleDeleteCard = () => {
-        dispatch(deleteCardTC({cardId: card._id}))
+        dispatch(setModalTitle('Delete card'))
+        dispatch(setCurrentContentModal(DeleteCardModalForm))
+        dispatch(setCurrentCardData({_id: card._id, answer: card.answer, question: card.question}))
+        dispatch(setIsOpenModal(true))
     }
 
     return <div className={`${isMyPack ? styles.myCard : styles.card}`}>
