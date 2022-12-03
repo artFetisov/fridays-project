@@ -1,5 +1,11 @@
 import {instance} from "../api/axios";
-import {IAllCardsWithParams, ICardsRequestParams, ICreateCardData, IUpdateCardData} from "../types/cards";
+import {
+    IAllCardsWithParams,
+    ICardsRequestParams,
+    ICreateCardData,
+    ISendGradeCardRequestData, ISendGradeCardResponseData,
+    IUpdateCardData
+} from "../types/cards";
 
 export const cardService = {
     async getAll(params: ICardsRequestParams) {
@@ -29,5 +35,8 @@ export const cardService = {
     },
     async deleteCard(cardId: string) {
         return instance.delete(`cards/card?id=${cardId}`)
+    },
+    async sendCardGrade(data: ISendGradeCardRequestData) {
+        return instance.put<ISendGradeCardResponseData>('cards/grade', data).then(data => data.data)
     }
 }

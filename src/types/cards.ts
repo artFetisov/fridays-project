@@ -52,3 +52,19 @@ export interface IUpdateCardData {
     answer?: string
 }
 
+export interface ISendGradeCardRequestData {
+    grade: number
+    card_id: string
+}
+
+export interface ISendGradeCardResponseData {
+    updatedGrade: {
+        _id: string
+        cardsPack_id: string
+        card_id: string
+        user_id: string
+        grade: number
+        shots: number
+    }
+}
+

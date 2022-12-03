@@ -1,7 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {cardService} from "../../../services/cardService";
-import {ICardsRequestParams, ICreateCardData, IUpdateCardData} from "../../../types/cards";
-import {setCards, setCardsPackName, setCardSTotalCount, setPackUserId} from "./card.slice";
+import {ICardsRequestParams, ICreateCardData, ISendGradeCardRequestData, IUpdateCardData} from "../../../types/cards";
+import {setCards, setCardsPackName, setCardSTotalCount, setPackUserId, updateGradeCard} from "./card.slice";
 import {AppRootState} from "../../index";
 
 export const getCardsTC = createAsyncThunk<void, void, { state: AppRootState }>('card/getAll', async (_, {
@@ -56,6 +56,19 @@ export const deleteCardTC = createAsyncThunk<void, { cardId: string }, { state: 
         try {
             await cardService.deleteCard(cardId)
             dispatch(getCardsTC())
+        } catch (error) {
+            alert(error)
+        }
+    })
+
+export const sendGradeCardTC = createAsyncThunk<void, ISendGradeCardRequestData>('card/grade',
+    async (data, {
+        dispatch,
+        rejectWithValue
+    }) => {
+        try {
+            const response = await cardService.sendCardGrade(data)
+            dispatch(updateGradeCard(response))
         } catch (error) {
             alert(error)
         }

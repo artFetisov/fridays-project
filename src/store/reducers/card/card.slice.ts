@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {ICard, SortCardsType} from "../../../types/cards";
+import {ICard, ISendGradeCardResponseData, SortCardsType} from "../../../types/cards";
 
 interface ICardState {
     cards: ICard[]
@@ -64,6 +64,14 @@ const cardSlice = createSlice({
         },
         setSortCardsValue(state, action: PayloadAction<SortCardsType>) {
             state.sortCardsValue = action.payload
+        },
+        updateGradeCard(state, action: PayloadAction<ISendGradeCardResponseData>) {
+            const updatedCards = state.cards.map(card => card._id === action.payload.updatedGrade.card_id ? {
+                ...card,
+                grade: action.payload.updatedGrade.grade
+            } : card)
+
+            state.cards = updatedCards
         }
     },
 })
@@ -78,7 +86,8 @@ export const {
     setPackUserId,
     setCardQuestionSearch,
     setIsEmptyCardQuestionSearchValue,
-    setSortCardsValue
+    setSortCardsValue,
+    updateGradeCard
 } = cardSlice.actions
 
 export const {reducer} = cardSlice
