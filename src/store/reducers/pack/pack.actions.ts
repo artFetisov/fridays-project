@@ -10,7 +10,7 @@ import {
 } from "./pack.slice";
 import {ICreatePackData, IUpdatePackData} from "../../../types/packs";
 import {toastr} from 'react-redux-toastr';
-import {errorToastr} from "../../../utils/errors";
+import {errorToastr} from "../../../utils/toastr";
 
 export const getAllPacksTC = createAsyncThunk<void, void, { state: AppRootState }>('pack/getAll',
     async (_, {
@@ -56,7 +56,7 @@ export const getAllPacksTC = createAsyncThunk<void, void, { state: AppRootState 
             dispatch(setPacksStatus('succeeded'))
 
         } catch (error) {
-            if (error instanceof Error) errorToastr(error)
+            if (error instanceof Error) errorToastr(error, '', dispatch)
             dispatch(setPacksStatus('failed'))
             return rejectWithValue(error)
         }
@@ -71,7 +71,7 @@ export const createPackTC = createAsyncThunk<void, ICreatePackData, { state: App
             toastr.success('Add pack', 'add was successful')
             dispatch(setPacksStatus('succeeded'))
         } catch (error) {
-            if (error instanceof Error) errorToastr(error)
+            if (error instanceof Error) errorToastr(error, '', dispatch)
 
             dispatch(setPacksStatus('failed'))
             return rejectWithValue(error)
@@ -88,7 +88,7 @@ export const updatePackTC = createAsyncThunk<void, IUpdatePackData, { state: App
             toastr.success('Update pack', 'update was successful')
             dispatch(setPacksStatus('succeeded'))
         } catch (error) {
-            if (error instanceof Error) errorToastr(error)
+            if (error instanceof Error) errorToastr(error, '', dispatch)
             dispatch(setPacksStatus('failed'))
             return rejectWithValue(error)
         }
@@ -104,7 +104,7 @@ export const deletePackTC = createAsyncThunk<void, { packId: string }, { state: 
             toastr.success('Delete pack', 'delete was successful')
             dispatch(setPacksStatus('succeeded'))
         } catch (error) {
-            if (error instanceof Error) errorToastr(error)
+            if (error instanceof Error) errorToastr(error, '', dispatch)
             dispatch(setPacksStatus('failed'))
             return rejectWithValue(error)
         }

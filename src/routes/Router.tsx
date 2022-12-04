@@ -4,7 +4,7 @@ import {Navigate, Route, Routes} from "react-router-dom";
 import {useAppSelector} from "../hooks/useAppSelector";
 
 export const Router: FC = () => {
-    const isAuth = useAppSelector(state => state.user.isAuth)
+    const isAuth = useAppSelector(state => state.auth.isAuth)
 
     return <>
         {isAuth && <Routes>

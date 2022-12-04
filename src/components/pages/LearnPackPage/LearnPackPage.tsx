@@ -3,19 +3,18 @@ import {Link, useParams} from "react-router-dom";
 import {setCardsPageCount, setOpenedPackId} from "../../../store/reducers/card/card.slice";
 import {getCardsTC, sendGradeCardTC} from "../../../store/reducers/card/card.actions";
 import {useAppDispatch} from "../../../hooks/useAppDispatch";
-import {setPageCount} from "../../../store/reducers/pack/pack.slice";
 import {PATH} from "../../../routes/router.data";
 import styles from './LearnPackPage.module.scss';
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import {useAppSelector} from "../../../hooks/useAppSelector";
 import {ICard} from "../../../types/cards";
 import {Button} from "../../ui/button/Button";
-import {FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
+import {FormControlLabel, Radio, RadioGroup} from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 
 const grades = ['Did not know', 'Forgot', 'A lot of thought', 'Confused', 'Knew the answer']
 
-const getCard = (cards: ICard[]) => {
+const getCardWithMinimumGrade = (cards: ICard[]) => {
     const sum = cards.reduce((acc, card) => acc + (6 - card.grade) * (6 - card.grade), 0);
     const rand = Math.random() * sum;
     const res = cards.reduce((acc: { sum: number, id: number }, card, i) => {
@@ -63,7 +62,7 @@ export const LearnPackPage: FC = () => {
 
     useEffect(() => {
         if (cards.length > 0 && !isShowGrades) {
-            setCurrentCard(getCard(cards))
+            setCurrentCard(getCardWithMinimumGrade(cards))
         }
     }, [isShowGrades])
 

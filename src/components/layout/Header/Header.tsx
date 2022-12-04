@@ -10,7 +10,8 @@ import {MyTooltip} from "../../ui/tooltip/MyTooltip";
 import {ProfileTooltip} from "../../ui/tooltip/ProfileTooltip";
 
 export const Header: FC = () => {
-    const {isAuth, user} = useAppSelector(state => state.user)
+    const isAuth = useAppSelector(state => state.auth.isAuth)
+    const user = useAppSelector(state => state.user.user)
     const {pathname} = useLocation()
 
     return <header className={styles.header}>
@@ -18,8 +19,8 @@ export const Header: FC = () => {
         {isAuth && <div className={styles.name}>
             <span>{user?.name}</span>
         </div>}
-        {!isAuth && <Button>
-            {pathname === PATH.LOGIN && 'Sign In'}
+        {!isAuth && <Button disabled>
+            {(pathname !== PATH.REGISTRATION && !isAuth) && 'Sign In'}
             {pathname === PATH.REGISTRATION && 'Sign Up'}
         </Button>}
         {isAuth && <>

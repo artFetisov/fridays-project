@@ -1,11 +1,14 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {RequestStatusType} from "../../../types/auth";
 
 interface IAppState {
     isInitialized: boolean
+    appStatus: RequestStatusType
 }
 
 const initialState: IAppState = {
-    isInitialized: false
+    isInitialized: false,
+    appStatus: 'idle'
 }
 
 const appSlice = createSlice({
@@ -14,11 +17,14 @@ const appSlice = createSlice({
     reducers: {
         setIsInitialized(state) {
             state.isInitialized = true
+        },
+        setAppStatus(state, action: PayloadAction<RequestStatusType>) {
+            state.appStatus = action.payload
         }
     },
 
 })
 
-export const {setIsInitialized} = appSlice.actions
+export const {setIsInitialized, setAppStatus} = appSlice.actions
 
 export const {reducer} = appSlice

@@ -1,5 +1,5 @@
 import React, {FC, useState} from "react";
-import {IconButton, InputAdornment, TextField} from "@mui/material";
+import {CircularProgress, IconButton, InputAdornment, TextField} from "@mui/material";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import styles from './RegisterForm.module.scss';
 import {Button} from "../../ui/button/Button";
@@ -10,6 +10,7 @@ import {registerTC} from "../../../store/reducers/auth/auth.actions";
 import {useAppDispatch} from "../../../hooks/useAppDispatch";
 import {useNavigate} from "react-router-dom";
 import {PATH} from "../../../routes/router.data";
+import {useAppSelector} from "../../../hooks/useAppSelector";
 
 interface IRegisterFormState {
     password: string;
@@ -19,7 +20,12 @@ interface IRegisterFormState {
 }
 
 export const RegisterForm: FC = () => {
+    const appStatus = useAppSelector(state => state.app.appStatus)
+
+    const isLoading = appStatus === 'loading'
+
     const navigate = useNavigate()
+
     const dispatch = useAppDispatch()
 
     const [values, setValues] = useState({
@@ -77,6 +83,7 @@ export const RegisterForm: FC = () => {
             helperText={errors.email?.message || ''}
             variant="standard"
             fullWidth
+            disabled={isLoading}
             className={styles.input}
             {...register('email', {
                 required: 'Email is required',
@@ -91,10 +98,11 @@ export const RegisterForm: FC = () => {
                 'password', {
                     required: 'Password is required!',
                     minLength: {
-                        value: 7,
-                        message: 'Min length should more 7 symbols!',
+                        value: 8,
+                        message: 'Min length should more 8 symbols!',
                     }
                 })}
+            disabled={isLoading}
             id="password"
             error={!!errors.password}
             helperText={errors.password?.message || ''}
@@ -131,10 +139,11 @@ export const RegisterForm: FC = () => {
                         }
                     },
                     minLength: {
-                        value: 7,
-                        message: 'Min length should more 7 symbols!',
+                        value: 8,
+                        message: 'Min length should more 8 symbols!',
                     },
                 })}
+            disabled={isLoading}
             id="confirm-password"
             error={!!errors.confirmPassword}
             helperText={errors.confirmPassword?.message || ''}
@@ -160,6 +169,7 @@ export const RegisterForm: FC = () => {
             }}
         />
 
-        <Button big>Sign Up</Button>
+        <Button disabled={isLoading} big>{isLoading ? <CircularProgress style={{color: 'white'}} size={16}/> :
+            <span>Sign Up</span>}</Button>
     </form>
 }

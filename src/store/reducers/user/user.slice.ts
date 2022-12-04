@@ -1,14 +1,14 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {ILoginResponse, RequestStatusType} from "../../../types/auth";
+import {ILoginResponse} from "../../../types/auth";
 
 interface IUserState {
     user: ILoginResponse | null
-    isAuth: boolean
+
 }
 
 const initialState: IUserState = {
     user: null,
-    isAuth: false
+
 }
 
 const userSlice = createSlice({
@@ -18,13 +18,11 @@ const userSlice = createSlice({
         setUserData(state, action: PayloadAction<ILoginResponse | null>) {
             state.user = action.payload
         },
-        setIsAuth(state, action: PayloadAction<boolean>) {
-            state.isAuth = action.payload
-        }
+
     },
 })
 
 
-export const {setUserData, setIsAuth} = userSlice.actions
+export const {setUserData} = userSlice.actions
 
 export const {reducer} = userSlice

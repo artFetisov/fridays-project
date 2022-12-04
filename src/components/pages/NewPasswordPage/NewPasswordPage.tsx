@@ -1,7 +1,7 @@
 import React, {FC, useState} from "react";
 import styles from './NewPasswordPage.module.scss';
 import {Button} from "../../ui/button/Button";
-import {IconButton, InputAdornment, TextField} from "@mui/material";
+import {CircularProgress, IconButton, InputAdornment, TextField} from "@mui/material";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {useAppDispatch} from "../../../hooks/useAppDispatch";
@@ -9,9 +9,15 @@ import {ThemeProvider} from "@mui/material/styles";
 import {fontTheme} from "../../../assets/materialUiThemes";
 import {useParams} from "react-router-dom";
 import {setNewPassTC} from "../../../store/reducers/auth/auth.actions";
+import {useAppSelector} from "../../../hooks/useAppSelector";
 
 export const NewPasswordPage: FC = () => {
+    const appStatus = useAppSelector(state => state.app.appStatus)
+
+    const isLoading = appStatus === 'loading'
+
     const dispatch = useAppDispatch()
+
     const {token} = useParams()
 
     const [values, setValues] = useState({
@@ -34,9 +40,7 @@ export const NewPasswordPage: FC = () => {
                 resetPasswordToken: token ? token : ''
             }
         dispatch(setNewPassTC(newData))
-        reset()
     }
-
 
     const handleChange = (prop: keyof { password: string }) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setValues({...values, [prop]: event.target.value});
@@ -64,10 +68,11 @@ export const NewPasswordPage: FC = () => {
                             'password', {
                                 required: 'Password is required!',
                                 minLength: {
-                                    value: 7,
-                                    message: 'Min length should more 7 symbols!',
+                                    value: 8,
+                                    message: 'Min length should more 8 symbols!',
                                 }
                             })}
+                        disabled={isLoading}
                         id="password"
                         error={!!errors.password}
                         helperText={errors.password?.message || ''}
@@ -95,7 +100,9 @@ export const NewPasswordPage: FC = () => {
                 </ThemeProvider>
                 <div className={styles.text}>Create new password and we will send you further instructions to email
                 </div>
-                <Button big>Create new password</Button>
+                <Button big disabled={isLoading}>{isLoading ?
+                    <CircularProgress style={{color: 'white'}} size={16}/> :
+                    <span>Create new password</span>}</Button>
             </form>
         </div>
     </div>

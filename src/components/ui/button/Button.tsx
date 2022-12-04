@@ -1,20 +1,24 @@
 import React, {ButtonHTMLAttributes, DetailedHTMLProps, FC} from 'react'
 import styles from './Button.module.scss'
+import cn from 'classnames'
 
 type DefaultButtonPropsType = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 
-type SuperButtonPropsType = DefaultButtonPropsType & {
+type ButtonPropsType = DefaultButtonPropsType & {
     big?: boolean
     variant?: 'white' | 'blue' | 'no-radius' | 'red'
 }
 
-export const Button: FC<SuperButtonPropsType> =
-    ({big, className, variant, ...restProps}) => {
+export const Button: FC<ButtonPropsType> =
+    ({big, className, variant, disabled, ...restProps}) => {
         return <button
-            className={`${styles.default} ${big && styles.big} 
-        ${variant === 'white' && styles.white}
-        ${variant === 'red' && styles.red}
-         ${variant === 'no-radius' && styles.noRadius}`}
+            className={cn(styles.default, {
+                [styles.big]: big,
+                [styles.white]: variant === 'white',
+                [styles.red]: variant === 'red',
+                [styles.noRadius]: variant === 'no-radius',
+                [styles.disabled]: disabled
+            })}
             {...restProps}
         />
     }

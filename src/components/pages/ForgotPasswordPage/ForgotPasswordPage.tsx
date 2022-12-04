@@ -1,7 +1,7 @@
 import React, {FC} from "react";
 import styles from './ForgotPasswordPage.module.scss';
 import {validEmail} from "../../../utils/regex";
-import {TextField} from "@mui/material";
+import {CircularProgress, TextField} from "@mui/material";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {ThemeProvider} from "@mui/material/styles";
 import {fontTheme} from "../../../assets/materialUiThemes";
@@ -10,9 +10,16 @@ import {Button} from "../../ui/button/Button";
 import {Link, useNavigate} from "react-router-dom";
 import {PATH} from "../../../routes/router.data";
 import {forgotPassTC} from "../../../store/reducers/auth/auth.actions";
+import {useAppSelector} from "../../../hooks/useAppSelector";
+import cn from 'classnames';
 
 export const ForgotPasswordPage: FC = () => {
+    const appStatus = useAppSelector(state => state.app.appStatus)
+
+    const isLoading = appStatus === 'loading'
+
     const dispatch = useAppDispatch()
+
     const navigate = useNavigate()
 
     const {
@@ -28,7 +35,6 @@ export const ForgotPasswordPage: FC = () => {
 
     const onSubmit: SubmitHandler<{ email: string }> = ({email}) => {
         dispatch(forgotPassTC({email, redirect}))
-        reset()
     }
 
     return <div className={styles.container}>
@@ -37,6 +43,7 @@ export const ForgotPasswordPage: FC = () => {
             <ThemeProvider theme={fontTheme}>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     < TextField
+                        disabled={isLoading}
                         id="email"
                         label="Email"
                         error={!!errors.email}
@@ -54,15 +61,21 @@ export const ForgotPasswordPage: FC = () => {
                     <div className={styles.text}>
                         <span>Enter your email address and we will send you further instructions</span>
                     </div>
-                    <Button big>Send Instructions</Button>
+                    <Button disabled={isLoading} big>{isLoading ?
+                        <CircularProgress style={{color: 'white'}} size={16}/> :
+                        <span>Send Instructions</span>}</Button>
                     <div className={styles.question}>
                         <span>Have you remembered your password?</span>
                     </div>
-                    <Link to={PATH.LOGIN}>
-                            <span className={styles.try}>
+                    <div className={cn(styles.toLoginPage, {
+                        [styles.isDisabled]: isLoading
+                    })}>
+                        <Link to={PATH.LOGIN}>
+                            <span>
                                  Try logging in
                             </span>
-                    </Link>
+                        </Link>
+                    </div>
                 </form>
             </ThemeProvider>
         </div>

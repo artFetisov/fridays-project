@@ -38,8 +38,25 @@
       font-size: 16px;
       line-height: 24px;
       text-align: center;
-      text-decoration-line: underline;
       color: #366EFF;
+
+      &.isDisabled {
+        pointer-events: none;
+        cursor: default;
+      }
+
+      & > a {
+        color: #366EFF;
+
+        &:hover {
+          text-decoration-line: underline;
+        }
+      }
+
+      &.isDisabled {
+        pointer-events: none;
+        cursor: default;
+      }
     }
   }
 }

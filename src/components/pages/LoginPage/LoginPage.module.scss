@@ -38,8 +38,21 @@
       font-size: 16px;
       line-height: 24px;
       text-align: center;
-      text-decoration-line: underline;
-      color: #366EFF;
+
+      transition: all .3s ease-in-out;
+
+      & > a {
+        color: #366EFF;
+
+        &:hover {
+          text-decoration-line: underline;
+        }
+      }
+
+      &.isDisabled {
+        pointer-events: none;
+        cursor: default;
+      }
     }
   }
 }

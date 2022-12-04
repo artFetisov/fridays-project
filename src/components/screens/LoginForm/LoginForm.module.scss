@@ -19,5 +19,21 @@
     font-weight: 500;
     font-size: 14px;
     line-height: 17px;
+
+
+    &.isDisabled {
+      pointer-events: none;
+    }
+
+    & > a {
+      cursor: pointer;
+      color: #366EFF;
+
+      &:hover {
+        border-bottom: 1px solid;
+      }
+    }
+
+
   }
 }

@@ -14,7 +14,7 @@ export const CheckEmailPage: FC = () => {
                     <DraftsIcon fontSize={'large'}/>
                 </div>
             </div>
-            <div className={styles.text}>We`ve sent an Email with instructions to fetishfestoff@mail.ru</div>
+            <div className={styles.text}>We`ve sent an Email with instructions to your email</div>
             <Link to={PATH.LOGIN}>
                 <Button big>Back to login</Button>
             </Link>

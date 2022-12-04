@@ -1,5 +1,5 @@
- import React, {FC, useEffect, useState} from "react";
-import {Checkbox, FormControlLabel, IconButton, InputAdornment, TextField} from "@mui/material";
+import React, {FC, useEffect, useState} from "react";
+import {Checkbox, CircularProgress, FormControlLabel, IconButton, InputAdornment, TextField} from "@mui/material";
 import styles from './LoginForm.module.scss';
 import {validEmail} from "../../../utils/regex";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
@@ -11,6 +11,7 @@ import {Button} from "../../ui/button/Button";
 import {loginTC} from "../../../store/reducers/auth/auth.actions";
 import {useAppSelector} from "../../../hooks/useAppSelector";
 import {PATH} from "../../../routes/router.data";
+import cn from 'classnames';
 
 interface ILoginFormState {
     password: string;
@@ -18,8 +19,13 @@ interface ILoginFormState {
 }
 
 export const LoginForm: FC = () => {
-    const isAuth = useAppSelector(state => state.user.isAuth)
+    const isAuth = useAppSelector(state => state.auth.isAuth)
+    const appStatus = useAppSelector(state => state.app.appStatus)
+
+    const isLoading = appStatus === 'loading'
+
     const navigate = useNavigate()
+
     const dispatch = useAppDispatch()
 
     useEffect(() => {
@@ -37,14 +43,12 @@ export const LoginForm: FC = () => {
     const {
         register,
         formState: {errors},
-        reset,
         handleSubmit,
     } = useForm<ILoginData>()
 
 
     const onSubmit: SubmitHandler<ILoginData> = (data) => {
         dispatch(loginTC(data))
-        reset()
     }
 
     const handleChange = (prop: keyof ILoginFormState) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,6 +76,7 @@ export const LoginForm: FC = () => {
             variant="standard"
             fullWidth
             className={styles.input}
+            disabled={isLoading}
             {...register('email', {
                 required: 'Email is required',
                 pattern: {
@@ -85,10 +90,11 @@ export const LoginForm: FC = () => {
                 'password', {
                     required: 'Password is required!',
                     minLength: {
-                        value: 7,
-                        message: 'Min length should more 7 symbols!',
+                        value: 8,
+                        message: 'Min length should more 8 symbols!',
                     }
                 })}
+            disabled={isLoading}
             id="password"
             error={!!errors.password}
             helperText={errors.password?.message || ''}
@@ -115,16 +121,20 @@ export const LoginForm: FC = () => {
         />
 
         <FormControlLabel className={styles.input} control={<Checkbox/>}
+                          disabled={isLoading}
                           label="Remember me"  {...register('rememberMe')}
                           style={{marginTop: '10px'}} id={'rememberMe'}/>
 
-        <div className={styles.forgotText}><span>
+        <div className={cn(styles.forgotText, {
+            [styles.isDisabled]: isLoading
+        })}>
             <Link to={PATH.FORGOT}>
-                  Forgot Password?
+                Forgot Password?
             </Link>
+        </div>
 
-        </span></div>
-
-        <Button big>Sign In</Button>
+        <Button big disabled={isLoading}>
+            {isLoading ? <CircularProgress style={{color: 'white'}} size={16}/> : <span>Sign In</span>}
+        </Button>
     </form>
 }
