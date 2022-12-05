@@ -7,14 +7,17 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {useAppDispatch} from "../../../hooks/useAppDispatch";
 import {ThemeProvider} from "@mui/material/styles";
 import {fontTheme} from "../../../assets/materialUiThemes";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {setNewPassTC} from "../../../store/reducers/auth/auth.actions";
 import {useAppSelector} from "../../../hooks/useAppSelector";
+import {PATH} from "../../../routes/router.data";
 
 export const NewPasswordPage: FC = () => {
     const appStatus = useAppSelector(state => state.app.appStatus)
 
     const isLoading = appStatus === 'loading'
+
+    const navigate = useNavigate()
 
     const dispatch = useAppDispatch()
 
@@ -25,10 +28,13 @@ export const NewPasswordPage: FC = () => {
         showPassword: false,
     });
 
+    const redirect = () => {
+        navigate(PATH.LOGIN)
+    }
+
     const {
         register,
         formState: {errors},
-        reset,
         handleSubmit,
     } = useForm<{ password: string }>()
 
@@ -37,9 +43,9 @@ export const NewPasswordPage: FC = () => {
         const newData: { password: string, resetPasswordToken: string } =
             {
                 password: data.password,
-                resetPasswordToken: token ? token : ''
+                resetPasswordToken: token ? token : '',
             }
-        dispatch(setNewPassTC(newData))
+        dispatch(setNewPassTC({...newData, redirect}))
     }
 
     const handleChange = (prop: keyof { password: string }) => (event: React.ChangeEvent<HTMLInputElement>) => {

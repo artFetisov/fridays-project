@@ -5,20 +5,20 @@ import {
     setMinAndMaxCardsCount,
     setMinAndMaxCurrentCardsCount,
     setPacks,
-    setPacksStatus,
     setPacksTotalCount
 } from "./pack.slice";
 import {ICreatePackData, IUpdatePackData} from "../../../types/packs";
-import {toastr} from 'react-redux-toastr';
-import {errorToastr} from "../../../utils/toastr";
+import {errorToastr, successToastr} from "../../../utils/toastr";
+import {setAppStatus} from "../app/app.slice";
 
 export const getAllPacksTC = createAsyncThunk<void, void, { state: AppRootState }>('pack/getAll',
     async (_, {
         dispatch,
         getState,
-        rejectWithValue
     }) => {
         try {
+            dispatch(setAppStatus('loading'))
+
             const {
                 maxCardsCount,
                 minCardsCount,
@@ -32,8 +32,6 @@ export const getAllPacksTC = createAsyncThunk<void, void, { state: AppRootState 
             } = getState().pack
 
             const userId = getState().user.user?._id
-
-            dispatch(setPacksStatus('loading'))
 
             const response = await packService.getAll({
                 max: currentMaxCardsCount,
@@ -53,59 +51,46 @@ export const getAllPacksTC = createAsyncThunk<void, void, { state: AppRootState 
 
             dispatch(setMinAndMaxCardsCount([response.minCardsCount, response.maxCardsCount]))
             dispatch(setPacks(response.cardPacks))
-            dispatch(setPacksStatus('succeeded'))
-
+            dispatch(setAppStatus('succeeded'))
         } catch (error) {
-            if (error instanceof Error) errorToastr(error, '', dispatch)
-            dispatch(setPacksStatus('failed'))
-            return rejectWithValue(error)
+            errorToastr(error as Error, 'Getting card packs', dispatch, setAppStatus('failed'))
         }
     })
 
 export const createPackTC = createAsyncThunk<void, ICreatePackData, { state: AppRootState }>('pack/create',
-    async (cardsPack, {dispatch, rejectWithValue}) => {
+    async (cardsPack, {dispatch}) => {
         try {
-            dispatch(setPacksStatus('loading'))
+            dispatch(setAppStatus('loading'))
             await packService.createPack(cardsPack)
             await dispatch(getAllPacksTC())
-            toastr.success('Add pack', 'add was successful')
-            dispatch(setPacksStatus('succeeded'))
+            successToastr('Create pack', 'add was successful', dispatch, setAppStatus('succeeded'))
         } catch (error) {
-            if (error instanceof Error) errorToastr(error, '', dispatch)
-
-            dispatch(setPacksStatus('failed'))
-            return rejectWithValue(error)
+            errorToastr(error as Error, 'Create pack', dispatch, setAppStatus('failed'))
         }
     }
 )
 
 export const updatePackTC = createAsyncThunk<void, IUpdatePackData, { state: AppRootState }>('pack/update',
-    async (cardsPack, {dispatch, rejectWithValue}) => {
+    async (cardsPack, {dispatch}) => {
         try {
-            dispatch(setPacksStatus('loading'))
+            dispatch(setAppStatus('loading'))
             await packService.updatePack(cardsPack)
             await dispatch(getAllPacksTC())
-            toastr.success('Update pack', 'update was successful')
-            dispatch(setPacksStatus('succeeded'))
+            successToastr('Update pack', 'update was successful', dispatch, setAppStatus('succeeded'))
         } catch (error) {
-            if (error instanceof Error) errorToastr(error, '', dispatch)
-            dispatch(setPacksStatus('failed'))
-            return rejectWithValue(error)
+            errorToastr(error as Error, 'Update pack', dispatch, setAppStatus('failed'))
         }
     }
 )
 
 export const deletePackTC = createAsyncThunk<void, { packId: string }, { state: AppRootState }>('pack/delete',
-    async ({packId}, {dispatch, rejectWithValue}) => {
+    async ({packId}, {dispatch}) => {
         try {
-            dispatch(setPacksStatus('loading'))
+            dispatch(setAppStatus('loading'))
             await packService.deletePack(packId)
             await dispatch(getAllPacksTC())
-            toastr.success('Delete pack', 'delete was successful')
-            dispatch(setPacksStatus('succeeded'))
+            successToastr('Delete pack', 'delete was successful', dispatch, setAppStatus('succeeded'))
         } catch (error) {
-            if (error instanceof Error) errorToastr(error, '', dispatch)
-            dispatch(setPacksStatus('failed'))
-            return rejectWithValue(error)
+            errorToastr(error as Error, 'Delete pack', dispatch, setAppStatus('failed'))
         }
     })

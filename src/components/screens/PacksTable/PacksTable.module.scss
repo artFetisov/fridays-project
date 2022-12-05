@@ -1,6 +1,5 @@
 .tableContainer {
   margin-top: 24px;
-  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.1)) drop-shadow(-1px -1px 2px rgba(0, 0, 0, 0.1));
   margin-bottom: 30px;
 
 
@@ -9,6 +8,8 @@
     padding: 16px 32px;
     display: grid;
     grid-template-columns: 2fr 2fr 1.6fr 1.4fr 1fr;
+    filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.1)) drop-shadow(-1px -1px 2px rgba(0, 0, 0, 0.1));
+    border: 1px solid #D9D9D9;
 
     .menuBox {
       display: flex;
@@ -25,15 +26,27 @@
 
   .packs {
 
+    .skeleton {
+      display: grid;
+      height: 52px;
+      grid-template-columns: 2fr 2fr 1.6fr 1.4fr 1fr;
+      border-right: 1px solid #D9D9D9;
+      border-left: 1px solid #D9D9D9;
+      border-bottom: 1px solid #D9D9D9;
+
+      .skeletonItem {
+        padding-right: 10px;
+      }
+    }
 
     .pack {
       display: grid;
       grid-template-columns: 2fr 2fr 1.6fr 1.4fr 1fr;
+      height: 52px;
       padding: 16px 32px;
       border-right: 1px solid #D9D9D9;
       border-left: 1px solid #D9D9D9;
       border-bottom: 1px solid #D9D9D9;
-      //filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.1)) drop-shadow(-1px -1px 2px rgba(0, 0, 0, 0.1));
 
       & > span {
         font-weight: 400;

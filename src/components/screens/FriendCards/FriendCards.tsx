@@ -1,14 +1,13 @@
 import React, {FC} from "react";
-import {PATH} from "../../../routes/router.data";
 import styles from './FriendCards.module.scss';
-import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {Button} from "../../ui/button/Button";
 import {MySearchInput} from "../../ui/search-input/MySearchInput";
 import {CardsTable} from "../CardsTable/CardsTable";
 import {Paginator} from "../../ui/pagination/Paginator";
 import {ICard} from "../../../types/cards";
 import {SelectChangeEvent} from "@mui/material/Select";
+import {BackArrow} from "../../ui/back-arrow/BackArrow";
 
 interface IFriendCards {
     packName: string
@@ -27,7 +26,6 @@ export const FriendCards: FC<IFriendCards> = (
     {
         packName,
         cards,
-        isEmptyCardQuestionSearchValue,
         isMyPack,
         page,
         pageCount,
@@ -44,25 +42,16 @@ export const FriendCards: FC<IFriendCards> = (
     }
 
     return <>
-        <Link to={PATH.PACKS}>
-            <div className={styles.backArrowWrapper}>
-                <KeyboardBackspaceIcon/>
-                <span>Back to Packs List</span>
-            </div>
-        </Link>
-
+        <BackArrow/>
         <div className={styles.titleAndButtonBox}>
             <h3 className={styles.title}>{packName}</h3>
             {<Button onClick={redirect}>Learn to pack</Button>}
         </div>
-
         <div className={styles.searchTitle}>Search</div>
         <MySearchInput fullWidth handleSearch={handleSearchCard}/>
-
         {cards.length > 0 && <CardsTable isMyPack={isMyPack} cards={cards}/>}
         {cards.length <= 0 &&
             <div className={styles.notFound}>There are no cards matching the search in this pack</div>}
-
         {cards.length > 0 && <Paginator page={page} pageCount={pageCount}
                                         totalCount={cardsTotalCount}
                                         handleChangeCurrentPage={handleChangeCurrentPage}

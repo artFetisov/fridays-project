@@ -26,6 +26,11 @@
 
     &:nth-child(4) {
       margin-left: auto;
+
+      &.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+      }
     }
 
 

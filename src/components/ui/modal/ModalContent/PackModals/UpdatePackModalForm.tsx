@@ -8,9 +8,15 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {IUpdatePackData} from "../../../../../types/packs";
 import {updatePackTC} from "../../../../../store/reducers/pack/pack.actions";
 import {useAppSelector} from "../../../../../hooks/useAppSelector";
+import {useLocation} from "react-router-dom";
+import {setCardsPackName} from "../../../../../store/reducers/card/card.slice";
 
 export const UpdatePackModalForm = () => {
     const dispatch = useAppDispatch()
+
+    const {pathname} = useLocation()
+
+    const isNowCardsPage = pathname.includes('cards')
 
     const currentPackData = useAppSelector(state => state.modal.currentPackData)
 
@@ -24,13 +30,15 @@ export const UpdatePackModalForm = () => {
         handleSubmit,
     } = useForm<IUpdatePackData>()
 
-    const onSubmit: SubmitHandler<IUpdatePackData> = (data) => {
+    const onSubmit: SubmitHandler<IUpdatePackData> = async (data) => {
         const updatedPackData: IUpdatePackData = {
             ...data,
             _id: currentPackData._id
         }
-        dispatch(updatePackTC(updatedPackData))
         handleCloseModal()
+        dispatch(updatePackTC(updatedPackData))
+        isNowCardsPage && dispatch(setCardsPackName(data.name))
+
     }
 
     return <form onSubmit={handleSubmit(onSubmit)}>

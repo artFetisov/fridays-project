@@ -6,15 +6,20 @@ import {useAppDispatch} from "../../../hooks/useAppDispatch";
 import {resetParams, setMinAndMaxCurrentCardsCount} from "../../../store/reducers/pack/pack.slice";
 import {useAppSelector} from "../../../hooks/useAppSelector";
 import {getAllPacksTC} from "../../../store/reducers/pack/pack.actions";
+import cn from 'classnames';
 
 const minDistance = 2;
 
 export const MyRangeSlider = () => {
     const dispatch = useAppDispatch()
+
+    const appStatus = useAppSelector(state => state.app.appStatus)
     const min = useAppSelector(state => state.pack.minCardsCount)
     const max = useAppSelector(state => state.pack.maxCardsCount)
     const currentMin = useAppSelector(state => state.pack.currentMinCardsCount)
     const currentMax = useAppSelector(state => state.pack.currentMaxCardsCount)
+
+    const isLoading = appStatus === 'loading'
 
     const [value, setValue] = useState<number[]>([currentMin, currentMax])
 
@@ -69,12 +74,13 @@ export const MyRangeSlider = () => {
     return (
         <div className={styles.rangeBox}>
             <div className={styles.value}>{value[0]}</div>
-            <Box sx={{width: 200}}>
+            <Box width={200}>
                 <Slider
+                    disabled={isLoading}
                     value={value}
-                    getAriaLabel={() => 'Minimum distance shift'}
                     max={max}
                     min={min}
+                    color={'primary'}
                     onChange={handleChange}
                     // @ts-ignore
                     onChangeCommitted={handleRange}
@@ -82,7 +88,11 @@ export const MyRangeSlider = () => {
                 />
             </Box>
             <div className={styles.value}>{value[1]}</div>
-            <div className={styles.value} onClick={handleResetParams}>icon</div>
+            <div className={cn(styles.value, {
+                    [styles.disabled]: isLoading
+                }
+            )} onClick={handleResetParams}>icon
+            </div>
         </div>
     );
 }

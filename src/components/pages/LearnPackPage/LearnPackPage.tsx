@@ -1,16 +1,15 @@
 import React, {FC, useEffect, useState} from "react";
-import {Link, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {setCardsPageCount, setOpenedPackId} from "../../../store/reducers/card/card.slice";
 import {getCardsTC, sendGradeCardTC} from "../../../store/reducers/card/card.actions";
 import {useAppDispatch} from "../../../hooks/useAppDispatch";
-import {PATH} from "../../../routes/router.data";
 import styles from './LearnPackPage.module.scss';
-import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import {useAppSelector} from "../../../hooks/useAppSelector";
 import {ICard} from "../../../types/cards";
 import {Button} from "../../ui/button/Button";
 import {FormControlLabel, Radio, RadioGroup} from "@mui/material";
 import FormControl from "@mui/material/FormControl";
+import {BackArrow} from "../../ui/back-arrow/BackArrow";
 
 const grades = ['Did not know', 'Forgot', 'A lot of thought', 'Confused', 'Knew the answer']
 
@@ -81,12 +80,7 @@ export const LearnPackPage: FC = () => {
     }
 
     return <div className={styles.container}>
-        <Link to={PATH.PACKS}>
-            <div className={styles.backArrowWrapper}>
-                <KeyboardBackspaceIcon/>
-                <span>Back to Packs List</span>
-            </div>
-        </Link>
+        <BackArrow/>
         <div className={styles.title}>Learn "{packName}"</div>
         <div className={styles.questionAndAnswersBox}>
             <div className={styles.questionAndAnswerInfo}>

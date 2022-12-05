@@ -1,11 +1,8 @@
-import React, {FC, useState} from "react";
+import React, {FC} from "react";
 import {Pagination} from "@mui/material";
 import styles from './Paginator.module.scss';
 import {MySelect} from "../select/MySelect";
 import {useAppSelector} from "../../../hooks/useAppSelector";
-import {useAppDispatch} from "../../../hooks/useAppDispatch";
-import {setCurrentPage} from "../../../store/reducers/pack/pack.slice";
-import {getAllPacksTC} from "../../../store/reducers/pack/pack.actions";
 import {SelectChangeEvent} from "@mui/material/Select";
 
 interface IPaginatorProps {
@@ -26,10 +23,13 @@ export const Paginator: FC<IPaginatorProps> = (
     }
 ) => {
     const pagesCount = Math.ceil(totalCount / pageCount)
+    const appStatus = useAppSelector(state => state.app.appStatus)
+
+    const isLoading = appStatus === 'loading'
 
     return (
         <div className={styles.paginatorBox}>
-            <Pagination count={pagesCount} page={page} onChange={handleChangeCurrentPage}/>
+            <Pagination disabled={isLoading} count={pagesCount} page={page} onChange={handleChangeCurrentPage}/>
             <span>Show</span>
             <MySelect handleChangePortionSize={handleChangePortionSize} pageCount={pageCount}/>
             <span>Cards per Page</span>

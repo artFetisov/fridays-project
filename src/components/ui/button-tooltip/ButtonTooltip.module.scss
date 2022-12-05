@@ -10,12 +10,24 @@
   justify-content: space-evenly;
   cursor: pointer;
 
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
   & > div {
     height: 1.75px;
     width: 1.75px;
     background-color: #000000;
     margin-bottom: 0.5px;
   }
+}
+
+.skeleton {
+  margin-right: auto;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
 }
 
 .headerTooltip {

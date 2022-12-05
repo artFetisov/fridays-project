@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, FC, useState} from "react";
-import {InputAdornment, TextField} from "@mui/material";
+import {InputAdornment, Skeleton, TextField} from "@mui/material";
 import styles from './EditableSpan.module.scss';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import {fontTheme} from "../../../assets/materialUiThemes";
@@ -8,6 +8,9 @@ import {useAppDispatch} from "../../../hooks/useAppDispatch";
 import {Button} from "../button/Button";
 import {useAppSelector} from "../../../hooks/useAppSelector";
 import {updateUserDataTC} from "../../../store/reducers/user/user.actions";
+import {useNavigate} from "react-router-dom";
+import {PATH} from "../../../routes/router.data";
+import cn from 'classnames';
 
 interface IEditableSpanProps {
     name?: string | undefined
@@ -15,23 +18,33 @@ interface IEditableSpanProps {
 
 export const EditableSpan: FC<IEditableSpanProps> = ({name}) => {
     const user = useAppSelector(state => state.user.user)
-    const dispatch = useAppDispatch()
-    const isDisabled = false
+    const userStatus = useAppSelector(state => state.user.userRequestStatus)
+    const appStatus = useAppSelector(state => state.app.appStatus)
 
+    const isLoading = userStatus === 'loading'
+
+    const dispatch = useAppDispatch()
+
+    const navigate = useNavigate()
+
+    const [localError, setLocalError] = useState('')
     const [editMode, setEditMode] = useState(false)
     const [newValue, setNewValue] = useState('')
 
+    const redirect = () => navigate(PATH.LOGIN)
 
     const setEditModeHandler = () => {
-        if (!isDisabled) {
-            if (name) setNewValue(name)
-            setEditMode(true)
+        if (name) {
+            setNewValue(name)
         }
+        setEditMode(true)
     }
 
     const changeField = () => {
+        if (name?.trim() !== newValue.trim()) {
+            dispatch(updateUserDataTC({name: newValue.trim(), avatar: user?.avatar as string, redirect}))
+        }
         setEditMode(false)
-        dispatch(updateUserDataTC({name: newValue, avatar: user?.avatar as string}))
     }
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -41,13 +54,27 @@ export const EditableSpan: FC<IEditableSpanProps> = ({name}) => {
     }
 
     const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewValue(e.currentTarget.value)
+        const value = e.currentTarget.value
+
+        if (value.length >= 20) {
+            setLocalError('Max length 20 symbols')
+            return
+        }
+
+
+        if (localError) {
+            setLocalError('')
+        }
+
+        setNewValue(value)
     }
 
-    return editMode ? <div className={styles.editSpanWrapper}>
+    return editMode ? <div className={cn(styles.editSpanWrapper, {
+            [styles.disabled]: appStatus === 'loading'
+        })}>
             <ThemeProvider theme={fontTheme}>
                 <TextField
-                    label={'Nickname'}
+                    label={'Nick name'}
                     fullWidth
                     autoFocus
                     onKeyDown={onKeyPressHandler}
@@ -55,7 +82,9 @@ export const EditableSpan: FC<IEditableSpanProps> = ({name}) => {
                     onChange={onChangeTitleHandler}
                     value={newValue}
                     variant="standard"
-                    disabled={isDisabled}
+                    helperText={'Max length 20 symbols'}
+                    error={localError.length > 0}
+                    disabled={isLoading || appStatus === 'loading'}
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position="start">
@@ -66,8 +95,14 @@ export const EditableSpan: FC<IEditableSpanProps> = ({name}) => {
                 />
             </ThemeProvider>
         </div>
-        : <div className={styles.editSpanWrapper}>
-            <span onDoubleClick={setEditModeHandler}>{name}</span>
-            <span className={styles.icon}><BorderColorIcon onClick={setEditModeHandler} fontSize={'small'}/></span>
+        : <div className={cn(styles.editSpanWrapper, {
+            [styles.disabled]: appStatus === 'loading'
+        })}>
+            {!isLoading ? <>
+                    <span onDoubleClick={setEditModeHandler}>{name}</span>
+                    <span className={styles.icon}><BorderColorIcon
+                        style={{width: '16px', height: '16px'}} onClick={setEditModeHandler} fontSize={'small'}/></span></>
+                : <Skeleton/>
+            }
         </div>
 }

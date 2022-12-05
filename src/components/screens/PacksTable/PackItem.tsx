@@ -8,14 +8,13 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import SchoolIcon from '@mui/icons-material/School';
 import {useAppDispatch} from "../../../hooks/useAppDispatch";
 import {useNavigate} from "react-router-dom";
-import {IconButton} from "@mui/material";
+import {IconButton, Skeleton} from "@mui/material";
 import {
     setCurrentContentModal,
     setCurrentPackData,
     setIsOpenModal,
     setModalTitle
 } from "../../../store/reducers/modal/modal.slice";
-import {AddPackModalForm} from "../../ui/modal/ModalContent/PackModals/AddPackModalForm";
 import {UpdatePackModalForm} from "../../ui/modal/ModalContent/PackModals/UpdatePackModalForm";
 import {DeletePackModalForm} from "../../ui/modal/ModalContent/PackModals/DeletePackModalForm";
 
@@ -25,7 +24,12 @@ interface IPackProps {
 
 export const PackItem: FC<IPackProps> = ({pack}) => {
     const dispatch = useAppDispatch()
+
     const myId = useAppSelector(state => state.user.user?._id)
+    const appStatus = useAppSelector(state => state.app.appStatus)
+
+    const isLoading = appStatus === 'loading'
+
     const navigate = useNavigate()
 
     const redirect = () => {
@@ -40,21 +44,23 @@ export const PackItem: FC<IPackProps> = ({pack}) => {
     }
 
     const handleDeletePack = () => {
-        dispatch(setModalTitle('Edit pack'))
+        dispatch(setModalTitle('Delete pack'))
         dispatch(setCurrentContentModal(DeletePackModalForm))
         dispatch(setCurrentPackData({_id: pack._id, name: pack.name}))
         dispatch(setIsOpenModal(true))
     }
 
-    return <div className={styles.pack}>
-        <span>{pack.name}</span>
-        <span>{pack.cardsCount}</span>
-        <span>
+    return <>
+        {isLoading
+            ? <Skeleton width={'100%'} variant={'rounded'} height={46} sx={{marginTop: 0.6}}/>
+            : <div className={styles.pack}>
+                <span>{pack.name}</span>
+                <span>{pack.cardsCount}</span>
+                <span>
             {getCorrectDate(pack.updated)}
-
-        </span>
-        <span className={styles.userName}>{pack.user_name}</span>
-        <span>
+            </span>
+                <span className={styles.userName}>{pack.user_name}</span>
+                <span>
             {pack.user_id === myId
                 ? <div className={styles.iconsBox}>
                     <SchoolIcon color={'primary'} fontSize={'small'} aria-disabled={true} onClick={redirect}/>
@@ -67,6 +73,8 @@ export const PackItem: FC<IPackProps> = ({pack}) => {
                     </IconButton>
                 </div>
             }
-        </span>
-    </div>
+            </span>
+            </div>
+        }
+    </>
 }

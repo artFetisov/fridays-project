@@ -4,22 +4,9 @@
   position: relative;
   width: 100%;
   background-color: $bg-color;
+  padding: 40px 136px;
 
-  .backArrowWrapper {
-    position: absolute;
-    top: 2%;
-    left: 9%;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
 
-    & > span {
-      margin-left: 10px;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 24px;
-    }
-  }
 
   .profileWrapper {
     margin: 40px auto;
@@ -42,7 +29,7 @@
       font-size: 14px;
       line-height: 24px;
       text-align: center;
-      opacity: 0.5;
+      color: rgba(0, 0, 0, 0.5);
       margin-bottom: 20px;
     }
 
@@ -56,6 +43,11 @@
       display: flex;
       justify-content: center;
       margin-bottom: 20px;
+
+      &.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+      }
 
       .iconWrapper {
         width: 32px;

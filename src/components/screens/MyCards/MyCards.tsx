@@ -1,8 +1,5 @@
 import React, {FC} from "react";
-import {PATH} from "../../../routes/router.data";
 import styles from './MyCards.module.scss';
-import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
-import {Link, useNavigate} from "react-router-dom";
 import {Button} from "../../ui/button/Button";
 import {ICard} from "../../../types/cards";
 import {MySearchInput} from "../../ui/search-input/MySearchInput";
@@ -10,6 +7,9 @@ import {CardsTable} from "../CardsTable/CardsTable";
 import {Paginator} from "../../ui/pagination/Paginator";
 import {SelectChangeEvent} from "@mui/material/Select";
 import {ButtonTooltip} from "../../ui/button-tooltip/ButtonTooltip";
+import {BackArrow} from "../../ui/back-arrow/BackArrow";
+import {useAppSelector} from "../../../hooks/useAppSelector";
+import cn from 'classnames';
 
 interface IMyCardsProps {
     packName: string
@@ -39,31 +39,31 @@ export const MyCards: FC<IMyCardsProps> =
          cardsTotalCount,
          handleChangeCurrentPage,
          handleChangePortionSize,
-         packId
      }) => {
+        const appStatus = useAppSelector(state => state.app.appStatus)
+
+        const isLoading = appStatus === 'loading'
 
 
         return <>
-            <Link to={PATH.PACKS}>
-                <div className={styles.backArrowWrapper}>
-                    <KeyboardBackspaceIcon/>
-                    <span>Back to Packs List</span>
-                </div>
-            </Link>
-
+            <BackArrow/>
             <div className={styles.titleAndButtonBox}>
-                <h3 className={styles.title}>{packName}</h3>
-                <ButtonTooltip />
-                {cards.length > 0 && <Button onClick={handleCreateCard}>Add new Card</Button>}
+                <h3 className={cn(styles.title, {
+                    [styles.disabled]: isLoading
+                })}>{packName}</h3>
+                <ButtonTooltip/>
+                {cards.length > 0 && <Button disabled={isLoading} onClick={handleCreateCard}>Add new Card</Button>}
             </div>
 
             {(cards.length > 0 || isEmptyCardQuestionSearchValue) && <>
-                <div className={styles.searchTitle}>Search</div>
-                <MySearchInput fullWidth handleSearch={handleSearchCard}/>
+                <div className={cn(styles.searchTitle, {
+                    [styles.disabled]: isLoading
+                })}>Search
+                </div>
+                <MySearchInput disabled={isLoading} fullWidth handleSearch={handleSearchCard}/>
             </>}
 
-
-            {cards.length > 0 && <CardsTable isMyPack={isMyPack} cards={cards}/>}
+            <CardsTable isMyPack={isMyPack} cards={cards}/>
             {(cards.length === 0 && isEmptyCardQuestionSearchValue) &&
                 <div className={styles.notFound}>There are no cards matching the search in this pack</div>}
 

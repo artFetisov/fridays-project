@@ -1,10 +1,17 @@
 .headerTooltip {
   padding: 10px 10px 10px 10px;
+  color: #000000;
+
+  a:active {
+    color: #000000;
+    text-decoration: none;
+  }
 
   .box {
     width: 100%;
     display: flex;
     cursor: pointer;
+    text-decoration: none;
 
     &:hover {
       text-decoration: underline;

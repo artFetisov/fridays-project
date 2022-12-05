@@ -14,6 +14,8 @@ import {
 } from "../../../store/reducers/modal/modal.slice";
 import {UpdateCardModalForm} from "../../ui/modal/ModalContent/CardModals/UpdateCardModalForm";
 import {DeleteCardModalForm} from "../../ui/modal/ModalContent/CardModals/DeleteCardModalForm";
+import {useAppSelector} from "../../../hooks/useAppSelector";
+import {Skeleton} from "@mui/material";
 
 interface ICardItemProps {
     card: ICard
@@ -22,6 +24,10 @@ interface ICardItemProps {
 
 export const CardsItem: FC<ICardItemProps> = ({card, isMyPack}) => {
     const dispatch = useAppDispatch()
+
+    const appStatus = useAppSelector(state => state.app.appStatus)
+
+    const isLoading = appStatus === 'loading'
 
     const handleUpdateCard = () => {
         dispatch(setModalTitle('Edit card'))
@@ -37,14 +43,20 @@ export const CardsItem: FC<ICardItemProps> = ({card, isMyPack}) => {
         dispatch(setIsOpenModal(true))
     }
 
-    return <div className={`${isMyPack ? styles.myCard : styles.card}`}>
-        <span>{card.question}</span>
-        <span>{card.answer}</span>
-        <span>{getCorrectDate(card.updated)}</span>
-        <span><MyRating grade={card.grade}/></span>
-        {isMyPack && <div className={styles.iconsBox}>
-            <BorderColorIcon fontSize={'small'} onClick={handleUpdateCard}/>
-            <DeleteOutlineIcon fontSize={'small'} onClick={handleDeleteCard}/>
-        </div>}
-    </div>
+    return <>
+        {isLoading
+            ? <Skeleton width={'100%'} variant={'rounded'} height={46} sx={{marginTop: 0.6}}/>
+            : <div className={`${isMyPack ? styles.myCard : styles.card}`}>
+                <span>{card.question}</span>
+                <span>{card.answer}</span>
+                <span>{getCorrectDate(card.updated)}</span>
+                <span><MyRating grade={card.grade}/></span>
+                {isMyPack && <div className={styles.iconsBox}>
+                    <BorderColorIcon fontSize={'small'} onClick={handleUpdateCard}/>
+                    <DeleteOutlineIcon fontSize={'small'} onClick={handleDeleteCard}/>
+                </div>}
+            </div>}
+
+
+    </>
 }

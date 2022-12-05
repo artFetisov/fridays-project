@@ -73,6 +73,10 @@ export const CardsPage: FC = () => {
         dispatch(getCardsTC())
     }, 600)
 
+    // if (isLoading) {
+    //     return <div><CircularProgress style={{position: 'absolute', top: '50%', left: '50%'}} size={40}/>
+    //     </div>
+    // }
 
     return <div className={styles.container}>
         {isMyPack ? <MyCards

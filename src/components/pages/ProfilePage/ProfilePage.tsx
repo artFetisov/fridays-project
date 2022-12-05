@@ -1,6 +1,6 @@
 import React, {ChangeEvent, FC, useEffect, useState} from "react";
 import styles from './ProfilePage.module.scss';
-import {Avatar, Badge, IconButton} from "@mui/material";
+import {Avatar, Badge, IconButton, Skeleton} from "@mui/material";
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import {EditableSpan} from "../../ui/editable-span/EditableSpan";
 import {Button} from "../../ui/button/Button";
@@ -10,13 +10,26 @@ import {useAppDispatch} from "../../../hooks/useAppDispatch";
 import {logoutTC} from "../../../store/reducers/auth/auth.actions";
 import {updateUserDataTC} from "../../../store/reducers/user/user.actions";
 import {getFileReaderURL} from "../../../utils/fileReader";
-import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {PATH} from "../../../routes/router.data";
+import cn from 'classnames';
+import {BackArrow} from "../../ui/back-arrow/BackArrow";
 
 export const ProfilePage: FC = () => {
     const user = useAppSelector(state => state.user.user)
+    const userStatus = useAppSelector(state => state.user.userRequestStatus)
+    const appStatus = useAppSelector(state => state.app.appStatus)
+
+    const isLoading = userStatus === 'loading'
+    const isLoadingApp = appStatus === 'loading'
+
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+
+    const redirect = () => {
+        navigate(PATH.LOGIN)
+    }
+
     const [dataUrl, setDataUrl] = useState<string | ArrayBuffer>('')
 
     const updateAvatarHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +41,7 @@ export const ProfilePage: FC = () => {
 
     useEffect(() => {
         if (dataUrl) {
-            dispatch(updateUserDataTC({name: user?.name as string, avatar: dataUrl}))
+            dispatch(updateUserDataTC({name: user?.name as string, avatar: dataUrl, redirect}))
         }
     }, [dataUrl])
 
@@ -36,39 +49,37 @@ export const ProfilePage: FC = () => {
         dispatch(logoutTC())
     }
 
-
     return <div className={styles.container}>
-        <Link to={PATH.PACKS}>
-            <div className={styles.backArrowWrapper}>
-                <KeyboardBackspaceIcon/>
-                <span>Back to Packs List</span>
-            </div>
-        </Link>
+        <BackArrow/>
         <div className={styles.profileWrapper}>
             <h3 className={styles.title}>Personal Information</h3>
-            <div className={styles.avatar}>
-                <Badge
+            <div className={cn(styles.avatar, {
+                    [styles.disabled]: isLoadingApp
+                }
+            )}>
+                {isLoading ? <Skeleton sx={{width: 96, height: 96}} variant={'circular'}/> : <Badge
                     overlap="circular"
                     anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
                     badgeContent={
                         <div className={styles.iconWrapper}>
                             <IconButton color="primary" aria-label="upload picture" component="label">
                                 <input hidden accept="image/*" type="file" onChange={updateAvatarHandler}/>
-                                <PhotoCameraIcon color={'inherit'} fontSize={'small'}/>
+                                <PhotoCameraIcon style={{color: 'white'}} fontSize={'small'}/>
                             </IconButton>
                         </div>
                     }
                 >
                     <Avatar sx={{width: 96, height: 96}} alt="Travis Howard"
                             src={user?.avatar || "/static/images/avatar/2.jpg"}/>
-                </Badge>
+                </Badge>}
+
             </div>
             <EditableSpan name={user?.name}/>
             <div className={styles.email}>
-                <span>{user?.email}</span>
+                <span>{isLoading ? <Skeleton/> : user?.email}</span>
             </div>
             <div className={styles.btnWrapper}>
-                <Button variant={'white'} onClick={logoutHandler}>
+                <Button variant={'white'} disabled={isLoading || appStatus === 'loading'} onClick={logoutHandler}>
                     <div style={{display: 'flex', alignItems: 'center'}}>
                         <LogoutIcon fontSize={'small'}/>
                         <span style={{marginLeft: '8px'}}>

@@ -7,7 +7,7 @@ import {PATH} from "../../../routes/router.data";
 import {useAppDispatch} from "../../../hooks/useAppDispatch";
 import {logoutTC} from "../../../store/reducers/auth/auth.actions";
 
-export const ProfileTooltip = () => {
+export const ProfileTooltip: FC = () => {
     const dispatch = useAppDispatch()
 
     const handleLogout = () => {
@@ -17,7 +17,7 @@ export const ProfileTooltip = () => {
     return <div className={styles.headerTooltip}>
         <div>
             <Link to={PATH.PROFILE} className={styles.box}>
-                <div className={styles.iconBox}><PersonOutlineIcon/></div>
+                <div className={styles.iconBox}><PersonOutlineIcon style={{color: '#000000'}}/></div>
                 <span className={styles.text}>Profile</span>
             </Link>
         </div>

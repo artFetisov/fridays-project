@@ -7,10 +7,12 @@ import {useAppDispatch} from "./hooks/useAppDispatch";
 import {appInitializedTC} from "./store/reducers/app/app.actions";
 import {LayoutModal} from "./components/ui/modal/LayoutModal";
 import {MyTopProgressBar} from "./components/ui/top-progress-bar/MyTopProgressBar";
+import {CircularProgress} from "@mui/material";
 
 
 export const App: FC = () => {
     const appStatus = useAppSelector(state => state.app.appStatus)
+    const userStatus = useAppSelector(state => state.user.userRequestStatus)
     const isInitialized = useAppSelector(state => state.app.isInitialized)
     const dispatch = useAppDispatch()
 
@@ -21,7 +23,7 @@ export const App: FC = () => {
 
     return <>
         <div style={{width: '100%'}}>
-            {appStatus === 'loading' && <MyTopProgressBar/>}
+            {(appStatus === 'loading' || userStatus === 'loading') && <MyTopProgressBar/>}
         </div>
         <>
             <LayoutModal/>
@@ -32,7 +34,9 @@ export const App: FC = () => {
                     <Router/>
                 </Layout>
             </div>
-            : <div>...Loading</div>
+            :
+            <div><CircularProgress style={{position: 'absolute', top: '50%', left: '50%'}} size={40}/>
+            </div>
         }
     </>
 }

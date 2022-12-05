@@ -42,7 +42,6 @@ export const RegisterForm: FC = () => {
     const {
         register,
         formState: {errors},
-        reset,
         handleSubmit,
         watch
     } = useForm<IRegisterData>()
@@ -50,7 +49,6 @@ export const RegisterForm: FC = () => {
     const onSubmit: SubmitHandler<IRegisterData> = (data) => {
         const {email, password} = data
         dispatch(registerTC({email, password, redirect}))
-        reset()
     }
 
     const handleChange = (prop: keyof IRegisterFormState) => (event: React.ChangeEvent<HTMLInputElement>) => {

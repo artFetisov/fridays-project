@@ -25,11 +25,12 @@ export const Header: FC = () => {
         </Button>}
         {isAuth && <>
             {pathname === PATH.PROFILE ? <Link to={PATH.PROFILE}>
-                <Avatar style={{marginLeft: '12px'}} sx={{width: 36, height: 36}} alt="Travis Howard"
+                <Avatar style={{marginLeft: '12px', color: '#000000'}} sx={{width: 36, height: 36}} alt="Travis Howard"
                         src={user?.avatar || "/static/images/avatar/2.jpg"}/>
             </Link> : <MyTooltip element={<ProfileTooltip/>}>
                 <Link to={PATH.PROFILE}>
-                    <Avatar style={{marginLeft: '12px'}} sx={{width: 36, height: 36}} alt="Travis Howard"
+                    <Avatar style={{marginLeft: '12px', color: '#000000'}} sx={{width: 36, height: 36}}
+                            alt="Travis Howard"
                             src={user?.avatar || "/static/images/avatar/2.jpg"}/>
                 </Link>
             </MyTooltip>}

@@ -20,11 +20,15 @@ import {setCurrentContentModal, setIsOpenModal, setModalTitle} from "../../../st
 import {AddPackModalForm} from "../../ui/modal/ModalContent/PackModals/AddPackModalForm";
 
 export const PacksPage: FC = () => {
-    const packsStatus = useAppSelector(state => state.pack.packStatus)
+    const appStatus = useAppSelector(state => state.app.appStatus)
     const page = useAppSelector(state => state.pack.page)
     const pageCount = useAppSelector(state => state.pack.pageCount)
     const cardPacksTotalCount = useAppSelector(state => state.pack.cardPacksTotalCount)
+    const cardPacks = useAppSelector(state => state.pack.cardPacks)
+
     const dispatch = useAppDispatch()
+
+    const isLoading = appStatus === 'loading'
 
     useEffect(() => {
         dispatch(getAllPacksTC())
@@ -54,7 +58,7 @@ export const PacksPage: FC = () => {
     return <div className={styles.packsContainer}>
         <div className={styles.topBox}>
             <h3 className={styles.title}>Packs list</h3>
-            <Button onClick={handleCreatePack}>Add new pack</Button>
+            <Button disabled={isLoading} onClick={handleCreatePack}>Add new pack</Button>
         </div>
         <div className={styles.paramsBox}>
             <span>Search</span>
@@ -62,17 +66,17 @@ export const PacksPage: FC = () => {
             <span>Number of cards</span>
         </div>
         <div className={styles.paramsBox}>
-            <MySearchInput handleSearch={handleSearchPackName}/>
+            <MySearchInput disabled={isLoading} handleSearch={handleSearchPackName}/>
             <ButtonGroup/>
             <MyRangeSlider/>
         </div>
-        {packsStatus === 'loading' ? 'Loading...' : <PacksTable/>}
-        <Paginator
+        <PacksTable/>
+        {cardPacks.length > 0 && <Paginator
             totalCount={cardPacksTotalCount}
             page={page}
             pageCount={pageCount}
             handleChangeCurrentPage={handleChangeCurrentPage}
             handleChangePortionSize={handleChangePortionSize}
-        />
+        />}
     </div>
 }

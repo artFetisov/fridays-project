@@ -10,6 +10,7 @@ import {getAllPacksTC} from "../../../store/reducers/pack/pack.actions";
 
 export const PacksTable: FC = () => {
     const dispatch = useAppDispatch()
+
     const packs = useAppSelector(state => state.pack.cardPacks)
     const sortPacks = useAppSelector(state => state.pack.sortPacks)
 
