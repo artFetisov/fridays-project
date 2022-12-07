@@ -14,12 +14,14 @@ import {
 import {UpdatePackModalForm} from "../modal/ModalContent/PackModals/UpdatePackModalForm";
 import {useAppSelector} from "../../../hooks/useAppSelector";
 import {DeletePackModalForm} from "../modal/ModalContent/PackModals/DeletePackModalForm";
+import cn from 'classnames';
 
 export const EditTooltip: FC = () => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const {packId} = useParams()
     const packName = useAppSelector(state => state.card.packName)
+    const cards = useAppSelector(state => state.card.cards)
 
     const handleUpdatePack = () => {
         dispatch(setModalTitle('Edit pack'))
@@ -49,7 +51,9 @@ export const EditTooltip: FC = () => {
             <div className={styles.iconBox}><DeleteOutlineIcon fontSize={'small'}/></div>
             <span className={styles.text}>Delete</span>
         </div>
-        <div className={styles.box} onClick={redirect}>
+        <div className={cn(styles.box, {
+            [styles.disabled]: cards.length <= 0
+        })} onClick={redirect}>
             <div className={styles.iconBox}><SchoolIcon fontSize={'small'}/></div>
             <span className={styles.text}>Learn</span>
         </div>

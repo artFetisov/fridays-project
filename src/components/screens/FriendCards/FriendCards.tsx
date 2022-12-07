@@ -8,6 +8,8 @@ import {Paginator} from "../../ui/pagination/Paginator";
 import {ICard} from "../../../types/cards";
 import {SelectChangeEvent} from "@mui/material/Select";
 import {BackArrow} from "../../ui/back-arrow/BackArrow";
+import cn from 'classnames';
+import {useAppSelector} from "../../../hooks/useAppSelector";
 
 interface IFriendCards {
     packName: string
@@ -34,6 +36,8 @@ export const FriendCards: FC<IFriendCards> = (
         handleChangePortionSize,
         handleSearchCard
     }) => {
+    const appStatus = useAppSelector(state => state.app.appStatus)
+
     const navigate = useNavigate()
     const {packId} = useParams()
 
@@ -44,12 +48,17 @@ export const FriendCards: FC<IFriendCards> = (
     return <>
         <BackArrow/>
         <div className={styles.titleAndButtonBox}>
-            <h3 className={styles.title}>{packName}</h3>
-            {<Button onClick={redirect}>Learn to pack</Button>}
+            <h3 className={cn(styles.title, {
+                [styles.disabled]: appStatus === 'loading'
+            })}>{packName}</h3>
+            {<Button onClick={redirect} disabled={appStatus === 'loading'}>Learn to pack</Button>}
         </div>
-        <div className={styles.searchTitle}>Search</div>
-        <MySearchInput fullWidth handleSearch={handleSearchCard}/>
-        {cards.length > 0 && <CardsTable isMyPack={isMyPack} cards={cards}/>}
+        <div className={cn(styles.searchTitle, {
+            [styles.disabled]: appStatus === 'loading'
+        })}>Search
+        </div>
+        <MySearchInput disabled={appStatus === 'loading'} fullWidth handleSearch={handleSearchCard}/>
+        <CardsTable isMyPack={isMyPack} cards={cards}/>
         {cards.length <= 0 &&
             <div className={styles.notFound}>There are no cards matching the search in this pack</div>}
         {cards.length > 0 && <Paginator page={page} pageCount={pageCount}

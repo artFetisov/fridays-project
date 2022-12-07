@@ -48,6 +48,11 @@
       border-left: 1px solid #D9D9D9;
       border-bottom: 1px solid #D9D9D9;
 
+      &:hover .hover {
+        cursor: pointer;
+        font-weight: 600;
+      }
+
       & > span {
         font-weight: 400;
         font-size: 13px;

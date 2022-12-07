@@ -23,6 +23,10 @@ export const CardsTable: FC<ICardsTableProps> = ({isMyPack, cards}) => {
         dispatch(getCardsTC())
     }
 
+    if (!cards.length) {
+        return <></>
+    }
+
     return <div className={styles.cardsTable}>
         {!isMyPack && <>
             <div className={styles.titles}>

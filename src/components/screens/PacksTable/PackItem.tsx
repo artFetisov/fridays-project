@@ -17,6 +17,7 @@ import {
 } from "../../../store/reducers/modal/modal.slice";
 import {UpdatePackModalForm} from "../../ui/modal/ModalContent/PackModals/UpdatePackModalForm";
 import {DeletePackModalForm} from "../../ui/modal/ModalContent/PackModals/DeletePackModalForm";
+import cn from 'classnames';
 
 interface IPackProps {
     pack: IPack
@@ -54,7 +55,9 @@ export const PackItem: FC<IPackProps> = ({pack}) => {
         {isLoading
             ? <Skeleton width={'100%'} variant={'rounded'} height={46} sx={{marginTop: 0.6}}/>
             : <div className={styles.pack}>
-                <span>{pack.name}</span>
+                <span className={cn(styles.nameSpan, {
+                    [styles.hover]: pack.cardsCount > 0
+                })} onClick={redirect}>{pack.name}</span>
                 <span>{pack.cardsCount}</span>
                 <span>
             {getCorrectDate(pack.updated)}

@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {IPack, IVariantMyOrAllPacks, SortPacksType} from "../../../types/packs";
+import {IPack, IPacksRequestParams, IVariantMyOrAllPacks, SortPacksType} from "../../../types/packs";
 import {RequestStatusType} from "../../../types/auth";
 
 interface IPackState {
@@ -76,6 +76,15 @@ const packSlice = createSlice({
         },
         setSortPacks(state, action: PayloadAction<SortPacksType>) {
             state.sortPacks = action.payload
+        },
+        setAllParamsForRequestPacks(state, action: PayloadAction<IPacksRequestParams & { variant: IVariantMyOrAllPacks }>) {
+            state.page = Number(action.payload.page)
+            state.pageCount = Number(action.payload.pageCount)
+            state.currentMinCardsCount = Number(action.payload.min)
+            state.currentMaxCardsCount = Number(action.payload.max)
+            state.searchPackName = action.payload.packName
+            state.variantMyOrAllPacks = action.payload.variant
+            state.sortPacks = action.payload.sortPacks
         }
     },
 })
@@ -92,7 +101,8 @@ export const {
     resetParams,
     setVariantMyOrAllPacks,
     setSearchPackName,
-    setSortPacks
+    setSortPacks,
+    setAllParamsForRequestPacks
 } = packSlice.actions
 
 export const {reducer} = packSlice
