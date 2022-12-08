@@ -29,7 +29,7 @@ export const MyRangeSlider = () => {
 
     const handleResetParams = () => {
         dispatch(resetParams())
-        dispatch(getAllPacksTC())
+        dispatch(getAllPacksTC({}))
     }
 
     const handleRange = (event: Event | SyntheticEvent<Element, Event>, newValue: number | number[], activeThumb: number,) => {
@@ -41,15 +41,15 @@ export const MyRangeSlider = () => {
             if (activeThumb === 0) {
                 const clamped = Math.min(newValue[0], 100 - minDistance);
                 dispatch(setMinAndMaxCurrentCardsCount([clamped, clamped + minDistance]))
-                dispatch(getAllPacksTC())
+                dispatch(getAllPacksTC({}))
             } else {
                 const clamped = Math.max(newValue[1], minDistance);
                 dispatch(setMinAndMaxCurrentCardsCount([clamped - minDistance, clamped]))
-                dispatch(getAllPacksTC())
+                dispatch(getAllPacksTC({}))
             }
         } else {
             dispatch(setMinAndMaxCurrentCardsCount(newValue as number[]))
-            dispatch(getAllPacksTC())
+            dispatch(getAllPacksTC({}))
         }
     }
 

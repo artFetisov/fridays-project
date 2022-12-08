@@ -17,7 +17,7 @@ export const ButtonGroup: FC = () => {
     const changeVariantHandler = (event: MouseEvent<HTMLButtonElement>) => {
         dispatch(setMinAndMaxCurrentCardsCount([0, 0]))
         dispatch(setVariantMyOrAllPacks(event.currentTarget.value as IVariantMyOrAllPacks))
-        dispatch(getAllPacksTC())
+        dispatch(getAllPacksTC({}))
     }
 
     return <div className={styles.buttonsBox}>

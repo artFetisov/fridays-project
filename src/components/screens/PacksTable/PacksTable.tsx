@@ -16,22 +16,22 @@ export const PacksTable: FC = () => {
 
     const handleChangeSortPacksUpdatedFieldUp = () => {
         dispatch(setSortPacks('0updated'))
-        dispatch(getAllPacksTC())
+        dispatch(getAllPacksTC({}))
     }
 
     const handleChangeSortPacksUpdatedFieldDown = () => {
         dispatch(setSortPacks('1updated'))
-        dispatch(getAllPacksTC())
+        dispatch(getAllPacksTC({}))
     }
 
     const handleChangeSortPacksCardsAmountUp = () => {
         dispatch(setSortPacks('0cardsCount'))
-        dispatch(getAllPacksTC())
+        dispatch(getAllPacksTC({}))
     }
 
     const handleChangeSortPacksCardsAmountDown = () => {
         dispatch(setSortPacks('1cardsCount'))
-        dispatch(getAllPacksTC())
+        dispatch(getAllPacksTC({}))
     }
 
     if (!packs.length) {

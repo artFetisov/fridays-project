@@ -19,15 +19,16 @@ interface IMySearchInput {
     handleSearch: (value: string) => void
     fullWidth?: boolean
     disabled?: boolean
+    value?: string
 }
 
-export const MySearchInput: FC<IMySearchInput> = ({fullWidth, handleSearch, disabled}) => {
+export const MySearchInput: FC<IMySearchInput> = ({fullWidth, handleSearch, disabled, value}) => {
 
     return <div className={`${styles.searchBox} ${fullWidth && styles.fullWidth}`}>
         <SearchIconWrapper>
             <SearchIcon style={{color: 'rgba(0, 0, 0, 0.5)'}}/>
         </SearchIconWrapper>
-        <input disabled={disabled} onChange={(e) => handleSearch(e.currentTarget.value)}
+        <input disabled={disabled} defaultValue={value} onChange={(e) => handleSearch(e.currentTarget.value)}
                className={`${styles.searchInput}`}
                placeholder={'Provide your text'}/>
     </div>
