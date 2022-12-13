@@ -42,22 +42,25 @@
     .pack {
       display: grid;
       grid-template-columns: 2fr 2fr 1.6fr 1.4fr 1fr;
-      height: 52px;
-      padding: 16px 32px;
+      height: 59px;
+      padding: 8px 32px;
       border-right: 1px solid #D9D9D9;
       border-left: 1px solid #D9D9D9;
       border-bottom: 1px solid #D9D9D9;
 
-      &:hover .hover {
-        cursor: pointer;
-        font-weight: 600;
-      }
 
       & > span {
+        display: flex;
+        align-items: center;
         font-weight: 400;
         font-size: 13px;
         line-height: 16px;
         color: #000000;
+
+        &:hover.hover {
+          cursor: pointer;
+          font-weight: 600;
+        }
       }
 
       .userName {

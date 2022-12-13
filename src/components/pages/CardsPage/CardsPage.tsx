@@ -6,7 +6,7 @@ import styles from './CardsPage.module.scss';
 import {useAppSelector} from "../../../hooks/useAppSelector";
 import {SelectChangeEvent} from "@mui/material/Select";
 import {
-    setCardQuestionSearch,
+    setCardQuestionSearch, setCards,
     setCardsCurrentPage,
     setCardsPageCount, setIsEmptyCardQuestionSearchValue,
     setOpenedPackId
@@ -47,6 +47,7 @@ export const CardsPage: FC = () => {
         return () => {
             dispatch(setCardQuestionSearch(''))
             dispatch(setIsEmptyCardQuestionSearchValue(false))
+            dispatch(setCards([]))
         }
     }, [packId])
 

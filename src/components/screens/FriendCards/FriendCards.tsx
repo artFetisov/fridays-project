@@ -10,6 +10,7 @@ import {SelectChangeEvent} from "@mui/material/Select";
 import {BackArrow} from "../../ui/back-arrow/BackArrow";
 import cn from 'classnames';
 import {useAppSelector} from "../../../hooks/useAppSelector";
+import {Avatar} from "@mui/material";
 
 interface IFriendCards {
     packName: string
@@ -37,6 +38,7 @@ export const FriendCards: FC<IFriendCards> = (
         handleSearchCard
     }) => {
     const appStatus = useAppSelector(state => state.app.appStatus)
+    const packDeckCover = useAppSelector(state => state.card.packDeckCover)
 
     const navigate = useNavigate()
     const {packId} = useParams()
@@ -53,6 +55,12 @@ export const FriendCards: FC<IFriendCards> = (
             })}>{packName}</h3>
             {<Button onClick={redirect} disabled={appStatus === 'loading'}>Learn to pack</Button>}
         </div>
+        <Avatar
+            sx={{width: 220, height: 140, marginTop: 1, marginBottom: 4}}
+            src={packDeckCover}
+            variant="rounded">
+            {!packDeckCover && 'no cover'}
+        </Avatar>
         <div className={cn(styles.searchTitle, {
             [styles.disabled]: appStatus === 'loading'
         })}>Search

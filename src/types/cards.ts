@@ -8,6 +8,8 @@ export interface ICard {
     created: string
     updated: string
     _id: string
+    questionImg?: string
+    answerImg?: string
 }
 
 export interface IAllCardsWithParams {
@@ -19,6 +21,7 @@ export interface IAllCardsWithParams {
     pageCount: number
     packUserId: string
     packName: string
+    packDeckCover: string
 }
 
 export type SortCardsType = '0updated' | '1updated'
@@ -50,6 +53,8 @@ export interface IUpdateCardData {
     _id: string
     question?: string
     answer?: string
+    questionImg?: string
+    answerImg?: string
 }
 
 export interface ISendGradeCardRequestData {
@@ -67,4 +72,6 @@ export interface ISendGradeCardResponseData {
         shots: number
     }
 }
+
+export type VariantAddCardModalType = 'Text' | 'Picture'
 

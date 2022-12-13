@@ -6,6 +6,8 @@ export interface IPack {
     created: string
     updated: string
     user_name: string
+    deckCover: string
+    private: boolean
 }
 
 export interface IAllPacksWithParams {
@@ -46,6 +48,8 @@ export interface ICreatePackData {
 export interface IUpdatePackData {
     _id: string
     name: string
+    private?: boolean
+    deckCover?: string
 }
 
 export type IVariantMyOrAllPacks = 'all' | 'my'

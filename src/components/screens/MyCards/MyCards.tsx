@@ -10,6 +10,7 @@ import {ButtonTooltip} from "../../ui/button-tooltip/ButtonTooltip";
 import {BackArrow} from "../../ui/back-arrow/BackArrow";
 import {useAppSelector} from "../../../hooks/useAppSelector";
 import cn from 'classnames';
+import {Avatar} from "@mui/material";
 
 interface IMyCardsProps {
     packName: string
@@ -44,6 +45,8 @@ export const MyCards: FC<IMyCardsProps> =
 
         const isLoading = appStatus === 'loading'
 
+        const packDeckCover = useAppSelector(state => state.card.packDeckCover)
+
 
         return <>
             <BackArrow/>
@@ -54,6 +57,13 @@ export const MyCards: FC<IMyCardsProps> =
                 <ButtonTooltip/>
                 {cards.length > 0 && <Button disabled={isLoading} onClick={handleCreateCard}>Add new Card</Button>}
             </div>
+
+            <Avatar
+                sx={{width: 220, height: 140, marginTop: 2, marginBottom: 4}}
+                src={packDeckCover}
+                variant="rounded">
+                {!packDeckCover && 'no cover'}
+            </Avatar>
 
             {(cards.length > 0 || isEmptyCardQuestionSearchValue) && <>
                 <div className={cn(styles.searchTitle, {

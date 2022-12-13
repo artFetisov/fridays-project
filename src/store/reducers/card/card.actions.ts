@@ -1,7 +1,13 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {cardService} from "../../../services/cardService";
 import {ICardsRequestParams, ICreateCardData, ISendGradeCardRequestData, IUpdateCardData} from "../../../types/cards";
-import {setCards, setCardsPackName, setCardSTotalCount, setPackUserId, updateGradeCard} from "./card.slice";
+import {
+    setCards,
+    setCardsPackName,
+    setCardSTotalCount,
+    setPackDeckCover,
+    setPackUserId,
+} from "./card.slice";
 import {AppRootState} from "../../index";
 import {setAppStatus} from "../app/app.slice";
 import {errorToastr, successToastr} from "../../../utils/toastr";
@@ -29,6 +35,7 @@ export const getCardsTC = createAsyncThunk<void, void, { state: AppRootState }>(
 
         dispatch(setPackUserId(response.packUserId))
         dispatch(setCardsPackName(response.packName))
+        dispatch(setPackDeckCover(response.packDeckCover))
         dispatch(setCards(response.cards))
 
         dispatch(setAppStatus('succeeded'))
@@ -79,8 +86,7 @@ export const sendGradeCardTC = createAsyncThunk<void, ISendGradeCardRequestData>
     }) => {
         try {
             dispatch(setAppStatus('loading'))
-            const response = await cardService.sendCardGrade(data)
-            dispatch(updateGradeCard(response))
+            await cardService.sendCardGrade(data)
             dispatch(setAppStatus('succeeded'))
         } catch (error) {
             errorToastr(error as Error, 'Sending grade', dispatch, setAppStatus('failed'))

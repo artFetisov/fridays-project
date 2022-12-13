@@ -8,7 +8,7 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import SchoolIcon from '@mui/icons-material/School';
 import {useAppDispatch} from "../../../hooks/useAppDispatch";
 import {useNavigate} from "react-router-dom";
-import {IconButton, Skeleton} from "@mui/material";
+import {Avatar, IconButton, Skeleton} from "@mui/material";
 import {
     setCurrentContentModal,
     setCurrentPackData,
@@ -40,7 +40,7 @@ export const PackItem: FC<IPackProps> = ({pack}) => {
     const handleUpdatePack = () => {
         dispatch(setModalTitle('Edit pack'))
         dispatch(setCurrentContentModal(UpdatePackModalForm))
-        dispatch(setCurrentPackData({_id: pack._id, name: pack.name}))
+        dispatch(setCurrentPackData({_id: pack._id, name: pack.name, private: pack.private, deckCover: pack.deckCover}))
         dispatch(setIsOpenModal(true))
     }
 
@@ -57,7 +57,15 @@ export const PackItem: FC<IPackProps> = ({pack}) => {
             : <div className={styles.pack}>
                 <span className={cn(styles.nameSpan, {
                     [styles.hover]: pack.cardsCount > 0
-                })} onClick={redirect}>{pack.name}</span>
+                })} onClick={redirect}><Avatar src={pack.deckCover}
+                                               sx={{width: 57, height: 42, marginRight: 2}}
+                                               variant="rounded">
+                    {!pack.deckCover && 'no cover'}
+                </Avatar>
+                    <span>
+                        {pack.name}
+                    </span>
+                    </span>
                 <span>{pack.cardsCount}</span>
                 <span>
             {getCorrectDate(pack.updated)}

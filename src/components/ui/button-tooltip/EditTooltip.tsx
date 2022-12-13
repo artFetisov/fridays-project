@@ -22,11 +22,12 @@ export const EditTooltip: FC = () => {
     const {packId} = useParams()
     const packName = useAppSelector(state => state.card.packName)
     const cards = useAppSelector(state => state.card.cards)
+    const packDeckCover = useAppSelector(state => state.card.packDeckCover)
 
     const handleUpdatePack = () => {
         dispatch(setModalTitle('Edit pack'))
         dispatch(setCurrentContentModal(UpdatePackModalForm))
-        dispatch(setCurrentPackData({_id: packId as string, name: packName as string}))
+        dispatch(setCurrentPackData({_id: packId as string, name: packName as string, deckCover: packDeckCover}))
         dispatch(setIsOpenModal(true))
     }
 

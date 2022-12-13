@@ -1,13 +1,13 @@
 import React, {FC, useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {setCardsPageCount, setOpenedPackId} from "../../../store/reducers/card/card.slice";
+import {setCards, setCardsPageCount, setOpenedPackId, updateGradeCard} from "../../../store/reducers/card/card.slice";
 import {getCardsTC, sendGradeCardTC} from "../../../store/reducers/card/card.actions";
 import {useAppDispatch} from "../../../hooks/useAppDispatch";
 import styles from './LearnPackPage.module.scss';
 import {useAppSelector} from "../../../hooks/useAppSelector";
 import {ICard} from "../../../types/cards";
 import {Button} from "../../ui/button/Button";
-import {FormControlLabel, Radio, RadioGroup} from "@mui/material";
+import {Avatar, FormControlLabel, Radio, RadioGroup} from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import {BackArrow} from "../../ui/back-arrow/BackArrow";
 
@@ -56,6 +56,7 @@ export const LearnPackPage: FC = () => {
 
         return () => {
             dispatch(setCardsPageCount(10))
+            dispatch(setCards([]))
         }
     }, [dispatch, packId])
 
@@ -74,6 +75,7 @@ export const LearnPackPage: FC = () => {
     };
 
     const onNext = () => {
+        dispatch(updateGradeCard({card_id: currentCard._id, grade: gradeValue}))
         dispatch(sendGradeCardTC({card_id: currentCard._id, grade: gradeValue}))
 
         handleShowGrades()
@@ -82,11 +84,20 @@ export const LearnPackPage: FC = () => {
     return <div className={styles.container}>
         <BackArrow/>
         <div className={styles.title}>Learn "{packName}"</div>
+
         <div className={styles.questionAndAnswersBox}>
             <div className={styles.questionAndAnswerInfo}>
                 <span>Question: </span>
-                <span>{currentCard.question}</span>
+                {(currentCard.questionImg || currentCard.answerImg)
+                    ? <Avatar
+                        sx={{width: '100%', height: 120, marginTop: 2, marginBottom: 2}}
+                        src={currentCard.questionImg as string}
+                        variant="rounded"
+                    />
+                    : <span>{currentCard.question}</span>
+                }
             </div>
+
             <div className={styles.attempts}>Number of attempts to answer the question: <span>{currentCard.shots}</span>
             </div>
             {!isShowGrades && <>
@@ -95,7 +106,14 @@ export const LearnPackPage: FC = () => {
             {isShowGrades && <>
                 <div className={styles.questionAndAnswerInfo}>
                     <span>Answer: </span>
-                    <span>{currentCard.answer}</span>
+                    {(currentCard.questionImg || currentCard.answerImg)
+                        ? <Avatar
+                            sx={{width: '100%', height: 120, marginTop: 2, marginBottom: 2}}
+                            src={currentCard.answerImg as string}
+                            variant="rounded"
+                        />
+                        : <span>{currentCard.answer}</span>
+                    }
                 </div>
                 <div className={styles.gradesTitle}>Rate yourself:</div>
                 <div style={{marginBottom: '32px'}}>

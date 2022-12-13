@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {ICard, ISendGradeCardResponseData, SortCardsType} from "../../../types/cards";
+import {ICard, SortCardsType} from "../../../types/cards";
 
 interface ICardState {
     cards: ICard[]
@@ -14,6 +14,7 @@ interface ICardState {
     cardQuestionSearch: string
     isEmptyCardQuestionSearchValue: boolean
     sortCardsValue: SortCardsType
+    packDeckCover: string
 }
 
 const initialState: ICardState = {
@@ -28,7 +29,8 @@ const initialState: ICardState = {
     openedPackId: null,
     cardQuestionSearch: '',
     isEmptyCardQuestionSearchValue: false,
-    sortCardsValue: '0updated'
+    sortCardsValue: '0updated',
+    packDeckCover: ''
 }
 
 const cardSlice = createSlice({
@@ -65,10 +67,13 @@ const cardSlice = createSlice({
         setSortCardsValue(state, action: PayloadAction<SortCardsType>) {
             state.sortCardsValue = action.payload
         },
-        updateGradeCard(state, action: PayloadAction<ISendGradeCardResponseData>) {
-            const updatedCards = state.cards.map(card => card._id === action.payload.updatedGrade.card_id ? {
+        setPackDeckCover(state, action: PayloadAction<string>) {
+            state.packDeckCover = action.payload
+        },
+        updateGradeCard(state, action: PayloadAction<{ card_id: string, grade: number }>) {
+            const updatedCards = state.cards.map(card => card._id === action.payload.card_id ? {
                 ...card,
-                grade: action.payload.updatedGrade.grade
+                grade: action.payload.grade
             } : card)
 
             state.cards = updatedCards
@@ -87,7 +92,8 @@ export const {
     setCardQuestionSearch,
     setIsEmptyCardQuestionSearchValue,
     setSortCardsValue,
-    updateGradeCard
+    updateGradeCard,
+    setPackDeckCover
 } = cardSlice.actions
 
 export const {reducer} = cardSlice

@@ -3,7 +3,6 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {IUpdatePackData} from "../../../types/packs";
 import {IUpdateCardData} from "../../../types/cards";
 
-
 interface IModalState {
     isOpenModal: boolean
     CurrentContentModal: () => JSX.Element
@@ -23,7 +22,9 @@ const initialState: IModalState = {
     currentCardData: {
         _id: '',
         answer: '',
-        question: ''
+        question: '',
+        answerImg: '',
+        questionImg: ''
     }
 }
 

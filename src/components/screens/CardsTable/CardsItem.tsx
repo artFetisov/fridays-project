@@ -15,7 +15,7 @@ import {
 import {UpdateCardModalForm} from "../../ui/modal/ModalContent/CardModals/UpdateCardModalForm";
 import {DeleteCardModalForm} from "../../ui/modal/ModalContent/CardModals/DeleteCardModalForm";
 import {useAppSelector} from "../../../hooks/useAppSelector";
-import {Skeleton} from "@mui/material";
+import {Avatar, Skeleton} from "@mui/material";
 
 interface ICardItemProps {
     card: ICard
@@ -32,14 +32,26 @@ export const CardsItem: FC<ICardItemProps> = ({card, isMyPack}) => {
     const handleUpdateCard = () => {
         dispatch(setModalTitle('Edit card'))
         dispatch(setCurrentContentModal(UpdateCardModalForm))
-        dispatch(setCurrentCardData({_id: card._id, answer: card.answer, question: card.question}))
+        dispatch(setCurrentCardData({
+            _id: card._id,
+            answer: card.answer,
+            question: card.question,
+            answerImg: card.answerImg,
+            questionImg: card.questionImg
+        }))
         dispatch(setIsOpenModal(true))
     }
 
     const handleDeleteCard = () => {
         dispatch(setModalTitle('Delete card'))
         dispatch(setCurrentContentModal(DeleteCardModalForm))
-        dispatch(setCurrentCardData({_id: card._id, answer: card.answer, question: card.question}))
+        dispatch(setCurrentCardData({
+            _id: card._id,
+            answer: card.answer,
+            question: card.question,
+            answerImg: card.answerImg,
+            questionImg: card.questionImg
+        }))
         dispatch(setIsOpenModal(true))
     }
 
@@ -47,8 +59,16 @@ export const CardsItem: FC<ICardItemProps> = ({card, isMyPack}) => {
         {isLoading
             ? <Skeleton width={'100%'} variant={'rounded'} height={46} sx={{marginTop: 0.6}}/>
             : <div className={`${isMyPack ? styles.myCard : styles.card}`}>
-                <span>{card.question}</span>
-                <span>{card.answer}</span>
+                <>
+                    {card?.questionImg ? <Avatar src={card.questionImg}
+                                                 sx={{width: 104, height: 42}}
+                                                 variant="rounded"/> : <span>{card.question}</span>}
+                </>
+                <>
+                    {card?.answerImg ? <Avatar src={card.answerImg}
+                                               sx={{width: 104, height: 42}}
+                                               variant="rounded"/> : <span>{card.answer}</span>}
+                </>
                 <span>{getCorrectDate(card.updated)}</span>
                 <span><MyRating grade={card.grade}/></span>
                 {isMyPack && <div className={styles.iconsBox}>
@@ -56,7 +76,5 @@ export const CardsItem: FC<ICardItemProps> = ({card, isMyPack}) => {
                     <DeleteOutlineIcon fontSize={'small'} onClick={handleDeleteCard}/>
                 </div>}
             </div>}
-
-
     </>
 }
