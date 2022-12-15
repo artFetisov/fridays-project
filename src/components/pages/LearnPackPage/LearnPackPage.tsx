@@ -7,7 +7,7 @@ import styles from './LearnPackPage.module.scss';
 import {useAppSelector} from "../../../hooks/useAppSelector";
 import {ICard} from "../../../types/cards";
 import {Button} from "../../ui/button/Button";
-import {Avatar, FormControlLabel, Radio, RadioGroup} from "@mui/material";
+import {Avatar, CircularProgress, FormControlLabel, Radio, RadioGroup} from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import {BackArrow} from "../../ui/back-arrow/BackArrow";
 
@@ -30,6 +30,7 @@ export const LearnPackPage: FC = () => {
 
     const cards = useAppSelector(state => state.card.cards)
     const packName = useAppSelector(state => state.card.packName)
+    const appStatus = useAppSelector(state => state.app.appStatus)
 
     const {packId} = useParams()
 
@@ -75,10 +76,15 @@ export const LearnPackPage: FC = () => {
     };
 
     const onNext = () => {
-        dispatch(updateGradeCard({card_id: currentCard._id, grade: gradeValue}))
         dispatch(sendGradeCardTC({card_id: currentCard._id, grade: gradeValue}))
+        dispatch(updateGradeCard({card_id: currentCard._id, grade: gradeValue}))
 
         handleShowGrades()
+    }
+
+    if (appStatus === 'loading') {
+        return <div><CircularProgress style={{position: 'absolute', top: '50%', left: '50%'}} size={40}/>
+        </div>
     }
 
     return <div className={styles.container}>
