@@ -18,7 +18,7 @@
 
   .paramsBox {
     display: grid;
-    grid-template-columns: 2fr 1fr 2fr;
+    grid-template-columns: 2.5fr 1.1fr 1.5fr;
     margin-bottom: 8px;
 
     span {
@@ -27,7 +27,6 @@
       line-height: 17px;
       display: flex;
       align-items: center;
-      //color: #000000;
     }
   }
 }

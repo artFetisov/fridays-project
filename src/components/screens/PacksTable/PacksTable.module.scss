@@ -6,8 +6,9 @@
   .titles {
     background: #EFEFEF;
     padding: 16px 32px;
+    height: 59px;
     display: grid;
-    grid-template-columns: 2fr 2fr 1.6fr 1.4fr 1fr;
+    grid-template-columns: 2.2fr 2fr 1.8fr 1.4fr 0.7fr;
     filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.1)) drop-shadow(-1px -1px 2px rgba(0, 0, 0, 0.1));
     border: 1px solid #D9D9D9;
 
@@ -29,7 +30,7 @@
     .skeleton {
       display: grid;
       height: 52px;
-      grid-template-columns: 2fr 2fr 1.6fr 1.4fr 1fr;
+      grid-template-columns: 2.2fr 2fr 1.8fr 1.4fr 0.7fr;
       border-right: 1px solid #D9D9D9;
       border-left: 1px solid #D9D9D9;
       border-bottom: 1px solid #D9D9D9;
@@ -41,42 +42,72 @@
 
     .pack {
       display: grid;
-      grid-template-columns: 2fr 2fr 1.6fr 1.4fr 1fr;
+      grid-template-columns: 2.2fr 2fr 1.8fr 1.4fr 0.7fr;
+      justify-items: flex-start;
+      align-items: center;
       height: 59px;
       padding: 8px 32px;
       border-right: 1px solid #D9D9D9;
       border-left: 1px solid #D9D9D9;
       border-bottom: 1px solid #D9D9D9;
 
-
-      & > span {
+      .coverAndNameBox {
         display: flex;
         align-items: center;
-        font-weight: 400;
-        font-size: 13px;
-        line-height: 16px;
-        color: #000000;
 
         &:hover.hover {
           cursor: pointer;
-          font-weight: 600;
+
+          & > span {
+            font-weight: 600;
+          }
         }
+      }
+
+      span {
+        display: block;
+        max-width: 230px;
+        padding-right: 10px;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 16px;
+        overflow: hidden;
+        white-space: nowrap;
+        color: #000000;
+        text-overflow: ellipsis;
       }
 
       .userName {
         font-weight: 400;
         font-size: 14px;
         line-height: 17px;
+        max-width: 220px;
+        overflow: hidden;
+        white-space: nowrap;
+        color: #000000;
+        text-overflow: ellipsis;
       }
 
       .iconsBox {
+        display: flex;
+        justify-content: flex-start;
+
+        .disabled {
+          color: rgba(0, 0, 0, 0.4);
+          pointer-events: none;
+        }
 
         & svg {
-          margin-right: 14px;
+          margin-right: 10px;
           cursor: pointer;
-          width: 16px;
-          height: 16px;
           color: #000000;
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+
+          &:hover {
+            transform: scale(1.08);
+          }
         }
       }
 
