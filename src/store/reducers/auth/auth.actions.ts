@@ -86,7 +86,7 @@ export const setNewPassTC = createAsyncThunk<
   try {
     dispatch(setAppStatus('loading'))
     await authService.setNewPass(data)
-    successToastr('Password updated', 'Follow the login page', dispatch, setAppStatus('succeeded'))
+    successToastr('Password updated', '', dispatch, setAppStatus('succeeded'))
     data.redirect()
   } catch (error) {
     errorToastr(error as Error, 'New password setting error', dispatch, setAppStatus('failed'))

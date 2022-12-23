@@ -112,7 +112,9 @@ export const MyCards: FC<IMyCardsProps> = ({
             This pack is empty.Click add new card to fill this pack
           </div>
           <div style={{ textAlign: 'center' }}>
-            <Button onClick={handleCreateCard}>Add new card</Button>
+            <Button onClick={handleCreateCard} disabled={isLoading}>
+              Add new card
+            </Button>
           </div>
         </div>
       )}

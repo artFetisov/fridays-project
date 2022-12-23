@@ -2,6 +2,7 @@ import React, { FC } from 'react'
 
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
+import cn from 'classnames'
 
 import { useAppDispatch } from '../../../hooks/useAppDispatch'
 import { useAppSelector } from '../../../hooks/useAppSelector'
@@ -19,7 +20,9 @@ interface ICardsTableProps {
 
 export const CardsTable: FC<ICardsTableProps> = ({ isMyPack, cards }) => {
   const dispatch = useAppDispatch()
+
   const sortCardsValue = useAppSelector(state => state.card.sortCardsValue)
+  const appStatus = useAppSelector(state => state.app.appStatus)
 
   const handleChangeSortCardsValue = () => {
     dispatch(setSortCardsValue(sortCardsValue === '0updated' ? '1updated' : '0updated'))
@@ -37,7 +40,11 @@ export const CardsTable: FC<ICardsTableProps> = ({ isMyPack, cards }) => {
           <div className={styles.titles}>
             <span>Question</span>
             <span>Answer</span>
-            <span className={styles.iconsBox}>
+            <span
+              className={cn(styles.iconsBox, {
+                [styles.disabled]: appStatus === 'loading',
+              })}
+            >
               Last Updated{' '}
               {sortCardsValue === '0updated' ? (
                 <ArrowDropDownIcon onClick={handleChangeSortCardsValue} cursor={'pointer'} />
@@ -55,7 +62,11 @@ export const CardsTable: FC<ICardsTableProps> = ({ isMyPack, cards }) => {
           <div className={styles.myTitles}>
             <span>Question</span>
             <span>Answer</span>
-            <span className={styles.iconsBox}>
+            <span
+              className={cn(styles.iconsBox, {
+                [styles.disabled]: appStatus === 'loading',
+              })}
+            >
               Last Updated{' '}
               {sortCardsValue === '0updated' ? (
                 <ArrowDropDownIcon onClick={handleChangeSortCardsValue} cursor={'pointer'} />

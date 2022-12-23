@@ -1,24 +1,23 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {RequestStatusType} from "../../../types/auth";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface IAuthState {
-    isAuth: boolean
+  isAuth: boolean
 }
 
 const initialState: IAuthState = {
-    isAuth: false
+  isAuth: false,
 }
 
 const authSlice = createSlice({
-    name: 'auth',
-    initialState,
-    reducers: {
-        setIsAuth(state, action: PayloadAction<boolean>) {
-            state.isAuth = action.payload
-        }
+  name: 'auth',
+  initialState,
+  reducers: {
+    setIsAuth(state, action: PayloadAction<boolean>) {
+      state.isAuth = action.payload
     },
+  },
 })
 
-export const {setIsAuth} = authSlice.actions
+export const { setIsAuth } = authSlice.actions
 
-export const {reducer} = authSlice
+export const { reducer } = authSlice

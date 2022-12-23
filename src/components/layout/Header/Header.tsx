@@ -15,6 +15,8 @@ import { Label } from './Label'
 export const Header: FC = () => {
   const isAuth = useAppSelector(state => state.auth.isAuth)
   const user = useAppSelector(state => state.user.user)
+  const appStatus = useAppSelector(state => state.app.appStatus)
+
   const { pathname } = useLocation()
 
   return (
@@ -43,7 +45,7 @@ export const Header: FC = () => {
               />
             </Link>
           ) : (
-            <MyTooltip element={<ProfileTooltip />}>
+            <MyTooltip element={<ProfileTooltip />} disabled={appStatus === 'loading'}>
               <Link to={PATH.PROFILE}>
                 <Avatar
                   style={{ marginLeft: '12px', color: '#000000' }}

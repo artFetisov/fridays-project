@@ -88,11 +88,16 @@
         align-items: center;
 
         & > svg {
-          margin-right: 14px;
+          margin-right: 10px;
           cursor: pointer;
-          width: 16px;
-          height: 16px;
+          width: 18px;
+          height: 18px;
           color: #000000;
+          border-radius: 50%;
+
+          &:hover {
+            transform: scale(1.08);
+          }
         }
       }
     }
@@ -123,4 +128,8 @@
       }
     }
   }
+}
+
+.disabled {
+  pointer-events: none;
 }
