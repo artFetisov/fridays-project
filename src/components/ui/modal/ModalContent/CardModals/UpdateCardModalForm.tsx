@@ -2,14 +2,13 @@ import React, { ChangeEvent, useState } from 'react'
 
 import { Avatar, Button, TextField } from '@mui/material'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { toastr } from 'react-redux-toastr'
 
 import { useAppDispatch } from '../../../../../hooks/useAppDispatch'
 import { useAppSelector } from '../../../../../hooks/useAppSelector'
 import { updateCardTC } from '../../../../../store/reducers/card/card.actions'
 import { setIsOpenModal } from '../../../../../store/reducers/modal/modal.slice'
 import { IUpdateCardData } from '../../../../../types/cards'
-import { getFileReaderURL } from '../../../../../utils/fileReader'
+import { changeImageHandler } from '../../../../../utils/image'
 import { Button as MyButton } from '../../../button/Button'
 
 import styles from './CardModals.module.scss'
@@ -56,31 +55,11 @@ export const UpdateCardModalForm = () => {
   }
 
   const handleChangeCoverQuestion = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      const file = event?.target?.files[0]
-
-      if (file.size > 1000000) {
-        toastr.error('Error', 'File size is too large')
-
-        return
-      }
-
-      getFileReaderURL(file, setCoverUrlQuestion)
-    }
+    changeImageHandler(event, setCoverUrlQuestion)
   }
 
   const handleChangeCoverAnswer = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      const file = event?.target?.files[0]
-
-      if (file.size > 1000000) {
-        toastr.error('Error', 'File size is too large')
-
-        return
-      }
-
-      getFileReaderURL(file, setCoverUrlAnswer)
-    }
+    changeImageHandler(event, setCoverUrlAnswer)
   }
 
   return (

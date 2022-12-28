@@ -73,11 +73,12 @@
       border-bottom: 1px solid #d9d9d9;
 
       & > span {
+        display: block;
         font-weight: 400;
         font-size: 13px;
         line-height: 16px;
         color: #000000;
-        max-width: 330px;
+        max-width: 350px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -115,13 +116,12 @@
       border-bottom: 1px solid #d9d9d9;
 
       & > span {
-        display: flex;
-        align-items: center;
+        display: block;
         font-weight: 400;
         font-size: 13px;
         line-height: 16px;
         color: #000000;
-        max-width: 300px;
+        max-width: 350px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;

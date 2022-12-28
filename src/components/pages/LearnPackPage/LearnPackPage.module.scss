@@ -47,11 +47,7 @@
       margin-bottom: 14px;
 
       & > span {
-        display: inline-block;
-        max-width: 200px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
+        word-break: break-all;
       }
 
       & > span:nth-child(1) {

@@ -1,77 +1,76 @@
 export interface ICard {
-    answer: string
-    question: string
-    cardsPack_id: string
-    grade: number
-    shots: number
-    user_id: string
-    created: string
-    updated: string
-    _id: string
-    questionImg?: string
-    answerImg?: string
+  answer: string
+  question: string
+  cardsPack_id: string
+  grade: number
+  shots: number
+  user_id: string
+  created: string
+  updated: string
+  _id: string
+  questionImg?: string
+  answerImg?: string
 }
 
 export interface IAllCardsWithParams {
-    cards: ICard[]
-    cardsTotalCount: number
-    maxGrade: number
-    minGrade: number
-    page: number
-    pageCount: number
-    packUserId: string
-    packName: string
-    packDeckCover: string
+  cards: ICard[]
+  cardsTotalCount: number
+  maxGrade: number
+  minGrade: number
+  page: number
+  pageCount: number
+  packUserId: string
+  packName: string
+  packDeckCover: string
 }
 
 export type SortCardsType = '0updated' | '1updated'
 
 export interface ICardsRequestParams {
-    cardAnswer?: string
-    cardQuestion?: string
-    cardsPack_id: string
-    min?: number
-    max?: number
-    sortCards?: string
-    page?: number
-    pageCount?: number
+  cardAnswer?: string
+  cardQuestion?: string
+  cardsPack_id: string
+  min?: number
+  max?: number
+  sortCards?: string
+  page?: number
+  pageCount?: number
 }
 
 export interface ICreateCardData {
-    cardsPack_id: string
-    question?: string
-    answer?: string
-    grade?: number
-    shots?: number
-    answerImg?: string
-    questionImg?: string
-    questionVideo?: string
-    answerVideo?: string
+  cardsPack_id: string
+  question?: string
+  answer?: string
+  grade?: number
+  shots?: number
+  answerImg?: string
+  questionImg?: string
+  questionVideo?: string
+  answerVideo?: string
 }
 
 export interface IUpdateCardData {
-    _id: string
-    question?: string
-    answer?: string
-    questionImg?: string
-    answerImg?: string
+  _id: string
+  question?: string
+  answer?: string
+  questionImg?: string
+  answerImg?: string
 }
 
 export interface ISendGradeCardRequestData {
-    grade: number
-    card_id: string
+  grade: number
+  card_id: string
 }
 
 export interface ISendGradeCardResponseData {
-    updatedGrade: {
-        _id: string
-        cardsPack_id: string
-        card_id: string
-        user_id: string
-        grade: number
-        shots: number
-    }
+  updatedGrade: {
+    _id: string
+    cardsPack_id: string
+    card_id: string
+    user_id: string
+    grade: number
+    shots: number
+  }
 }
 
 export type VariantAddCardModalType = 'Text' | 'Picture'
-

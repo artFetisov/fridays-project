@@ -2,13 +2,12 @@ import React, { ChangeEvent, useState } from 'react'
 
 import { Avatar, Button, Checkbox, FormControlLabel, TextField } from '@mui/material'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { toastr } from 'react-redux-toastr'
 
 import { useAppDispatch } from '../../../../../hooks/useAppDispatch'
 import { setIsOpenModal } from '../../../../../store/reducers/modal/modal.slice'
 import { createPackTC } from '../../../../../store/reducers/pack/pack.actions'
 import { ICreatePackData } from '../../../../../types/packs'
-import { getFileReaderURL } from '../../../../../utils/fileReader'
+import { changeImageHandler } from '../../../../../utils/image'
 import { Button as MyButton } from '../../../button/Button'
 
 import styles from './PackModals.module.scss'
@@ -39,17 +38,7 @@ export const AddPackModalForm = () => {
   }
 
   const handleChangeCover = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      const file = event?.target?.files[0]
-
-      if (file.size > 1000000) {
-        toastr.error('Error', 'File size is too large')
-
-        return
-      }
-
-      getFileReaderURL(file, setCoverUrl)
-    }
+    changeImageHandler(event, setCoverUrl)
   }
 
   return (

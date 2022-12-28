@@ -2,7 +2,6 @@ import React, { ChangeEvent, useState } from 'react'
 
 import { Avatar, Button, Checkbox, FormControlLabel, TextField } from '@mui/material'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { toastr } from 'react-redux-toastr'
 import { useLocation } from 'react-router-dom'
 
 import { useAppDispatch } from '../../../../../hooks/useAppDispatch'
@@ -11,7 +10,7 @@ import { setCardsPackName } from '../../../../../store/reducers/card/card.slice'
 import { setIsOpenModal } from '../../../../../store/reducers/modal/modal.slice'
 import { updatePackTC } from '../../../../../store/reducers/pack/pack.actions'
 import { IUpdatePackData } from '../../../../../types/packs'
-import { getFileReaderURL } from '../../../../../utils/fileReader'
+import { changeImageHandler } from '../../../../../utils/image'
 
 import { Button as MyButton } from '././../../../button/Button'
 import styles from './PackModals.module.scss'
@@ -21,20 +20,6 @@ export const UpdatePackModalForm = () => {
 
   const [coverUrl, setCoverUrl] = useState<string | ArrayBuffer>('')
 
-  const handleChangeCover = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      const file = event?.target?.files[0]
-
-      if (file.size > 1000000) {
-        toastr.error('Error', 'File size is too large')
-
-        return
-      }
-
-      getFileReaderURL(file, setCoverUrl)
-    }
-  }
-
   const { pathname } = useLocation()
 
   const isNowCardsPage = pathname.includes('cards')
@@ -43,6 +28,10 @@ export const UpdatePackModalForm = () => {
 
   const handleCloseModal = () => {
     dispatch(setIsOpenModal(false))
+  }
+
+  const handleChangeCover = (event: ChangeEvent<HTMLInputElement>) => {
+    changeImageHandler(event, setCoverUrl)
   }
 
   const {

@@ -1,14 +1,14 @@
-import {configureStore} from "@reduxjs/toolkit";
-import {reducers} from "./reducers/rootReducer";
+import { configureStore } from '@reduxjs/toolkit'
 
+import { reducers } from './reducers/rootReducer'
 
 export const store = configureStore({
-    reducer: reducers,
-    devTools: true,
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-            serializableCheck: false,
-        }),
+  reducer: reducers,
+  devTools: true,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 })
 
 export type AppDispatch = typeof store.dispatch

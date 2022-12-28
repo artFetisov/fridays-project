@@ -12,7 +12,7 @@ import { useAppSelector } from '../../../../../hooks/useAppSelector'
 import { createCardTC } from '../../../../../store/reducers/card/card.actions'
 import { setIsOpenModal } from '../../../../../store/reducers/modal/modal.slice'
 import { ICreateCardData, VariantAddCardModalType } from '../../../../../types/cards'
-import { getFileReaderURL } from '../../../../../utils/fileReader'
+import { changeImageHandler, checkFileSize, getFileReaderURL } from '../../../../../utils/image'
 import { Button as MyButton } from '../../../button/Button'
 
 import styles from './CardModals.module.scss'
@@ -68,31 +68,11 @@ export const AddCardModalForm = () => {
   }
 
   const handleChangeCoverQuestion = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      const file = event?.target?.files[0]
-
-      if (file.size > 1000000) {
-        toastr.error('Error', 'File size is too large')
-
-        return
-      }
-
-      getFileReaderURL(file, setCoverUrlQuestion)
-    }
+    changeImageHandler(event, setCoverUrlQuestion)
   }
 
   const handleChangeCoverAnswer = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      const file = event?.target?.files[0]
-
-      if (file.size > 1000000) {
-        toastr.error('Error', 'File size is too large')
-
-        return
-      }
-
-      getFileReaderURL(file, setCoverUrlAnswer)
-    }
+    changeImageHandler(event, setCoverUrlAnswer)
   }
 
   return (
