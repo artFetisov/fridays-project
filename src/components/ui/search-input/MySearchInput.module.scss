@@ -20,8 +20,12 @@
     color: rgba(0, 0, 0, 0.8);
     transition: all 0.3s ease;
 
-    &:focus {
+    &:hover {
       border: 1px solid rgba(0, 0, 0, 0.4);
+    }
+
+    &:focus {
+      border: 1.4px solid rgba(0, 0, 0, 0.4);
     }
   }
 

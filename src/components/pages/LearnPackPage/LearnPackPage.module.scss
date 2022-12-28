@@ -37,7 +37,7 @@
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1), -1px -1px 2px rgba(0, 0, 0, 0.1);
     border-radius: 2px;
     padding: 35px 33px 42px;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
 
     .questionAndAnswerInfo {
       font-weight: 400;
@@ -46,8 +46,17 @@
       color: #000000;
       margin-bottom: 14px;
 
+      & > span {
+        display: inline-block;
+        max-width: 200px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
       & > span:nth-child(1) {
         font-weight: 600;
+        margin-right: 5px;
       }
     }
 
