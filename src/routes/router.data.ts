@@ -26,17 +26,18 @@ export enum PATH {
 export interface IRoute {
   path: string
   element: FC
+  index?: boolean
 }
 
 export const privateRoutes: IRoute[] = [
   { path: PATH.PACKS, element: PacksPage },
-  { path: PATH.PROFILE, element: ProfilePage },
+  { path: PATH.PROFILE, element: ProfilePage, index: true },
   { path: PATH.CARDS, element: CardsPage },
   { path: PATH.LEARN_PACK, element: LearnPackPage },
 ]
 
 export const publicRoutes: IRoute[] = [
-  { path: PATH.LOGIN, element: LoginPage },
+  { path: PATH.LOGIN, element: LoginPage, index: true },
   { path: PATH.REGISTRATION, element: RegisterPage },
   { path: PATH.FORGOT, element: ForgotPasswordPage },
   { path: PATH.CHECK, element: CheckEmailPage },
