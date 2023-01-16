@@ -17,7 +17,7 @@ export const changeImageHandler = (
   }
 }
 
-export const getFileReaderURL = (file: File, cb: (value: string | ArrayBuffer) => void) => {
+const getFileReaderURL = (file: File, cb: (value: string | ArrayBuffer) => void) => {
   const fileReader = new FileReader()
 
   fileReader.onload = function (event) {
@@ -29,7 +29,7 @@ export const getFileReaderURL = (file: File, cb: (value: string | ArrayBuffer) =
   fileReader.readAsDataURL(file)
 }
 
-export const checkFileSize = (fileSize: number): boolean => {
+const checkFileSize = (fileSize: number): boolean => {
   if (fileSize > 100000) {
     toastr.error('File size is too large', 'max size 100kb')
 

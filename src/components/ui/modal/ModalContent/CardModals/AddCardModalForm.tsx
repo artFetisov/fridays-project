@@ -12,7 +12,7 @@ import { useAppSelector } from '../../../../../hooks/useAppSelector'
 import { createCardTC } from '../../../../../store/reducers/card/card.actions'
 import { setIsOpenModal } from '../../../../../store/reducers/modal/modal.slice'
 import { ICreateCardData, VariantAddCardModalType } from '../../../../../types/cards'
-import { changeImageHandler, checkFileSize, getFileReaderURL } from '../../../../../utils/image'
+import { changeImageHandler } from '../../../../../utils/image'
 import { Button as MyButton } from '../../../button/Button'
 
 import styles from './CardModals.module.scss'
